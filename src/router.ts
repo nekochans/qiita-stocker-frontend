@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Counter from "./views/Counter.vue";
+import Counter from "./components/Counter.vue";
 import Home from "./views/Home.vue";
 
 Vue.use(Router);

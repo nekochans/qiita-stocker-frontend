@@ -9,7 +9,7 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import { Getter, Action, namespace } from "vuex-class";
-import { CounterState } from "@/types/counter";
+import { CounterState } from "../types/counter";
 
 const CounterGetter = namespace("CounterModule", Getter);
 const CounterAction = namespace("CounterModule", Action);
