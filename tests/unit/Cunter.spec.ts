@@ -8,7 +8,7 @@ const localVue = createLocalVue();
 
 localVue.use(Vuex);
 
-describe("MyComponent.vue", () => {
+describe("Counter.vue", () => {
   let store: any;
   let state: CounterState;
   let actions: any;

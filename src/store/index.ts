@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import { CounterModule } from "./modules/counter";
+import { WeatherModule } from "./modules/weather";
 Vue.use(Vuex);
 
 export interface RootState {
@@ -12,6 +13,7 @@ export default new Vuex.Store({
     version: "1.0.0"
   },
   modules: {
-    CounterModule
+    CounterModule,
+    WeatherModule
   }
 });

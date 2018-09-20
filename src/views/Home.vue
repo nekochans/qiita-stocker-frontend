@@ -1,10 +1,13 @@
 <template>
   <div class="home">
-     <ui>
+     <ul>
        <li>
          <router-link to="/counter">counter</router-link>
        </li>
-     </ui>
+       <li>
+         <router-link to="/weather">weather</router-link>
+       </li>
+     </ul>
   </div>
 </template>
 
