@@ -28,7 +28,7 @@ const actions: ActionTree<WeatherState, RootState> = {
 
     WeatherAPI.fetchWeather()
       .then(response => {
-        weather = response.data["weather"];
+        weather = response.data.weather;
         commit("saveWeather", weather);
       })
       .catch(error => {
