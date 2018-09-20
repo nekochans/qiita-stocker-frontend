@@ -5,7 +5,7 @@ jest.mock("axios");
 
 describe("WeatherModule", () => {
   describe("getters", () => {
-    it("should be able to get wether", () => {
+    it("should be able to get weather", () => {
       const state: WeatherState = {
         weather: "sunny"
       };

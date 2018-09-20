@@ -17,8 +17,8 @@ const getters: GetterTree<WeatherState, RootState> = {
 };
 
 const mutations: MutationTree<WeatherState> = {
-  saveWeather: (state, wether: string) => {
-    state.weather = wether;
+  saveWeather: (state, weather: string) => {
+    state.weather = weather;
   }
 };
 
