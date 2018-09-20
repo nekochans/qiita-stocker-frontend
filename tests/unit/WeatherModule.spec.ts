@@ -31,11 +31,11 @@ describe("WeatherModule", () => {
     });
   });
 
-  describe("actions",() => {
+  describe("actions", () => {
     it("should be able to fetch weather from API", async () => {
       // mock化出来ている事を確認する為、あえて現実ではあり得ない🐱rainy🐶を指定
       const mockResponse: any = {
-        data : { weather: "🐶rainy🐱" }
+        data: { weather: "🐶rainy🐱" }
       };
 
       // 普通に axios.get.mockResolvedValue を呼ぶとTypeScriptでエラーになるので強引にany型にキャスト
@@ -45,11 +45,11 @@ describe("WeatherModule", () => {
 
       const commit = jest.fn();
 
-      const wrapper =  (actions: any) => actions.fetchWeather({ commit });
+      const wrapper = (actions: any) => actions.fetchWeather({ commit });
       await wrapper(WeatherModule.actions);
 
       // commit() が commit("saveWeather", "🐶rainy🐱"); で呼ばれている事を確認
-      expect(commit.mock.calls).toEqual([['saveWeather', '🐶rainy🐱']]);
+      expect(commit.mock.calls).toEqual([["saveWeather", "🐶rainy🐱"]]);
     });
   });
 });
