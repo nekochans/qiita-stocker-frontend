@@ -23,17 +23,13 @@ const mutations: MutationTree<WeatherState> = {
 };
 
 const actions: ActionTree<WeatherState, RootState> = {
-  fetchWeather: ({ commit }) => {
-    let weather: string = "";
-
-    WeatherAPI.fetchWeather()
-      .then(response => {
-        weather = response.data.weather;
-        commit("saveWeather", weather);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+  fetchWeather: async ({ commit }) => {
+    try {
+      const weatherResponse = await WeatherAPI.fetchWeather();
+      commit("saveWeather", weatherResponse.data.weather);
+    } catch (error) {
+      console.log(error);
+    }
   }
 };
 
