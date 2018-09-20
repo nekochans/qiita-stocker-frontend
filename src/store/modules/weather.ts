@@ -17,23 +17,19 @@ const getters: GetterTree<WeatherState, RootState> = {
 };
 
 const mutations: MutationTree<WeatherState> = {
-  saveWeather: (state, wether: string) => {
-    state.weather = wether;
+  saveWeather: (state, weather: string) => {
+    state.weather = weather;
   }
 };
 
 const actions: ActionTree<WeatherState, RootState> = {
-  fetchWeather: ({ commit }) => {
-    let weather: string = "";
-
-    WeatherAPI.fetchWeather()
-      .then(response => {
-        weather = response.data.weather;
-        commit("saveWeather", weather);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+  fetchWeather: async ({ commit }) => {
+    try {
+      const weatherResponse = await WeatherAPI.fetchWeather();
+      commit("saveWeather", weatherResponse.data.weather);
+    } catch (error) {
+      console.log(error);
+    }
   }
 };
 
