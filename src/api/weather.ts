@@ -1,5 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 
+const apiUrlBase = process.env.VUE_APP_API_URL_BASE;
+
 enum Weather {
   SUNNY = "sunny",
   CLOUDY = "cloudy",
@@ -13,7 +15,7 @@ interface WeatherResponse {
 export const WeatherAPI = {
   fetchWeather: async (): Promise<AxiosResponse<WeatherResponse>> => {
     const response = await axios
-      .get<WeatherResponse>("http://127.0.0.1:8000/api/weather")
+      .get<WeatherResponse>(`${apiUrlBase}/api/weather`)
       .catch(error => Promise.reject(error));
     return response;
   }
