@@ -2,6 +2,8 @@ import Vue from "vue";
 import Vuex from "vuex";
 import { CounterModule } from "./modules/counter";
 import { WeatherModule } from "./modules/weather";
+import { QiitaModule } from "./modules/Qiita";
+
 Vue.use(Vuex);
 
 export interface RootState {
@@ -14,6 +16,7 @@ export default new Vuex.Store({
   },
   modules: {
     CounterModule,
-    WeatherModule
+    WeatherModule,
+    QiitaModule
   }
 });
