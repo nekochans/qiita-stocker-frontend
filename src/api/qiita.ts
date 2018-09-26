@@ -1,15 +1,15 @@
 import axios, { AxiosResponse, AxiosError } from "axios";
 import {
-  IFetchAccessTokensRequest,
-  IFetchAccessTokensResponse
+  IIssueAccessTokensRequest,
+  IIssueAccessTokensResponse
 } from "@/domain/Qiita";
 
 export const QiitaAPI = {
-  fetchAccessTokens: async (
-    request: IFetchAccessTokensRequest
-  ): Promise<IFetchAccessTokensResponse> => {
+  issueAccessToken: async (
+    request: IIssueAccessTokensRequest
+  ): Promise<IIssueAccessTokensResponse> => {
     return await axios
-      .post<IFetchAccessTokensResponse>(
+      .post<IIssueAccessTokensResponse>(
         `https://qiita.com/api/v2/access_tokens`,
         request
       )

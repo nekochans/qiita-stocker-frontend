@@ -22,12 +22,12 @@ export default class Login extends Vue {
   login!: () => void;
 
   @QiitaAction
-  fetchAccessTokens!: (query: object) => void;
+  issueAccessToken!: (query: object) => void;
 
   created(): void {
     const query: object = this.$route.query;
     this.$router.push({ query: {} });
-    this.fetchAccessTokens(query);
+    this.issueAccessToken(query);
   }
 }
 </script>

@@ -1,7 +1,7 @@
 import { LoginState } from "@/types/login";
 import { QiitaModule } from "@/store/modules/qiita";
 import axios from "axios";
-import { IFetchAccessTokensResponse, fetchAccessTokens } from "@/domain/Qiita";
+import { IIssueAccessTokensResponse } from "@/domain/Qiita";
 
 jest.mock("@/domain/Qiita");
 jest.mock("axios");
@@ -71,7 +71,7 @@ describe("QiitaModule", () => {
 
   describe("actions", () => {
     it("should be able to fetch AccessTokens from Qiita API", async () => {
-      const mockResponse: { data: IFetchAccessTokensResponse } = {
+      const mockResponse: { data: IIssueAccessTokensResponse } = {
         data: {
           client_id: "4f54451e86041b5c0a29419b4058f44b5ea04ae9",
           scopes: ["read_qiita"],
@@ -87,7 +87,7 @@ describe("QiitaModule", () => {
       const routeQuery = { code: "34d97d024861f098d2e45fb4d9ed7757f97f5b0f" };
 
       const wrapper = (actions: any) =>
-        actions.fetchAccessTokens({ commit }, routeQuery);
+        actions.issueAccessToken({ commit }, routeQuery);
       await wrapper(QiitaModule.actions);
 
       expect(commit.mock.calls).toEqual([

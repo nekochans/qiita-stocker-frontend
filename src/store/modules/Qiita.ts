@@ -4,11 +4,15 @@ import { LoginState } from "@/types/login";
 import { RootState } from "@/store";
 import {
   requestToAuthorizationServer,
-  fetchAccessTokens,
-  IFetchAccessTokensResponse
+  issueAccessToken,
+  IIssueAccessTokensResponse,
+  IIssueAccessTokensRequest
 } from "@/domain/Qiita";
 
 Vue.use(Vuex);
+
+const clientId: any = process.env.VUE_APP_QIITA_CLIENT_ID;
+const clientSecret: any = process.env.VUE_APP_QIITA_CLIENT_SECRET;
 
 const state: LoginState = {
   authorizationCode: "",
@@ -35,9 +39,9 @@ const mutations: MutationTree<LoginState> = {
 
 const actions: ActionTree<LoginState, RootState> = {
   login: ({ commit }) => {
-    requestToAuthorizationServer();
+    requestToAuthorizationServer(clientId);
   },
-  fetchAccessTokens: async ({ commit }, query) => {
+  issueAccessToken: async ({ commit }, query) => {
     if (query.code === undefined) {
       return;
     }
@@ -45,9 +49,15 @@ const actions: ActionTree<LoginState, RootState> = {
     const authorizationCode: string = query.code;
     commit("saveAuthorizationCode", authorizationCode);
 
+    const request: IIssueAccessTokensRequest = {
+      client_id: clientId,
+      client_secret: clientSecret,
+      code: authorizationCode
+    };
+
     try {
-      const response: IFetchAccessTokensResponse = await fetchAccessTokens(
-        authorizationCode
+      const response: IIssueAccessTokensResponse = await issueAccessToken(
+        request
       );
       commit("saveAccessToken", response.token);
     } catch (error) {
