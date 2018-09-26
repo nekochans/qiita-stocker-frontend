@@ -14,7 +14,8 @@ describe("Login.vue", () => {
 
   it('calls store action "login" when button is clicked', () => {
     state = {
-      authorizationCode: ""
+      authorizationCode: "",
+      accessToken: ""
     };
 
     actions = {
