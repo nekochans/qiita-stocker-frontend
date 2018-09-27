@@ -70,7 +70,7 @@ describe("QiitaModule", () => {
   });
 
   describe("actions", () => {
-    it("should be able to fetch AccessTokens from Qiita API", async () => {
+    it("should be able to issue AccessTokens from Qiita API", async () => {
       const mockResponse: { data: IIssueAccessTokensResponse } = {
         data: {
           client_id: "4f54451e86041b5c0a29419b4058f44b5ea04ae9",
