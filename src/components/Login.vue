@@ -2,7 +2,7 @@
   <div>
     <h1>ログイン</h1>
     <button @click="login">Qiitaアカウントでログイン</button>
-    <p v-show="authorizationCode">authorizationCode :{{ authorizationCode }}</p>
+    <p v-show="accessToken">AccessToken :{{ accessToken }}</p>
   </div>
 </template>
 
@@ -16,18 +16,18 @@ const QiitaGetter = namespace("QiitaModule", Getter);
 @Component
 export default class Login extends Vue {
   @QiitaGetter
-  authorizationCode!: string;
+  accessToken!: string;
 
   @QiitaAction
   login!: () => void;
 
   @QiitaAction
-  fetchAccessTokens!: (query: object) => void;
+  issueAccessToken!: (query: object) => void;
 
   created(): void {
     const query: object = this.$route.query;
     this.$router.push({ query: {} });
-    this.fetchAccessTokens(query);
+    this.issueAccessToken(query);
   }
 }
 </script>
