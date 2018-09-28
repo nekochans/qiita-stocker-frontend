@@ -1,7 +1,10 @@
 import { LoginState } from "@/types/login";
 import { QiitaModule } from "@/store/modules/qiita";
 import axios from "axios";
-import { IIssueAccessTokensResponse } from "@/domain/Qiita";
+import {
+  IIssueAccessTokensResponse,
+  IFetchAuthenticatedUserResponse
+} from "@/domain/Qiita";
 
 jest.mock("@/domain/Qiita");
 jest.mock("axios");
@@ -13,7 +16,8 @@ describe("QiitaModule", () => {
     beforeEach(() => {
       state = {
         authorizationCode: "34d97d024861f098d2e45fb4d9ed7757f97f5b0f",
-        accessToken: "72d79c218c16c65b8076c7de8ef6ec55504ca6a0"
+        accessToken: "72d79c218c16c65b8076c7de8ef6ec55504ca6a0",
+        permanentId: "1"
       };
     });
 
@@ -30,6 +34,13 @@ describe("QiitaModule", () => {
 
       expect(accessToken).toEqual(state.accessToken);
     });
+
+    it("should be able to get permanentId", () => {
+      const wrapper = (getters: any) => getters.permanentId(state);
+      const permanentId: LoginState = wrapper(QiitaModule.getters);
+
+      expect(permanentId).toEqual(state.permanentId);
+    });
   });
 
   describe("mutations", () => {
@@ -38,7 +49,8 @@ describe("QiitaModule", () => {
     beforeEach(() => {
       state = {
         authorizationCode: "",
-        accessToken: ""
+        accessToken: "",
+        permanentId: ""
       };
     });
 
@@ -67,11 +79,18 @@ describe("QiitaModule", () => {
         "72d79c218c16c65b8076c7de8ef6ec55504ca6a0"
       );
     });
+
+    it("should be able to save permanentId", () => {
+      const wrapper = (mutations: any) => mutations.savePermanentId(state, "1");
+      wrapper(QiitaModule.mutations);
+
+      expect(state.permanentId).toEqual("1");
+    });
   });
 
   describe("actions", () => {
     it("should be able to issue AccessTokens from Qiita API", async () => {
-      const mockResponse: { data: IIssueAccessTokensResponse } = {
+      const mockPostResponse: { data: IIssueAccessTokensResponse } = {
         data: {
           client_id: "4f54451e86041b5c0a29419b4058f44b5ea04ae9",
           scopes: ["read_qiita"],
@@ -79,8 +98,15 @@ describe("QiitaModule", () => {
         }
       };
 
+      const mockGetResponse: { data: IFetchAuthenticatedUserResponse } = {
+        data: {
+          permanent_id: "1"
+        }
+      };
+
       const mockAxios: any = axios;
-      mockAxios.post.mockResolvedValue(mockResponse);
+      mockAxios.get.mockResolvedValue(mockGetResponse);
+      mockAxios.post.mockResolvedValue(mockPostResponse);
 
       const commit = jest.fn();
 
@@ -92,7 +118,8 @@ describe("QiitaModule", () => {
 
       expect(commit.mock.calls).toEqual([
         ["saveAuthorizationCode", "34d97d024861f098d2e45fb4d9ed7757f97f5b0f"],
-        ["saveAccessToken", "72d79c218c16c65b8076c7de8ef6ec55504ca6a0"]
+        ["saveAccessToken", "72d79c218c16c65b8076c7de8ef6ec55504ca6a0"],
+        ["savePermanentId", "1"]
       ]);
     });
   });

@@ -2,7 +2,7 @@
   <div>
     <h1>ログイン</h1>
     <button @click="login">Qiitaアカウントでログイン</button>
-    <p v-show="accessToken">AccessToken :{{ accessToken }}</p>
+    <p v-show="permanentId">PermanentId :{{ permanentId }}</p>
   </div>
 </template>
 
@@ -16,7 +16,7 @@ const QiitaGetter = namespace("QiitaModule", Getter);
 @Component
 export default class Login extends Vue {
   @QiitaGetter
-  accessToken!: string;
+  permanentId!: string;
 
   @QiitaAction
   login!: () => void;
