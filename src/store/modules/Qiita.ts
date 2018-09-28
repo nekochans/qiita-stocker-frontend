@@ -6,7 +6,10 @@ import {
   requestToAuthorizationServer,
   issueAccessToken,
   IIssueAccessTokensResponse,
-  IIssueAccessTokensRequest
+  IIssueAccessTokensRequest,
+  fetchAuthenticatedUser,
+  IFetchAuthenticatedUserResponse,
+  IFetchAuthenticatedUserRequest
 } from "@/domain/Qiita";
 
 Vue.use(Vuex);
@@ -16,7 +19,8 @@ const clientSecret: any = process.env.VUE_APP_QIITA_CLIENT_SECRET;
 
 const state: LoginState = {
   authorizationCode: "",
-  accessToken: ""
+  accessToken: "",
+  permanentId: ""
 };
 
 const getters: GetterTree<LoginState, RootState> = {
@@ -25,6 +29,9 @@ const getters: GetterTree<LoginState, RootState> = {
   },
   accessToken: (state): LoginState["accessToken"] => {
     return state.accessToken;
+  },
+  permanentId: (state): LoginState["permanentId"] => {
+    return state.permanentId;
   }
 };
 
@@ -34,6 +41,9 @@ const mutations: MutationTree<LoginState> = {
   },
   saveAccessToken: (state, accessToken: string) => {
     state.accessToken = accessToken;
+  },
+  savePermanentId: (state, permanentId: string) => {
+    state.permanentId = permanentId;
   }
 };
 
@@ -49,7 +59,7 @@ const actions: ActionTree<LoginState, RootState> = {
     const authorizationCode: string = query.code;
     commit("saveAuthorizationCode", authorizationCode);
 
-    const request: IIssueAccessTokensRequest = {
+    const issueAccessTokensRequest: IIssueAccessTokensRequest = {
       client_id: clientId,
       client_secret: clientSecret,
       code: authorizationCode
@@ -57,9 +67,19 @@ const actions: ActionTree<LoginState, RootState> = {
 
     try {
       const response: IIssueAccessTokensResponse = await issueAccessToken(
-        request
+        issueAccessTokensRequest
       );
       commit("saveAccessToken", response.token);
+
+      const fetchAuthenticatedUserRequest: IFetchAuthenticatedUserRequest = {
+        accessToken: response.token
+      };
+
+      const authenticatedUser: IFetchAuthenticatedUserResponse = await fetchAuthenticatedUser(
+        fetchAuthenticatedUserRequest
+      );
+
+      commit("savePermanentId", authenticatedUser.permanent_id);
     } catch (error) {
       console.log(error);
     }
