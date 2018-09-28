@@ -11,14 +11,7 @@ const localVue = createLocalVue();
 localVue.use(Vuex);
 localVue.use(VueRouter);
 
-const routes = [
-  {
-    path: "/login",
-    component: Login
-  }
-];
-
-const router = new VueRouter({ routes });
+const router = new VueRouter();
 
 describe("Login.vue", () => {
   let store: any;
