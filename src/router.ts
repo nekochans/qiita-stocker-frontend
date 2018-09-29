@@ -3,6 +3,7 @@ import Router from "vue-router";
 import Counter from "./components/Counter.vue";
 import Weather from "./components/Weather.vue";
 import Login from "./components/Login.vue";
+import Error from "./components/Error.vue";
 import Home from "./views/Home.vue";
 
 Vue.use(Router);
@@ -30,6 +31,12 @@ export default new Router({
       path: "/login",
       name: "login",
       component: Login
+    },
+    {
+      path: "/error",
+      name: "error",
+      component: Error,
+      props: true
     }
   ]
 });
