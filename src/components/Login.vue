@@ -9,6 +9,7 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import { Getter, Action, namespace } from "vuex-class";
+import { IAuthorizationResponse, STORAGE_KEY_AUTH_STATE } from "@/domain/Qiita";
 
 const QiitaAction = namespace("QiitaModule", Action);
 const QiitaGetter = namespace("QiitaModule", Getter);
@@ -25,9 +26,16 @@ export default class Login extends Vue {
   issueAccessToken!: (query: object) => void;
 
   created(): void {
-    const query: object = this.$route.query;
+    const query: any = this.$route.query;
+    const params: IAuthorizationResponse = {
+      code: query.code,
+      callbackState: query.state,
+      localState:
+        window.localStorage.getItem(STORAGE_KEY_AUTH_STATE) || undefined
+    };
+
     this.$router.push({ query: {} });
-    this.issueAccessToken(query);
+    this.issueAccessToken(params);
   }
 }
 </script>

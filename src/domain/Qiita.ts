@@ -1,5 +1,18 @@
 import { QiitaAPI } from "@/api/qiita";
 
+export const STORAGE_KEY_AUTH_STATE = "authorizationState";
+
+export interface IAuthorizationRequest {
+  clientId: string;
+  state: string;
+}
+
+export interface IAuthorizationResponse {
+  code: string;
+  callbackState: string;
+  localState?: string;
+}
+
 export interface IIssueAccessTokensRequest {
   client_id: string;
   client_secret: string;
@@ -20,8 +33,12 @@ export interface IFetchAuthenticatedUserResponse {
   permanent_id: string;
 }
 
-export const requestToAuthorizationServer = (clientId: string) => {
-  location.href = `http://qiita.com/api/v2/oauth/authorize?client_id=${clientId}&scope=read_qiita`;
+export const requestToAuthorizationServer = (
+  authorizationRequest: IAuthorizationRequest
+) => {
+  location.href = `http://qiita.com/api/v2/oauth/authorize?client_id=${
+    authorizationRequest.clientId
+  }&scope=read_qiita&state=${authorizationRequest.state}`;
 };
 
 export const issueAccessToken = async (
@@ -34,4 +51,15 @@ export const fetchAuthenticatedUser = async (
   request: IFetchAuthenticatedUserRequest
 ): Promise<IFetchAuthenticatedUserResponse> => {
   return await QiitaAPI.fetchAuthenticatedUser(request);
+};
+
+export const matchState = (responseState: string, state: string): boolean => {
+  if (responseState !== state) {
+    return false;
+  }
+  return true;
+};
+
+export const stateNotMatchedMessage = (): string => {
+  return "不正なリクエストが行われました。再度、ユーザ登録を行なってください。";
 };

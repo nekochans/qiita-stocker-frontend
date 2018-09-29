@@ -3,7 +3,8 @@ import { QiitaModule } from "@/store/modules/qiita";
 import axios from "axios";
 import {
   IIssueAccessTokensResponse,
-  IFetchAuthenticatedUserResponse
+  IFetchAuthenticatedUserResponse,
+  IAuthorizationResponse
 } from "@/domain/Qiita";
 
 jest.mock("@/domain/Qiita");
@@ -110,10 +111,14 @@ describe("QiitaModule", () => {
 
       const commit = jest.fn();
 
-      const routeQuery = { code: "34d97d024861f098d2e45fb4d9ed7757f97f5b0f" };
+      const params: IAuthorizationResponse = {
+        code: "34d97d024861f098d2e45fb4d9ed7757f97f5b0f",
+        callbackState: "89bd7d77-b352-45f8-9585-388939d426ad",
+        localState: "89bd7d77-b352-45f8-9585-388939d426ad"
+      };
 
       const wrapper = (actions: any) =>
-        actions.issueAccessToken({ commit }, routeQuery);
+        actions.issueAccessToken({ commit }, params);
       await wrapper(QiitaModule.actions);
 
       expect(commit.mock.calls).toEqual([
@@ -121,6 +126,22 @@ describe("QiitaModule", () => {
         ["saveAccessToken", "72d79c218c16c65b8076c7de8ef6ec55504ca6a0"],
         ["savePermanentId", "1"]
       ]);
+    });
+
+    it("should not commit when callbackState don't match localState", async () => {
+      const commit = jest.fn();
+
+      const params: IAuthorizationResponse = {
+        code: "34d97d024861f098d2e45fb4d9ed7757f97f5b0f",
+        callbackState: "callbackState-45f8-9585-388939d426ad",
+        localState: "localState-52-45f8-9585-388939d426ad"
+      };
+
+      const wrapper = (actions: any) =>
+        actions.issueAccessToken({ commit }, params);
+      await wrapper(QiitaModule.actions);
+
+      expect(commit.mock.calls).toEqual([]);
     });
   });
 });

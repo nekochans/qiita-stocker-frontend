@@ -9,8 +9,15 @@ import {
   IIssueAccessTokensRequest,
   fetchAuthenticatedUser,
   IFetchAuthenticatedUserResponse,
-  IFetchAuthenticatedUserRequest
+  IFetchAuthenticatedUserRequest,
+  IAuthorizationResponse,
+  IAuthorizationRequest,
+  stateNotMatchedMessage,
+  matchState,
+  STORAGE_KEY_AUTH_STATE
 } from "@/domain/Qiita";
+import uuid from "uuid";
+import router from "@/router";
 
 Vue.use(Vuex);
 
@@ -49,14 +56,35 @@ const mutations: MutationTree<LoginState> = {
 
 const actions: ActionTree<LoginState, RootState> = {
   login: ({ commit }) => {
-    requestToAuthorizationServer(clientId);
+    const state = uuid.v4();
+
+    window.localStorage.setItem(STORAGE_KEY_AUTH_STATE, state);
+
+    const authorizationRequest: IAuthorizationRequest = {
+      clientId: clientId,
+      state: state
+    };
+
+    requestToAuthorizationServer(authorizationRequest);
   },
-  issueAccessToken: async ({ commit }, query) => {
-    if (query.code === undefined) {
+  // アカウント作成APIにリクエストを送信する処理を追加する時点でメソッド名を変更する
+  issueAccessToken: async ({ commit }, params: IAuthorizationResponse) => {
+    if (params.code === undefined) {
       return;
     }
 
-    const authorizationCode: string = query.code;
+    if (
+      params.localState === undefined ||
+      !matchState(params.callbackState, params.localState)
+    ) {
+      router.push({
+        name: "error",
+        params: { errorMessage: stateNotMatchedMessage() }
+      });
+      return;
+    }
+
+    const authorizationCode: string = params.code;
     commit("saveAuthorizationCode", authorizationCode);
 
     const issueAccessTokensRequest: IIssueAccessTokensRequest = {
