@@ -1,5 +1,7 @@
 import { QiitaAPI } from "@/api/qiita";
 
+export const STORAGE_KEY_AUTH_STATE = "authorizationState";
+
 export interface IAuthorizationRequest {
   clientId: string;
   state: string;
@@ -7,7 +9,8 @@ export interface IAuthorizationRequest {
 
 export interface IAuthorizationResponse {
   code: string;
-  state: string;
+  callbackState: string;
+  localState: string | null;
 }
 
 export interface IIssueAccessTokensRequest {
