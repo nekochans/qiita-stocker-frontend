@@ -10,7 +10,7 @@ export interface IAuthorizationRequest {
 export interface IAuthorizationResponse {
   code: string;
   callbackState: string;
-  localState: string | null;
+  localState?: string;
 }
 
 export interface IIssueAccessTokensRequest {

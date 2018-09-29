@@ -74,7 +74,7 @@ const actions: ActionTree<LoginState, RootState> = {
     }
 
     if (
-      params.localState === null ||
+      params.localState === undefined ||
       !matchState(params.callbackState, params.localState)
     ) {
       router.push({

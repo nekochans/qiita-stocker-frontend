@@ -30,7 +30,8 @@ export default class Login extends Vue {
     const params: IAuthorizationResponse = {
       code: query.code,
       callbackState: query.state,
-      localState: window.localStorage.getItem(STORAGE_KEY_AUTH_STATE)
+      localState:
+        window.localStorage.getItem(STORAGE_KEY_AUTH_STATE) || undefined
     };
 
     this.$router.push({ query: {} });
