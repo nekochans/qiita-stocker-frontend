@@ -1,4 +1,5 @@
 import { QiitaAPI } from "@/api/qiita";
+import { QiitaStockerAPI } from "@/api/qiitaStocker";
 
 export const STORAGE_KEY_AUTH_STATE = "authorizationState";
 
@@ -33,6 +34,17 @@ export interface IFetchAuthenticatedUserResponse {
   permanent_id: string;
 }
 
+export interface ICreateAccountRequest {
+  apiUrlBase: string;
+  permanentId: string;
+  accessToken: string;
+}
+
+export interface ICreateAccountResponse {
+  accountId: string;
+  _embedded: { sessionId: string };
+}
+
 export const requestToAuthorizationServer = (
   authorizationRequest: IAuthorizationRequest
 ) => {
@@ -51,6 +63,12 @@ export const fetchAuthenticatedUser = async (
   request: IFetchAuthenticatedUserRequest
 ): Promise<IFetchAuthenticatedUserResponse> => {
   return await QiitaAPI.fetchAuthenticatedUser(request);
+};
+
+export const createAccount = async (
+  request: ICreateAccountRequest
+): Promise<ICreateAccountResponse> => {
+  return await QiitaStockerAPI.createAccount(request);
 };
 
 export const matchState = (responseState: string, state: string): boolean => {

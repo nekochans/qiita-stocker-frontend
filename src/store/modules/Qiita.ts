@@ -14,7 +14,10 @@ import {
   IAuthorizationRequest,
   stateNotMatchedMessage,
   matchState,
-  STORAGE_KEY_AUTH_STATE
+  STORAGE_KEY_AUTH_STATE,
+  createAccount,
+  ICreateAccountRequest,
+  ICreateAccountResponse
 } from "@/domain/Qiita";
 import uuid from "uuid";
 import router from "@/router";
@@ -23,6 +26,7 @@ Vue.use(Vuex);
 
 const clientId: any = process.env.VUE_APP_QIITA_CLIENT_ID;
 const clientSecret: any = process.env.VUE_APP_QIITA_CLIENT_SECRET;
+const apiUrlBase: any = process.env.VUE_APP_API_URL_BASE;
 
 const state: LoginState = {
   authorizationCode: "",
@@ -108,6 +112,19 @@ const actions: ActionTree<LoginState, RootState> = {
       );
 
       commit("savePermanentId", authenticatedUser.permanent_id);
+
+      const createAccountRequest: ICreateAccountRequest = {
+        apiUrlBase: apiUrlBase,
+        permanentId: authenticatedUser.permanent_id,
+        accessToken: response.token
+      };
+
+      const createAccountResponse: ICreateAccountResponse = await createAccount(
+        createAccountRequest
+      );
+
+      console.log(createAccountResponse.accountId);
+      console.log(createAccountResponse._embedded.sessionId);
     } catch (error) {
       console.log(error);
     }
