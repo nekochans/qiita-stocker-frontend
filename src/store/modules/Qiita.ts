@@ -14,15 +14,32 @@ import {
   IAuthorizationRequest,
   stateNotMatchedMessage,
   matchState,
-  STORAGE_KEY_AUTH_STATE
+  STORAGE_KEY_AUTH_STATE,
+  createAccount,
+  ICreateAccountRequest,
+  ICreateAccountResponse
 } from "@/domain/Qiita";
 import uuid from "uuid";
 import router from "@/router";
 
 Vue.use(Vuex);
 
-const clientId: any = process.env.VUE_APP_QIITA_CLIENT_ID;
-const clientSecret: any = process.env.VUE_APP_QIITA_CLIENT_SECRET;
+const clientId = (): string => {
+  return process.env.VUE_APP_QIITA_CLIENT_ID === undefined
+    ? ""
+    : process.env.VUE_APP_QIITA_CLIENT_ID;
+};
+
+const clientSecret = (): string => {
+  return process.env.VUE_APP_QIITA_CLIENT_SECRET === undefined
+    ? ""
+    : process.env.VUE_APP_QIITA_CLIENT_SECRET;
+};
+const apiUrlBase = (): string => {
+  return process.env.VUE_APP_API_URL_BASE === undefined
+    ? ""
+    : process.env.VUE_APP_API_URL_BASE;
+};
 
 const state: LoginState = {
   authorizationCode: "",
@@ -61,7 +78,7 @@ const actions: ActionTree<LoginState, RootState> = {
     window.localStorage.setItem(STORAGE_KEY_AUTH_STATE, state);
 
     const authorizationRequest: IAuthorizationRequest = {
-      clientId: clientId,
+      clientId: clientId(),
       state: state
     };
 
@@ -88,8 +105,8 @@ const actions: ActionTree<LoginState, RootState> = {
     commit("saveAuthorizationCode", authorizationCode);
 
     const issueAccessTokensRequest: IIssueAccessTokensRequest = {
-      client_id: clientId,
-      client_secret: clientSecret,
+      client_id: clientId(),
+      client_secret: clientSecret(),
       code: authorizationCode
     };
 
@@ -108,6 +125,19 @@ const actions: ActionTree<LoginState, RootState> = {
       );
 
       commit("savePermanentId", authenticatedUser.permanent_id);
+
+      const createAccountRequest: ICreateAccountRequest = {
+        apiUrlBase: apiUrlBase(),
+        permanentId: authenticatedUser.permanent_id,
+        accessToken: response.token
+      };
+
+      const createAccountResponse: ICreateAccountResponse = await createAccount(
+        createAccountRequest
+      );
+
+      console.log(createAccountResponse.accountId);
+      console.log(createAccountResponse._embedded.sessionId);
     } catch (error) {
       console.log(error);
     }
