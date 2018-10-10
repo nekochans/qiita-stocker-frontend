@@ -37,4 +37,8 @@ yarn run test:e2e
 ```
 VUE_APP_API_URL_BASE=http://127.0.0.1:8000
 VUE_APP_STAGE=local
+
+VUE_APP_QIITA_CLIENT_ID=XXXX        // Your client ID
+VUE_APP_QIITA_CLIENT_SECRET=XXXX    // Your client secret
+VUE_APP_QIITA_REDIRECT_URI=http://localhost:8080/login
 ```
