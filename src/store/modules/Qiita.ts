@@ -72,7 +72,7 @@ const mutations: MutationTree<LoginState> = {
 };
 
 const actions: ActionTree<LoginState, RootState> = {
-  login: ({ commit }) => {
+  signUp: ({ commit }) => {
     const state = uuid.v4();
 
     window.localStorage.setItem(STORAGE_KEY_AUTH_STATE, state);
@@ -141,6 +141,9 @@ const actions: ActionTree<LoginState, RootState> = {
     } catch (error) {
       console.log(error);
     }
+  },
+  login: ({ commit }) => {
+    // TODO ログインAPIを呼び出す処理を追加する
   }
 };
 
