@@ -23,7 +23,7 @@ export default class Login extends Vue {
   signUp!: () => void;
 
   @QiitaAction
-  issueAccessToken!: (query: object) => void;
+  createAccount!: (query: object) => void;
 
   created(): void {
     const query: any = this.$route.query;
@@ -35,7 +35,7 @@ export default class Login extends Vue {
     };
 
     this.$router.push({ query: {} });
-    this.issueAccessToken(params);
+    this.createAccount(params);
   }
 }
 </script>

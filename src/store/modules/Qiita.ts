@@ -84,8 +84,7 @@ const actions: ActionTree<LoginState, RootState> = {
 
     requestToAuthorizationServer(authorizationRequest);
   },
-  // アカウント作成APIにリクエストを送信する処理を追加する時点でメソッド名を変更する
-  issueAccessToken: async ({ commit }, params: IAuthorizationResponse) => {
+  createAccount: async ({ commit }, params: IAuthorizationResponse) => {
     if (params.code === undefined) {
       return;
     }

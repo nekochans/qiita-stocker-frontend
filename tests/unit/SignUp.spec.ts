@@ -27,7 +27,7 @@ describe("SignUp.vue", () => {
 
     actions = {
       signUp: jest.fn(),
-      issueAccessToken: jest.fn()
+      createAccount: jest.fn()
     };
 
     store = new Vuex.Store({

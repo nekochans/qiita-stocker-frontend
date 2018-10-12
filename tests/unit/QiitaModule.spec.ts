@@ -118,7 +118,7 @@ describe("QiitaModule", () => {
       };
 
       const wrapper = (actions: any) =>
-        actions.issueAccessToken({ commit }, params);
+        actions.createAccount({ commit }, params);
       await wrapper(QiitaModule.actions);
 
       expect(commit.mock.calls).toEqual([
@@ -138,7 +138,7 @@ describe("QiitaModule", () => {
       };
 
       const wrapper = (actions: any) =>
-        actions.issueAccessToken({ commit }, params);
+        actions.createAccount({ commit }, params);
       await wrapper(QiitaModule.actions);
 
       expect(commit.mock.calls).toEqual([]);
