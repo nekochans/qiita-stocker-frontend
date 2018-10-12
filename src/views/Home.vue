@@ -8,7 +8,7 @@
          <router-link to="/weather">weather</router-link>
        </li>
        <li>
-         <router-link to="/signUp">sign up</router-link>
+         <router-link to="/signup">sign up</router-link>
        </li>
        <li>
          <router-link to="/login">login</router-link>
