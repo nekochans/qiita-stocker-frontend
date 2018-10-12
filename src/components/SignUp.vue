@@ -15,7 +15,7 @@ const QiitaAction = namespace("QiitaModule", Action);
 const QiitaGetter = namespace("QiitaModule", Getter);
 
 @Component
-export default class Login extends Vue {
+export default class SignUp extends Vue {
   @QiitaGetter
   permanentId!: string;
 
