@@ -1,6 +1,6 @@
 import { shallowMount, createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
-import Login from "../../src/components/Login.vue";
+import SignUp from "../../src/components/SignUp.vue";
 import { QiitaModule } from "@/store/modules/Qiita";
 
 import { LoginState } from "@/types/login";
@@ -13,12 +13,12 @@ localVue.use(VueRouter);
 
 const router = new VueRouter();
 
-describe("Login.vue", () => {
+describe("SignUp.vue", () => {
   let store: any;
   let state: LoginState;
   let actions: any;
 
-  it('calls store action "login" when button is clicked', () => {
+  it('calls store action "signUp" when button is clicked', () => {
     state = {
       authorizationCode: "",
       accessToken: "",
@@ -26,7 +26,7 @@ describe("Login.vue", () => {
     };
 
     actions = {
-      login: jest.fn(),
+      signUp: jest.fn(),
       createAccount: jest.fn()
     };
 
@@ -41,10 +41,10 @@ describe("Login.vue", () => {
       }
     });
 
-    const wrapper = shallowMount(Login, { store, localVue, router });
+    const wrapper = shallowMount(SignUp, { store, localVue, router });
     const button = wrapper.find("button");
 
     button.trigger("click");
-    expect(actions.login).toHaveBeenCalled();
+    expect(actions.signUp).toHaveBeenCalled();
   });
 });

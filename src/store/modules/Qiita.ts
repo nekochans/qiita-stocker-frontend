@@ -72,7 +72,7 @@ const mutations: MutationTree<LoginState> = {
 };
 
 const actions: ActionTree<LoginState, RootState> = {
-  login: ({ commit }) => {
+  signUp: ({ commit }) => {
     const state = uuid.v4();
 
     window.localStorage.setItem(STORAGE_KEY_AUTH_STATE, state);
@@ -84,8 +84,7 @@ const actions: ActionTree<LoginState, RootState> = {
 
     requestToAuthorizationServer(authorizationRequest);
   },
-  // アカウント作成APIにリクエストを送信する処理を追加する時点でメソッド名を変更する
-  issueAccessToken: async ({ commit }, params: IAuthorizationResponse) => {
+  createAccount: async ({ commit }, params: IAuthorizationResponse) => {
     if (params.code === undefined) {
       return;
     }
@@ -141,6 +140,9 @@ const actions: ActionTree<LoginState, RootState> = {
     } catch (error) {
       console.log(error);
     }
+  },
+  login: ({ commit }) => {
+    // TODO ログインAPIを呼び出す処理を追加する
   }
 };
 
