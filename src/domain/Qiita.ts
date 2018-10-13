@@ -2,6 +2,7 @@ import { QiitaAPI } from "@/api/qiita";
 import { QiitaStockerAPI } from "@/api/qiitaStocker";
 
 export const STORAGE_KEY_AUTH_STATE = "authorizationState";
+export const STORAGE_KEY_ACCOUNT_ACTION = "accountAction";
 
 export interface IAuthorizationRequest {
   clientId: string;

@@ -7,14 +7,24 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import { Action, namespace } from "vuex-class";
-import { IAuthorizationResponse, STORAGE_KEY_AUTH_STATE } from "@/domain/Qiita";
+import {
+  IAuthorizationResponse,
+  STORAGE_KEY_AUTH_STATE,
+  STORAGE_KEY_ACCOUNT_ACTION
+} from "@/domain/Qiita";
 
 const QiitaAction = namespace("QiitaModule", Action);
 
 @Component
 export default class OAuthCallback extends Vue {
   @QiitaAction
-  createAccount!: (query: object) => void;
+  fetchUser!: (query: object) => void;
+
+  @QiitaAction
+  createAccount!: () => void;
+
+  @QiitaAction
+  issueLoginSession!: () => void;
 
   created(): void {
     const query: any = this.$route.query;
@@ -26,7 +36,21 @@ export default class OAuthCallback extends Vue {
     };
 
     this.$router.push({ query: {} });
-    this.createAccount(params);
+
+    const accountAction: string =
+      window.localStorage.getItem(STORAGE_KEY_ACCOUNT_ACTION) || "";
+
+    switch (accountAction) {
+      case "signUp":
+        this.createAccount();
+        break;
+      case "login":
+        this.issueLoginSession();
+        break;
+      default:
+        // TODO エラー処理を追加
+        console.log("ERROR!");
+    }
   }
 }
 </script>
