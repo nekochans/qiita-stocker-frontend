@@ -7,11 +7,9 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { Getter, Action, namespace } from "vuex-class";
-import { IAuthorizationResponse, STORAGE_KEY_AUTH_STATE } from "@/domain/Qiita";
+import { Action, namespace } from "vuex-class";
 
 const QiitaAction = namespace("QiitaModule", Action);
-const QiitaGetter = namespace("QiitaModule", Getter);
 
 @Component
 export default class Login extends Vue {
