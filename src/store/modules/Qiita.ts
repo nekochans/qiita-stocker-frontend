@@ -15,6 +15,7 @@ import {
   stateNotMatchedMessage,
   matchState,
   STORAGE_KEY_AUTH_STATE,
+  STORAGE_KEY_ACCOUNT_ACTION,
   createAccount,
   ICreateAccountRequest,
   ICreateAccountResponse
@@ -73,18 +74,14 @@ const mutations: MutationTree<LoginState> = {
 
 const actions: ActionTree<LoginState, RootState> = {
   signUp: ({ commit }) => {
-    const state = uuid.v4();
-
-    window.localStorage.setItem(STORAGE_KEY_AUTH_STATE, state);
-
-    const authorizationRequest: IAuthorizationRequest = {
-      clientId: clientId(),
-      state: state
-    };
-
-    requestToAuthorizationServer(authorizationRequest);
+    window.localStorage.setItem(STORAGE_KEY_ACCOUNT_ACTION, "signUp");
+    requestToAuthorizationServer(createAuthRequestParam());
   },
-  createAccount: async ({ commit }, params: IAuthorizationResponse) => {
+  login: ({ commit }) => {
+    window.localStorage.setItem(STORAGE_KEY_ACCOUNT_ACTION, "login");
+    requestToAuthorizationServer(createAuthRequestParam());
+  },
+  fetchUser: async ({ commit }, params: IAuthorizationResponse) => {
     if (params.code === undefined) {
       return;
     }
@@ -124,11 +121,17 @@ const actions: ActionTree<LoginState, RootState> = {
       );
 
       commit("savePermanentId", authenticatedUser.permanent_id);
-
+    } catch (error) {
+      // TODO エラー処理を追加する
+      console.log(error);
+    }
+  },
+  createAccount: async ({ commit }) => {
+    try {
       const createAccountRequest: ICreateAccountRequest = {
         apiUrlBase: apiUrlBase(),
-        permanentId: authenticatedUser.permanent_id,
-        accessToken: response.token
+        permanentId: state.permanentId,
+        accessToken: state.accessToken
       };
 
       const createAccountResponse: ICreateAccountResponse = await createAccount(
@@ -138,12 +141,26 @@ const actions: ActionTree<LoginState, RootState> = {
       console.log(createAccountResponse.accountId);
       console.log(createAccountResponse._embedded.sessionId);
     } catch (error) {
+      // TODO エラー処理を追加する
       console.log(error);
     }
   },
-  login: ({ commit }) => {
+  issueLoginSession: ({ commit }) => {
     // TODO ログインAPIを呼び出す処理を追加する
+    console.log("request LoginAPI");
   }
+};
+
+const createAuthRequestParam = (): IAuthorizationRequest => {
+  const state = uuid.v4();
+  window.localStorage.setItem(STORAGE_KEY_AUTH_STATE, state);
+
+  const authorizationRequest: IAuthorizationRequest = {
+    clientId: clientId(),
+    state: state
+  };
+
+  return authorizationRequest;
 };
 
 export const QiitaModule: Module<LoginState, RootState> = {
