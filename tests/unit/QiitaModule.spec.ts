@@ -90,7 +90,7 @@ describe("QiitaModule", () => {
   });
 
   describe("actions", () => {
-    it("should be able to issue AccessTokens from Qiita API", async () => {
+    it("should be able to fetch user from Qiita API", async () => {
       const mockPostResponse: { data: IIssueAccessTokensResponse } = {
         data: {
           client_id: "4f54451e86041b5c0a29419b4058f44b5ea04ae9",
@@ -117,8 +117,7 @@ describe("QiitaModule", () => {
         localState: "89bd7d77-b352-45f8-9585-388939d426ad"
       };
 
-      const wrapper = (actions: any) =>
-        actions.createAccount({ commit }, params);
+      const wrapper = (actions: any) => actions.fetchUser({ commit }, params);
       await wrapper(QiitaModule.actions);
 
       expect(commit.mock.calls).toEqual([
@@ -137,8 +136,7 @@ describe("QiitaModule", () => {
         localState: "localState-52-45f8-9585-388939d426ad"
       };
 
-      const wrapper = (actions: any) =>
-        actions.createAccount({ commit }, params);
+      const wrapper = (actions: any) => actions.fetchUser({ commit }, params);
       await wrapper(QiitaModule.actions);
 
       expect(commit.mock.calls).toEqual([]);
