@@ -1,5 +1,10 @@
 import axios, { AxiosResponse, AxiosError } from "axios";
-import { ICreateAccountRequest, ICreateAccountResponse } from "@/domain/Qiita";
+import {
+  ICreateAccountRequest,
+  ICreateAccountResponse,
+  IIssueLoginSessionRequest,
+  IIssueLoginSessionResponse
+} from "@/domain/Qiita";
 
 export const QiitaStockerAPI = {
   createAccount: async (
@@ -14,6 +19,26 @@ export const QiitaStockerAPI = {
             // "application/json"を指定すると以下のエラーとなるので、いったん"application/x-www-form-urlencoded"を指定する
             // Response to preflight request doesn't pass access control check
             // "Content-Type": "application/json"
+            "Content-Type": "application/x-www-form-urlencoded"
+          }
+        }
+      )
+      .then((axiosResponse: AxiosResponse) => {
+        return Promise.resolve(axiosResponse.data);
+      })
+      .catch((axiosError: AxiosError) => {
+        return Promise.reject(axiosError);
+      });
+  },
+  issueLoginSession: async (
+    request: IIssueLoginSessionRequest
+  ): Promise<IIssueLoginSessionResponse> => {
+    return await axios
+      .post<IIssueLoginSessionResponse>(
+        `${request.apiUrlBase}/api/login-sessions`,
+        request,
+        {
+          headers: {
             "Content-Type": "application/x-www-form-urlencoded"
           }
         }

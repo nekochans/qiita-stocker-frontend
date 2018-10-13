@@ -46,6 +46,16 @@ export interface ICreateAccountResponse {
   _embedded: { sessionId: string };
 }
 
+export interface IIssueLoginSessionRequest {
+  apiUrlBase: string;
+  permanentId: string;
+  accessToken: string;
+}
+
+export interface IIssueLoginSessionResponse {
+  sessionId: string;
+}
+
 export const requestToAuthorizationServer = (
   authorizationRequest: IAuthorizationRequest
 ) => {
@@ -70,6 +80,12 @@ export const createAccount = async (
   request: ICreateAccountRequest
 ): Promise<ICreateAccountResponse> => {
   return await QiitaStockerAPI.createAccount(request);
+};
+
+export const issueLoginSession = async (
+  request: IIssueLoginSessionRequest
+): Promise<IIssueLoginSessionResponse> => {
+  return await QiitaStockerAPI.issueLoginSession(request);
 };
 
 export const matchState = (responseState: string, state: string): boolean => {

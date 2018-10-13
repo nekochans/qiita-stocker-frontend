@@ -18,7 +18,10 @@ import {
   STORAGE_KEY_ACCOUNT_ACTION,
   createAccount,
   ICreateAccountRequest,
-  ICreateAccountResponse
+  ICreateAccountResponse,
+  IIssueLoginSessionRequest,
+  IIssueLoginSessionResponse,
+  issueLoginSession
 } from "@/domain/Qiita";
 import uuid from "uuid";
 import router from "@/router";
@@ -145,9 +148,23 @@ const actions: ActionTree<LoginState, RootState> = {
       console.log(error);
     }
   },
-  issueLoginSession: ({ commit }) => {
-    // TODO ログインAPIを呼び出す処理を追加する
-    console.log("request LoginAPI");
+  issueLoginSession: async ({ commit }) => {
+    try {
+      const issueLoginSessionRequest: IIssueLoginSessionRequest = {
+        apiUrlBase: apiUrlBase(),
+        permanentId: state.permanentId,
+        accessToken: state.accessToken
+      };
+
+      const issueAccessTokensResponse: IIssueLoginSessionResponse = await issueLoginSession(
+        issueLoginSessionRequest
+      );
+
+      console.log(issueAccessTokensResponse.sessionId);
+    } catch (error) {
+      // TODO エラー処理を追加する
+      console.log(error);
+    }
   }
 };
 
