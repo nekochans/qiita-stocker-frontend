@@ -26,7 +26,7 @@ export default class OAuthCallback extends Vue {
   @QiitaAction
   issueLoginSession!: () => void;
 
-  created(): void {
+  async created(): Promise<void> {
     const query: any = this.$route.query;
     const params: IAuthorizationResponse = {
       code: query.code,
@@ -36,6 +36,8 @@ export default class OAuthCallback extends Vue {
     };
 
     this.$router.push({ query: {} });
+
+    await this.fetchUser(params);
 
     const accountAction: string =
       window.localStorage.getItem(STORAGE_KEY_ACCOUNT_ACTION) || "";
