@@ -47,7 +47,7 @@ export const QiitaStockerAPI = {
       .then((axiosResponse: AxiosResponse) => {
         return Promise.resolve(axiosResponse.data);
       })
-      .catch((axiosError: AxiosError) => {
+      .catch((axiosError: IQiitaStockerError) => {
         return Promise.reject(axiosError);
       });
   }
