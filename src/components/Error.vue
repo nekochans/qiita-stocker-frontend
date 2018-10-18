@@ -11,7 +11,7 @@
 import { Component, Vue, Prop } from "vue-property-decorator";
 
 @Component
-export default class Login extends Vue {
+export default class Error extends Vue {
   @Prop()
   errorMessage!: string;
 }
