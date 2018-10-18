@@ -21,7 +21,8 @@ import {
   ICreateAccountResponse,
   IIssueLoginSessionRequest,
   IIssueLoginSessionResponse,
-  issueLoginSession
+  issueLoginSession,
+  IQiitaStockerError
 } from "@/domain/Qiita";
 import uuid from "uuid";
 import router from "@/router";
@@ -144,8 +145,11 @@ const actions: ActionTree<LoginState, RootState> = {
       console.log(createAccountResponse.accountId);
       console.log(createAccountResponse._embedded.sessionId);
     } catch (error) {
-      // TODO エラー処理を追加する
-      console.log(error);
+      router.push({
+        name: "error",
+        params: { errorMessage: error.response.data.message }
+      });
+      return;
     }
   },
   issueLoginSession: async ({ commit }) => {
