@@ -5,6 +5,7 @@ import Weather from "./components/Weather.vue";
 import SignUp from "./components/SignUp.vue";
 import Login from "./components/Login.vue";
 import OAuthCallback from "./components/OAuthCallback.vue";
+import Cancel from "./components/Cancel.vue";
 import Error from "./components/Error.vue";
 import Home from "./views/Home.vue";
 
@@ -43,6 +44,11 @@ export default new Router({
       path: "/oauth/callback",
       name: "oAuthCallback",
       component: OAuthCallback
+    },
+    {
+      path: "/cancel",
+      name: "cancel",
+      component: Cancel
     },
     {
       path: "/error",

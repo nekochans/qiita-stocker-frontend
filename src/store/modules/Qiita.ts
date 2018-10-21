@@ -171,6 +171,9 @@ const actions: ActionTree<LoginState, RootState> = {
       });
       return;
     }
+  },
+  cancel: ({ commit }) => {
+    // TODO 退会APIへのリクエスト処理を追加する
   }
 };
 
