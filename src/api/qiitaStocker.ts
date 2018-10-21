@@ -4,7 +4,8 @@ import {
   ICreateAccountResponse,
   IIssueLoginSessionRequest,
   IIssueLoginSessionResponse,
-  IQiitaStockerError
+  IQiitaStockerError,
+  ICancelAccountRequest
 } from "@/domain/Qiita";
 
 export const QiitaStockerAPI = {
@@ -23,6 +24,20 @@ export const QiitaStockerAPI = {
       )
       .then((axiosResponse: AxiosResponse) => {
         return Promise.resolve(axiosResponse.data);
+      })
+      .catch((axiosError: IQiitaStockerError) => {
+        return Promise.reject(axiosError);
+      });
+  },
+  cancelAccount: async (request: ICancelAccountRequest): Promise<void> => {
+    return await axios
+      .delete(`${request.apiUrlBase}/api/accounts`, {
+        headers: {
+          Authorization: `Bearer ${request.sessionId}`
+        }
+      })
+      .then(() => {
+        return Promise.resolve();
       })
       .catch((axiosError: IQiitaStockerError) => {
         return Promise.reject(axiosError);
