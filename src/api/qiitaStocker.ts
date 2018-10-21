@@ -17,10 +17,7 @@ export const QiitaStockerAPI = {
         request,
         {
           headers: {
-            // "application/json"を指定すると以下のエラーとなるので、いったん"application/x-www-form-urlencoded"を指定する
-            // Response to preflight request doesn't pass access control check
-            // "Content-Type": "application/json"
-            "Content-Type": "application/x-www-form-urlencoded"
+            "Content-Type": "application/json"
           }
         }
       )
@@ -40,7 +37,7 @@ export const QiitaStockerAPI = {
         request,
         {
           headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
+            "Content-Type": "application/json"
           }
         }
       )
