@@ -21,7 +21,9 @@ import {
   ICreateAccountResponse,
   IIssueLoginSessionRequest,
   IIssueLoginSessionResponse,
-  issueLoginSession
+  issueLoginSession,
+  ICancelAccountRequest,
+  cancelAccount
 } from "@/domain/Qiita";
 import uuid from "uuid";
 import router from "@/router";
@@ -172,8 +174,26 @@ const actions: ActionTree<LoginState, RootState> = {
       return;
     }
   },
-  cancel: ({ commit }) => {
-    // TODO 退会APIへのリクエスト処理を追加する
+  cancel: async ({ commit }) => {
+    try {
+      const cancelAccountRequest: ICancelAccountRequest = {
+        apiUrlBase: apiUrlBase(),
+        sessionId: "bf039637-010a-40be-ab0f-1354f7756cb9" // セッションIDを永続化する処理が未実装なので、固定値を設定
+      };
+
+      await cancelAccount(cancelAccountRequest);
+
+      // TODO 永続化したセッションIDを削除する処理を追加する
+      // TODO 退会完了画面を表示する
+
+      console.log("退会処理が完了しました");
+    } catch (error) {
+      router.push({
+        name: "error",
+        params: { errorMessage: error.response.data.message }
+      });
+      return;
+    }
   }
 };
 

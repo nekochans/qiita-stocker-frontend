@@ -57,6 +57,11 @@ export interface IIssueLoginSessionResponse {
   sessionId: string;
 }
 
+export interface ICancelAccountRequest {
+  apiUrlBase: string;
+  sessionId: string;
+}
+
 interface IQiitaStockerErrorData {
   code: number;
   message: string;
@@ -96,6 +101,12 @@ export const issueLoginSession = async (
   request: IIssueLoginSessionRequest
 ): Promise<IIssueLoginSessionResponse> => {
   return await QiitaStockerAPI.issueLoginSession(request);
+};
+
+export const cancelAccount = async (
+  request: ICancelAccountRequest
+): Promise<void> => {
+  return await QiitaStockerAPI.cancelAccount(request);
 };
 
 export const matchState = (responseState: string, state: string): boolean => {
