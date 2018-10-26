@@ -186,7 +186,9 @@ const actions: ActionTree<LoginState, RootState> = {
       // TODO 永続化したセッションIDを削除する処理を追加する
       // TODO 退会完了画面を表示する
 
-      console.log("退会処理が完了しました");
+      router.push({
+        name: "cancelComplete"
+      });
     } catch (error) {
       router.push({
         name: "error",

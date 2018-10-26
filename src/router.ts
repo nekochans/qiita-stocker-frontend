@@ -6,6 +6,7 @@ import SignUp from "./components/SignUp.vue";
 import Login from "./components/Login.vue";
 import OAuthCallback from "./components/OAuthCallback.vue";
 import Cancel from "./components/Cancel.vue";
+import CancelComplete from "./components/CancelComplete.vue";
 import Error from "./components/Error.vue";
 import Home from "./views/Home.vue";
 
@@ -49,6 +50,11 @@ export default new Router({
       path: "/cancel",
       name: "cancel",
       component: Cancel
+    },
+    {
+      path: "/cancel/complete",
+      name: "cancelComplete",
+      component: CancelComplete
     },
     {
       path: "/error",
