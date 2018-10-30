@@ -23,7 +23,8 @@ import {
   IIssueLoginSessionResponse,
   issueLoginSession,
   ICancelAccountRequest,
-  cancelAccount
+  cancelAccount,
+  unauthorizedMessage
 } from "@/domain/Qiita";
 import uuid from "uuid";
 import router from "@/router";
@@ -86,7 +87,13 @@ const actions: ActionTree<LoginState, RootState> = {
     window.localStorage.setItem(STORAGE_KEY_ACCOUNT_ACTION, "login");
     requestToAuthorizationServer(createAuthRequestParam());
   },
-  fetchUser: async ({ commit }, params: IAuthorizationResponse) => {
+  fetchUser: async (
+    { dispatch, commit },
+    {
+      params,
+      accountAction
+    }: { params: IAuthorizationResponse; accountAction: "signUp" | "login" }
+  ) => {
     if (params.code === undefined) {
       return;
     }
@@ -126,9 +133,30 @@ const actions: ActionTree<LoginState, RootState> = {
       );
 
       commit("savePermanentId", authenticatedUser.permanent_id);
+
+      switch (accountAction) {
+        case "signUp":
+          dispatch("createAccount");
+          break;
+        case "login":
+          dispatch("issueLoginSession");
+          break;
+        default:
+          router.push({
+            name: "error",
+            params: {
+              errorMessage: unauthorizedMessage()
+            }
+          });
+      }
     } catch (error) {
-      // TODO エラー処理を追加する
-      console.log(error);
+      router.push({
+        name: "error",
+        params: {
+          errorMessage: unauthorizedMessage()
+        }
+      });
+      return;
     }
   },
   createAccount: async ({ commit }) => {
@@ -145,6 +173,10 @@ const actions: ActionTree<LoginState, RootState> = {
 
       console.log(createAccountResponse.accountId);
       console.log(createAccountResponse._embedded.sessionId);
+
+      router.push({
+        name: "signup"
+      });
     } catch (error) {
       router.push({
         name: "error",
@@ -166,6 +198,10 @@ const actions: ActionTree<LoginState, RootState> = {
       );
 
       console.log(issueAccessTokensResponse.sessionId);
+
+      router.push({
+        name: "login"
+      });
     } catch (error) {
       router.push({
         name: "error",
