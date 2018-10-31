@@ -1,5 +1,5 @@
-import { QiitaAPI } from "@/api/qiita";
-import { QiitaStockerAPI } from "@/api/qiitaStocker";
+import { QiitaAPI } from "@/infrastructure/api/qiita";
+import { QiitaStockerAPI } from "@/infrastructure/api/qiitaStocker";
 import { AxiosResponse, AxiosError } from "axios";
 
 export const STORAGE_KEY_AUTH_STATE = "authorizationState";
