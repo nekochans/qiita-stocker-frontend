@@ -117,5 +117,9 @@ export const matchState = (responseState: string, state: string): boolean => {
 };
 
 export const stateNotMatchedMessage = (): string => {
-  return "不正なリクエストが行われました。再度、ユーザ登録を行なってください。";
+  return "不正なリクエストが行われました。再度、ホーム画面よりやり直してください。";
+};
+
+export const unauthorizedMessage = (): string => {
+  return "認証に失敗しました。再度、ホーム画面よりやり直してください。";
 };

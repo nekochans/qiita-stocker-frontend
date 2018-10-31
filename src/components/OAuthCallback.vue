@@ -26,7 +26,7 @@ export default class OAuthCallback extends Vue {
   @QiitaAction
   issueLoginSession!: () => void;
 
-  async created(): Promise<void> {
+  created() {
     const query: any = this.$route.query;
     const params: IAuthorizationResponse = {
       code: query.code,
@@ -37,22 +37,10 @@ export default class OAuthCallback extends Vue {
 
     this.$router.push({ query: {} });
 
-    await this.fetchUser(params);
-
     const accountAction: string =
       window.localStorage.getItem(STORAGE_KEY_ACCOUNT_ACTION) || "";
 
-    switch (accountAction) {
-      case "signUp":
-        this.createAccount();
-        break;
-      case "login":
-        this.issueLoginSession();
-        break;
-      default:
-        // TODO エラー処理を追加
-        console.log("ERROR!");
-    }
+    this.fetchUser({ params: params, accountAction: accountAction });
   }
 }
 </script>
