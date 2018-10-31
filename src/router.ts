@@ -1,16 +1,16 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Counter from "./components/Counter.vue";
-import Weather from "./components/Weather.vue";
-import SignUp from "./components/SignUp.vue";
-import Login from "./components/Login.vue";
-import Account from "./views/Account.vue";
-import OAuthCallback from "./components/OAuthCallback.vue";
-import Cancel from "./components/Cancel.vue";
-import CancelComplete from "./components/CancelComplete.vue";
-import Error from "./components/Error.vue";
-import NotFound from "./views/NotFound.vue";
-import Home from "./views/Home.vue";
+import Counter from "./pages/Counter.vue";
+import Weather from "./pages/Weather.vue";
+import SignUp from "./pages/SignUp.vue";
+import Login from "./pages/Login.vue";
+import Account from "./pages/Account.vue";
+import OAuthCallback from "./pages/oAuth/callback/OAuthCallback.vue";
+import Cancel from "./pages/cencel/Cancel.vue";
+import CancelComplete from "./pages/cencel/complete/CancelComplete.vue";
+import Error from "./pages/Error.vue";
+import NotFound from "./pages/NotFound.vue";
+import Home from "./pages/Home.vue";
 
 Vue.use(Router);
 
