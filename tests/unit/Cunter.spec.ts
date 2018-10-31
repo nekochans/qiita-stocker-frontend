@@ -1,6 +1,6 @@
 import { shallowMount, createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
-import Counter from "@/components/Counter.vue";
+import Counter from "@/pages/Counter.vue";
 import { CounterModule } from "@/store/modules/counter";
 import { CounterState } from "@/types/counter";
 

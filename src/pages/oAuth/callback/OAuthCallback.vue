@@ -11,7 +11,7 @@ import {
   IAuthorizationResponse,
   STORAGE_KEY_AUTH_STATE,
   STORAGE_KEY_ACCOUNT_ACTION
-} from "@/domain/Qiita";
+} from "../../../domain/Qiita";
 
 const QiitaAction = namespace("QiitaModule", Action);
 

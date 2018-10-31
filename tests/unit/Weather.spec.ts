@@ -1,6 +1,6 @@
 import { shallowMount, createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
-import Weather from "@/components/Weather.vue";
+import Weather from "@/pages/Weather.vue";
 import { WeatherModule } from "@/store/modules/weather";
 import { WeatherState } from "@/types/weather";
 

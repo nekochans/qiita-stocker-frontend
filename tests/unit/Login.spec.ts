@@ -1,6 +1,6 @@
 import { shallowMount, createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
-import Login from "../../src/components/Login.vue";
+import Login from "../../src/pages/Login.vue";
 import { QiitaModule } from "@/store/modules/Qiita";
 
 import { LoginState } from "@/types/login";
