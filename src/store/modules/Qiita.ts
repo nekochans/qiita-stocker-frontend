@@ -175,7 +175,7 @@ const actions: ActionTree<LoginState, RootState> = {
       console.log(createAccountResponse._embedded.sessionId);
 
       router.push({
-        name: "signup"
+        name: "account"
       });
     } catch (error) {
       router.push({
@@ -200,7 +200,7 @@ const actions: ActionTree<LoginState, RootState> = {
       console.log(issueAccessTokensResponse.sessionId);
 
       router.push({
-        name: "login"
+        name: "account"
       });
     } catch (error) {
       router.push({
