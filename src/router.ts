@@ -9,6 +9,7 @@ import OAuthCallback from "./components/OAuthCallback.vue";
 import Cancel from "./components/Cancel.vue";
 import CancelComplete from "./components/CancelComplete.vue";
 import Error from "./components/Error.vue";
+import NotFound from "./views/NotFound.vue";
 import Home from "./views/Home.vue";
 
 Vue.use(Router);
@@ -67,6 +68,11 @@ export default new Router({
       name: "error",
       component: Error,
       props: true
+    },
+    {
+      path: "*",
+      name: "notFound",
+      component: NotFound
     }
   ]
 });
