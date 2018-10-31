@@ -5,6 +5,7 @@
 </template>
 
 <script lang="ts">
+import localStorage from "@/infrastructure/repository/localStorage";
 import { Component, Vue } from "vue-property-decorator";
 import { Action, namespace } from "vuex-class";
 import {
@@ -31,14 +32,13 @@ export default class OAuthCallback extends Vue {
     const params: IAuthorizationResponse = {
       code: query.code,
       callbackState: query.state,
-      localState:
-        window.localStorage.getItem(STORAGE_KEY_AUTH_STATE) || undefined
+      localState: localStorage.get(STORAGE_KEY_AUTH_STATE) || undefined
     };
 
     this.$router.push({ query: {} });
 
     const accountAction: string =
-      window.localStorage.getItem(STORAGE_KEY_ACCOUNT_ACTION) || "";
+      localStorage.get(STORAGE_KEY_ACCOUNT_ACTION) || "";
 
     this.fetchUser({ params: params, accountAction: accountAction });
   }

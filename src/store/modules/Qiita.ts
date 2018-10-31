@@ -26,6 +26,7 @@ import {
   cancelAccount,
   unauthorizedMessage
 } from "@/domain/Qiita";
+import localStorage from "@/infrastructure/repository/localStorage";
 import uuid from "uuid";
 import router from "@/router";
 
@@ -80,11 +81,11 @@ const mutations: MutationTree<LoginState> = {
 
 const actions: ActionTree<LoginState, RootState> = {
   signUp: ({ commit }) => {
-    window.localStorage.setItem(STORAGE_KEY_ACCOUNT_ACTION, "signUp");
+    localStorage.set(STORAGE_KEY_ACCOUNT_ACTION, "signUp");
     requestToAuthorizationServer(createAuthRequestParam());
   },
   login: ({ commit }) => {
-    window.localStorage.setItem(STORAGE_KEY_ACCOUNT_ACTION, "login");
+    localStorage.set(STORAGE_KEY_ACCOUNT_ACTION, "login");
     requestToAuthorizationServer(createAuthRequestParam());
   },
   fetchUser: async (
@@ -220,7 +221,6 @@ const actions: ActionTree<LoginState, RootState> = {
       await cancelAccount(cancelAccountRequest);
 
       // TODO 永続化したセッションIDを削除する処理を追加する
-      // TODO 退会完了画面を表示する
 
       router.push({
         name: "cancelComplete"
@@ -237,7 +237,7 @@ const actions: ActionTree<LoginState, RootState> = {
 
 const createAuthRequestParam = (): IAuthorizationRequest => {
   const state = uuid.v4();
-  window.localStorage.setItem(STORAGE_KEY_AUTH_STATE, state);
+  localStorage.set(STORAGE_KEY_AUTH_STATE, state);
 
   const authorizationRequest: IAuthorizationRequest = {
     clientId: clientId(),
