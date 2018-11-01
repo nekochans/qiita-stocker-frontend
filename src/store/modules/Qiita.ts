@@ -81,11 +81,11 @@ const mutations: MutationTree<LoginState> = {
 
 const actions: ActionTree<LoginState, RootState> = {
   signUp: ({ commit }) => {
-    localStorage.set(STORAGE_KEY_ACCOUNT_ACTION, "signUp");
+    localStorage.save(STORAGE_KEY_ACCOUNT_ACTION, "signUp");
     requestToAuthorizationServer(createAuthRequestParam());
   },
   login: ({ commit }) => {
-    localStorage.set(STORAGE_KEY_ACCOUNT_ACTION, "login");
+    localStorage.save(STORAGE_KEY_ACCOUNT_ACTION, "login");
     requestToAuthorizationServer(createAuthRequestParam());
   },
   fetchUser: async (
@@ -237,7 +237,7 @@ const actions: ActionTree<LoginState, RootState> = {
 
 const createAuthRequestParam = (): IAuthorizationRequest => {
   const state = uuid.v4();
-  localStorage.set(STORAGE_KEY_AUTH_STATE, state);
+  localStorage.save(STORAGE_KEY_AUTH_STATE, state);
 
   const authorizationRequest: IAuthorizationRequest = {
     clientId: clientId(),

@@ -32,13 +32,13 @@ export default class OAuthCallback extends Vue {
     const params: IAuthorizationResponse = {
       code: query.code,
       callbackState: query.state,
-      localState: localStorage.get(STORAGE_KEY_AUTH_STATE) || undefined
+      localState: localStorage.load(STORAGE_KEY_AUTH_STATE) || undefined
     };
 
     this.$router.push({ query: {} });
 
     const accountAction: string =
-      localStorage.get(STORAGE_KEY_ACCOUNT_ACTION) || "";
+      localStorage.load(STORAGE_KEY_ACCOUNT_ACTION) || "";
 
     this.fetchUser({ params: params, accountAction: accountAction });
   }
