@@ -5,7 +5,7 @@ import { AxiosResponse, AxiosError } from "axios";
 export const STORAGE_KEY_AUTH_STATE = "authorizationState";
 export const STORAGE_KEY_ACCOUNT_ACTION = "accountAction";
 
-export interface ILocalStorage {
+export interface IQiitaStockerSessionStorage {
   save(key: string, value: string): void;
   load(key: string): any;
   remove(key: string): void;

@@ -1,6 +1,6 @@
-import { ILocalStorage } from "@/domain/Qiita";
+import { IQiitaStockerSessionStorage } from "@/domain/Qiita";
 
-export default class LocalStorage implements ILocalStorage {
+export default class LocalStorage implements IQiitaStockerSessionStorage {
   save(key: string, value: string) {
     window.localStorage.setItem(key, value);
   }
