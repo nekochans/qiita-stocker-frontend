@@ -2,7 +2,7 @@ import Vue from "vue";
 import Vuex, { GetterTree, MutationTree, ActionTree, Module } from "vuex";
 import { WeatherState } from "@/types/weather";
 import { RootState } from "@/store";
-import { WeatherAPI } from "@/api/weather";
+import { WeatherAPI } from "@/infrastructure/api/weather";
 
 Vue.use(Vuex);
 

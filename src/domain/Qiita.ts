@@ -1,9 +1,15 @@
-import { QiitaAPI } from "@/api/qiita";
-import { QiitaStockerAPI } from "@/api/qiitaStocker";
+import { QiitaAPI } from "@/infrastructure/api/qiita";
+import { QiitaStockerAPI } from "@/infrastructure/api/qiitaStocker";
 import { AxiosResponse, AxiosError } from "axios";
 
 export const STORAGE_KEY_AUTH_STATE = "authorizationState";
 export const STORAGE_KEY_ACCOUNT_ACTION = "accountAction";
+
+export interface IQiitaStockerSessionStorage {
+  save(key: string, value: string): void;
+  load(key: string): any;
+  remove(key: string): void;
+}
 
 export interface IAuthorizationRequest {
   clientId: string;

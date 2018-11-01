@@ -5,6 +5,7 @@
 </template>
 
 <script lang="ts">
+import LocalStorage from "@/infrastructure/repository/localStorage";
 import { Component, Vue } from "vue-property-decorator";
 import { Action, namespace } from "vuex-class";
 import {
@@ -14,6 +15,7 @@ import {
 } from "../../../domain/Qiita";
 
 const QiitaAction = namespace("QiitaModule", Action);
+const localStorage = new LocalStorage();
 
 @Component
 export default class OAuthCallback extends Vue {
@@ -31,14 +33,13 @@ export default class OAuthCallback extends Vue {
     const params: IAuthorizationResponse = {
       code: query.code,
       callbackState: query.state,
-      localState:
-        window.localStorage.getItem(STORAGE_KEY_AUTH_STATE) || undefined
+      localState: localStorage.load(STORAGE_KEY_AUTH_STATE) || undefined
     };
 
     this.$router.push({ query: {} });
 
     const accountAction: string =
-      window.localStorage.getItem(STORAGE_KEY_ACCOUNT_ACTION) || "";
+      localStorage.load(STORAGE_KEY_ACCOUNT_ACTION) || "";
 
     this.fetchUser({ params: params, accountAction: accountAction });
   }
