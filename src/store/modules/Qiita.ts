@@ -175,6 +175,7 @@ const actions: ActionTree<LoginState, RootState> = {
         createAccountRequest
       );
 
+      // TODO 発行されたアカウントIDをstateに保存するのか検討
       console.log(createAccountResponse.accountId);
       localStorage.save(
         STORAGE_KEY_SESSION_ID,
@@ -208,7 +209,6 @@ const actions: ActionTree<LoginState, RootState> = {
         STORAGE_KEY_SESSION_ID,
         issueAccessTokensResponse.sessionId
       );
-      console.log(issueAccessTokensResponse.sessionId);
 
       router.push({
         name: "account"
