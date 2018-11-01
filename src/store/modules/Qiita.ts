@@ -16,6 +16,7 @@ import {
   matchState,
   STORAGE_KEY_AUTH_STATE,
   STORAGE_KEY_ACCOUNT_ACTION,
+  STORAGE_KEY_SESSION_ID,
   createAccount,
   ICreateAccountRequest,
   ICreateAccountResponse,
@@ -174,8 +175,12 @@ const actions: ActionTree<LoginState, RootState> = {
         createAccountRequest
       );
 
+      // TODO 発行されたアカウントIDをstateに保存するのか検討
       console.log(createAccountResponse.accountId);
-      console.log(createAccountResponse._embedded.sessionId);
+      localStorage.save(
+        STORAGE_KEY_SESSION_ID,
+        createAccountResponse._embedded.sessionId
+      );
 
       router.push({
         name: "account"
@@ -200,7 +205,10 @@ const actions: ActionTree<LoginState, RootState> = {
         issueLoginSessionRequest
       );
 
-      console.log(issueAccessTokensResponse.sessionId);
+      localStorage.save(
+        STORAGE_KEY_SESSION_ID,
+        issueAccessTokensResponse.sessionId
+      );
 
       router.push({
         name: "account"
