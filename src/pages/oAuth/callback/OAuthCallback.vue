@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import localStorage from "@/infrastructure/repository/localStorage";
+import LocalStorage from "@/infrastructure/repository/localStorage";
 import { Component, Vue } from "vue-property-decorator";
 import { Action, namespace } from "vuex-class";
 import {
@@ -15,6 +15,7 @@ import {
 } from "../../../domain/Qiita";
 
 const QiitaAction = namespace("QiitaModule", Action);
+const localStorage = new LocalStorage();
 
 @Component
 export default class OAuthCallback extends Vue {
