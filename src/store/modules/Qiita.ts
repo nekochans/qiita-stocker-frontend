@@ -231,7 +231,7 @@ const actions: ActionTree<LoginState, RootState> = {
 
       await cancelAccount(cancelAccountRequest);
 
-      // TODO 永続化したセッションIDを削除する処理を追加する
+      localStorage.remove(STORAGE_KEY_SESSION_ID);
 
       router.push({
         name: "cancelComplete"
