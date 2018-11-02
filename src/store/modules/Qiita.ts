@@ -223,9 +223,10 @@ const actions: ActionTree<LoginState, RootState> = {
   },
   cancel: async ({ commit }) => {
     try {
+      const sessionId = localStorage.load(STORAGE_KEY_SESSION_ID);
       const cancelAccountRequest: ICancelAccountRequest = {
         apiUrlBase: apiUrlBase(),
-        sessionId: "bf039637-010a-40be-ab0f-1354f7756cb9" // セッションIDを永続化する処理が未実装なので、固定値を設定
+        sessionId: sessionId
       };
 
       await cancelAccount(cancelAccountRequest);
