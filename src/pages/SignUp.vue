@@ -16,22 +16,23 @@
         <p v-show="permanentId">PermanentId :{{ permanentId }}</p>
       </div>
     </main>
-    <footer class="footer">
-      <div class="content has-text-centered">
-        <p>Copyright (c) 2018 nekochans</p>
-      </div>
-    </footer>
+    <Footer />
   </section>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import { Getter, Action, namespace } from "vuex-class";
+import Footer from "@/components/Footer.vue";
 
 const QiitaAction = namespace("QiitaModule", Action);
 const QiitaGetter = namespace("QiitaModule", Getter);
 
-@Component
+@Component({
+  components: {
+    Footer
+  }
+})
 export default class SignUp extends Vue {
   @QiitaGetter
   permanentId!: string;
