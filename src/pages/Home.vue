@@ -1,6 +1,6 @@
 <template>
   <div>
-    <HeaderGuest />
+    <Header />
     <section class="hero is-medium hero-top">
       <div class="hero-body">
         <div class="container">
@@ -46,12 +46,12 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import HeaderGuest from "@/components/HeaderGuest.vue";
+import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
 
 @Component({
   components: {
-    HeaderGuest,
+    Header,
     Footer
   }
 })
