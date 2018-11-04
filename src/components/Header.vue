@@ -5,7 +5,7 @@
         <div class="navbar-brand">
           <a class="navbar-item" href="/"><p class="is-size-5 has-text-black">Qiita Stocker</p></a>
         </div>
-        <div class="navbar-menu">
+        <div class="navbar-menu is-active">
           <div class="navbar-end">
             <div class="navbar-item">
               <a href="/login" class="button">ログイン</a>
