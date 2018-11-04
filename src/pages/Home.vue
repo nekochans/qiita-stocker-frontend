@@ -1,19 +1,6 @@
 <template>
   <div>
-    <nav class="navbar navbar-gest">
-      <div class="container">
-        <div class="navbar-brand">
-          <a class="navbar-item" href="/"><p class="is-size-5 has-text-black">Qiita Stocker</p></a>
-        </div>
-        <div class="navbar-menu">
-          <div class="navbar-end">
-            <div class="navbar-item">
-              <a href="/login" class="button">ログイン</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </nav>
+    <HeaderGuest />
     <section class="hero is-medium hero-top">
       <div class="hero-body">
         <div class="container">
@@ -59,10 +46,12 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import HeaderGuest from "@/components/HeaderGuest.vue";
 import Footer from "@/components/Footer.vue";
 
 @Component({
   components: {
+    HeaderGuest,
     Footer
   }
 })
@@ -72,10 +61,6 @@ export default class Home extends Vue {}
 <style scoped>
 .hero-top {
   background: black url(../assets/top.jpg) center / cover;
-}
-.navbar-gest {
-  border-top: 6px solid #00d1b2;
-  border-bottom: 1px solid #e8e8e8;
 }
 .subtitle {
   padding-top: 1rem;
