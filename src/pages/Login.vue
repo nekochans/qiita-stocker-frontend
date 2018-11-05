@@ -6,7 +6,7 @@
         <h1 class="title">ログイン</h1>
         <button class="button" @click="login">Qiitaアカウントでログイン</button>
         <h2 class="is-size-7 login-guide">
-          アカウントを持っていない場合は<a href="/signup">新規登録</a>から
+          アカウントを持っていない場合は<a href="/signup">アカウント作成</a>から
         </h2>
       </div>
     </main>
