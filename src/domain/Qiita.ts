@@ -1,20 +1,19 @@
-import { QiitaAPI } from "@/infrastructure/api/qiita";
-// import { QiitaStockerAPI } from "@/infrastructure/api/qiitaStocker";
 import { AxiosResponse, AxiosError } from "axios";
-
 import QiitaStockerApi from "@/infrastructure/api/qiitaStocker";
+import QiitaApi from "@/infrastructure/api/qiita";
 
 export const STORAGE_KEY_AUTH_STATE = "authorizationState";
 export const STORAGE_KEY_ACCOUNT_ACTION = "accountAction";
 export const STORAGE_KEY_SESSION_ID = "sessionId";
+
+const qiitaStockerApi = new QiitaStockerApi();
+const qiitaApi = new QiitaApi();
 
 export interface IQiitaStockerSessionStorage {
   save(key: string, value: string): void;
   load(key: string): any;
   remove(key: string): void;
 }
-
-const qiitaStockerApi = new QiitaStockerApi();
 
 export interface IQiitaStockerApi {
   createAccount(
@@ -24,6 +23,15 @@ export interface IQiitaStockerApi {
   issueLoginSession(
     request: IIssueLoginSessionRequest
   ): Promise<IIssueLoginSessionResponse>;
+}
+
+export interface IQiitaApi {
+  issueAccessToken(
+    request: IIssueAccessTokensRequest
+  ): Promise<IIssueAccessTokensResponse>;
+  fetchAuthenticatedUser(
+    request: IFetchAuthenticatedUserRequest
+  ): Promise<IFetchAuthenticatedUserResponse>;
 }
 
 export interface IAuthorizationRequest {
@@ -103,13 +111,13 @@ export const requestToAuthorizationServer = (
 export const issueAccessToken = async (
   request: IIssueAccessTokensRequest
 ): Promise<IIssueAccessTokensResponse> => {
-  return await QiitaAPI.issueAccessToken(request);
+  return await qiitaApi.issueAccessToken(request);
 };
 
 export const fetchAuthenticatedUser = async (
   request: IFetchAuthenticatedUserRequest
 ): Promise<IFetchAuthenticatedUserResponse> => {
-  return await QiitaAPI.fetchAuthenticatedUser(request);
+  return await qiitaApi.fetchAuthenticatedUser(request);
 };
 
 export const createAccount = async (
