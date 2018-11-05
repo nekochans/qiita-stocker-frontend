@@ -2,7 +2,7 @@
   <section class="hero is-fullheight">
     <Header />
     <main>
-      <div class="container">
+      <div class="container has-text-centered">
         <h1 class="title">アカウント作成</h1>
         <button class="button" @click="signUp">Qiitaアカウントで登録</button>
         <p v-show="permanentId">PermanentId :{{ permanentId }}</p>

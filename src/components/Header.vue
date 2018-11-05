@@ -1,17 +1,19 @@
 <template>
   <header class="header">
-    <div class="container">
-      <nav class="navbar has-shadow">
+    <nav class="navbar navbar-guest">
+      <div class="container">
         <div class="navbar-brand">
-          <a class="navbar-item" href="http://localhost:8080"><p class="is-size-5 has-text-black">Qiita Stocker</p></a>
+          <a class="navbar-item" href="/"><p class="is-size-5 has-text-black">Qiita Stocker</p></a>
         </div>
-        <div class="navbar-end">
-          <div class="navbar-item">
-            <button class="button is-small">ボタン</button>
+        <div class="navbar-menu is-active">
+          <div class="navbar-end">
+            <div class="navbar-item">
+              <a href="/login" class="button">ログイン</a>
+            </div>
           </div>
         </div>
-      </nav>
-    </div>
+      </div>
+    </nav>
   </header>
 </template>
 
@@ -21,3 +23,10 @@ import { Component, Vue } from "vue-property-decorator";
 @Component
 export default class Header extends Vue {}
 </script>
+
+<style scoped>
+.navbar-guest {
+  border-top: 6px solid #00d1b2;
+  border-bottom: 1px solid #e8e8e8;
+}
+</style>
