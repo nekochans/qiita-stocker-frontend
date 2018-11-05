@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import {
+  IQiitaStockerApi,
   ICreateAccountRequest,
   ICreateAccountResponse,
   IIssueLoginSessionRequest,
@@ -8,10 +9,10 @@ import {
   ICancelAccountRequest
 } from "@/domain/Qiita";
 
-export const QiitaStockerAPI = {
-  createAccount: async (
+export default class QiitaStockerApi implements IQiitaStockerApi {
+  async createAccount(
     request: ICreateAccountRequest
-  ): Promise<ICreateAccountResponse> => {
+  ): Promise<ICreateAccountResponse> {
     return await axios
       .post<ICreateAccountResponse>(
         `${request.apiUrlBase}/api/accounts`,
@@ -28,8 +29,9 @@ export const QiitaStockerAPI = {
       .catch((axiosError: IQiitaStockerError) => {
         return Promise.reject(axiosError);
       });
-  },
-  cancelAccount: async (request: ICancelAccountRequest): Promise<void> => {
+  }
+
+  async cancelAccount(request: ICancelAccountRequest): Promise<void> {
     return await axios
       .delete(`${request.apiUrlBase}/api/accounts`, {
         headers: {
@@ -42,10 +44,11 @@ export const QiitaStockerAPI = {
       .catch((axiosError: IQiitaStockerError) => {
         return Promise.reject(axiosError);
       });
-  },
-  issueLoginSession: async (
+  }
+
+  async issueLoginSession(
     request: IIssueLoginSessionRequest
-  ): Promise<IIssueLoginSessionResponse> => {
+  ): Promise<IIssueLoginSessionResponse> {
     return await axios
       .post<IIssueLoginSessionResponse>(
         `${request.apiUrlBase}/api/login-sessions`,
@@ -63,4 +66,4 @@ export const QiitaStockerAPI = {
         return Promise.reject(axiosError);
       });
   }
-};
+}

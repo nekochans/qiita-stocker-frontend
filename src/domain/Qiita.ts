@@ -1,6 +1,8 @@
 import { QiitaAPI } from "@/infrastructure/api/qiita";
-import { QiitaStockerAPI } from "@/infrastructure/api/qiitaStocker";
+// import { QiitaStockerAPI } from "@/infrastructure/api/qiitaStocker";
 import { AxiosResponse, AxiosError } from "axios";
+
+import QiitaStockerApi from "@/infrastructure/api/qiitaStocker";
 
 export const STORAGE_KEY_AUTH_STATE = "authorizationState";
 export const STORAGE_KEY_ACCOUNT_ACTION = "accountAction";
@@ -10,6 +12,18 @@ export interface IQiitaStockerSessionStorage {
   save(key: string, value: string): void;
   load(key: string): any;
   remove(key: string): void;
+}
+
+const qiitaStockerApi = new QiitaStockerApi();
+
+export interface IQiitaStockerApi {
+  createAccount(
+    request: ICreateAccountRequest
+  ): Promise<ICreateAccountResponse>;
+  cancelAccount(request: ICancelAccountRequest): Promise<void>;
+  issueLoginSession(
+    request: IIssueLoginSessionRequest
+  ): Promise<IIssueLoginSessionResponse>;
 }
 
 export interface IAuthorizationRequest {
@@ -101,19 +115,19 @@ export const fetchAuthenticatedUser = async (
 export const createAccount = async (
   request: ICreateAccountRequest
 ): Promise<ICreateAccountResponse> => {
-  return await QiitaStockerAPI.createAccount(request);
+  return await qiitaStockerApi.createAccount(request);
 };
 
 export const issueLoginSession = async (
   request: IIssueLoginSessionRequest
 ): Promise<IIssueLoginSessionResponse> => {
-  return await QiitaStockerAPI.issueLoginSession(request);
+  return await qiitaStockerApi.issueLoginSession(request);
 };
 
 export const cancelAccount = async (
   request: ICancelAccountRequest
 ): Promise<void> => {
-  return await QiitaStockerAPI.cancelAccount(request);
+  return await qiitaStockerApi.cancelAccount(request);
 };
 
 export const matchState = (responseState: string, state: string): boolean => {
