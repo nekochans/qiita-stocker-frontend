@@ -1,14 +1,15 @@
 <template>
   <aside class="submenu menu">
     <SideMenuSearch/>
-    <SideMenuList />
+    <SideMenuList :categories="categories"/>
   </aside>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Prop } from "vue-property-decorator";
 import SideMenuSearch from "@/components/SideMenuSearch.vue";
 import SideMenuList from "@/components/SideMenuList.vue";
+import { ICategory } from "@/domain/Qiita";
 
 @Component({
   components: {
@@ -16,5 +17,8 @@ import SideMenuList from "@/components/SideMenuList.vue";
     SideMenuList
   }
 })
-export default class SideMenu extends Vue {}
+export default class SideMenu extends Vue {
+  @Prop()
+  categories!: ICategory[];
+}
 </script>
