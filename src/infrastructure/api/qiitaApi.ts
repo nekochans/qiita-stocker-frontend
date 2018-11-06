@@ -1,15 +1,16 @@
 import axios, { AxiosResponse, AxiosError } from "axios";
 import {
+  IQiitaApi,
   IIssueAccessTokensRequest,
   IIssueAccessTokensResponse,
   IFetchAuthenticatedUserResponse,
   IFetchAuthenticatedUserRequest
 } from "@/domain/Qiita";
 
-export const QiitaAPI = {
-  issueAccessToken: async (
+export default class QiitaApi implements IQiitaApi {
+  async issueAccessToken(
     request: IIssueAccessTokensRequest
-  ): Promise<IIssueAccessTokensResponse> => {
+  ): Promise<IIssueAccessTokensResponse> {
     return await axios
       .post<IIssueAccessTokensResponse>(
         `https://qiita.com/api/v2/access_tokens`,
@@ -21,10 +22,11 @@ export const QiitaAPI = {
       .catch((axiosError: AxiosError) => {
         return Promise.reject(axiosError);
       });
-  },
-  fetchAuthenticatedUser: async (
+  }
+
+  async fetchAuthenticatedUser(
     request: IFetchAuthenticatedUserRequest
-  ): Promise<IFetchAuthenticatedUserResponse> => {
+  ): Promise<IFetchAuthenticatedUserResponse> {
     return await axios
       .get<IFetchAuthenticatedUserResponse>(
         `https://qiita.com/api/v2/authenticated_user`,
@@ -39,4 +41,4 @@ export const QiitaAPI = {
         return Promise.reject(axiosError);
       });
   }
-};
+}

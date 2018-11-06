@@ -1,15 +1,37 @@
-import { QiitaAPI } from "@/infrastructure/api/qiita";
-import { QiitaStockerAPI } from "@/infrastructure/api/qiitaStocker";
 import { AxiosResponse, AxiosError } from "axios";
+import QiitaStockerApi from "@/infrastructure/api/qiitaStockerApi";
+import QiitaApi from "@/infrastructure/api/qiitaApi";
 
 export const STORAGE_KEY_AUTH_STATE = "authorizationState";
 export const STORAGE_KEY_ACCOUNT_ACTION = "accountAction";
 export const STORAGE_KEY_SESSION_ID = "sessionId";
 
+const qiitaStockerApi = new QiitaStockerApi();
+const qiitaApi = new QiitaApi();
+
 export interface IQiitaStockerSessionStorage {
   save(key: string, value: string): void;
   load(key: string): any;
   remove(key: string): void;
+}
+
+export interface IQiitaStockerApi {
+  createAccount(
+    request: ICreateAccountRequest
+  ): Promise<ICreateAccountResponse>;
+  cancelAccount(request: ICancelAccountRequest): Promise<void>;
+  issueLoginSession(
+    request: IIssueLoginSessionRequest
+  ): Promise<IIssueLoginSessionResponse>;
+}
+
+export interface IQiitaApi {
+  issueAccessToken(
+    request: IIssueAccessTokensRequest
+  ): Promise<IIssueAccessTokensResponse>;
+  fetchAuthenticatedUser(
+    request: IFetchAuthenticatedUserRequest
+  ): Promise<IFetchAuthenticatedUserResponse>;
 }
 
 export interface IAuthorizationRequest {
@@ -89,31 +111,31 @@ export const requestToAuthorizationServer = (
 export const issueAccessToken = async (
   request: IIssueAccessTokensRequest
 ): Promise<IIssueAccessTokensResponse> => {
-  return await QiitaAPI.issueAccessToken(request);
+  return await qiitaApi.issueAccessToken(request);
 };
 
 export const fetchAuthenticatedUser = async (
   request: IFetchAuthenticatedUserRequest
 ): Promise<IFetchAuthenticatedUserResponse> => {
-  return await QiitaAPI.fetchAuthenticatedUser(request);
+  return await qiitaApi.fetchAuthenticatedUser(request);
 };
 
 export const createAccount = async (
   request: ICreateAccountRequest
 ): Promise<ICreateAccountResponse> => {
-  return await QiitaStockerAPI.createAccount(request);
+  return await qiitaStockerApi.createAccount(request);
 };
 
 export const issueLoginSession = async (
   request: IIssueLoginSessionRequest
 ): Promise<IIssueLoginSessionResponse> => {
-  return await QiitaStockerAPI.issueLoginSession(request);
+  return await qiitaStockerApi.issueLoginSession(request);
 };
 
 export const cancelAccount = async (
   request: ICancelAccountRequest
 ): Promise<void> => {
-  return await QiitaStockerAPI.cancelAccount(request);
+  return await qiitaStockerApi.cancelAccount(request);
 };
 
 export const matchState = (responseState: string, state: string): boolean => {
