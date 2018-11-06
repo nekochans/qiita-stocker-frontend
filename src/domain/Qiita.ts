@@ -100,6 +100,12 @@ export interface IQiitaStockerError extends AxiosError {
   response: AxiosResponse<IQiitaStockerErrorData>;
 }
 
+// TODO 適切な値に修正する
+export interface ICategory {
+  id: number;
+  name: string;
+}
+
 export const requestToAuthorizationServer = (
   authorizationRequest: IAuthorizationRequest
 ) => {
