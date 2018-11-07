@@ -106,6 +106,16 @@ export interface ICategory {
   name: string;
 }
 
+// TODO 適切な値に修正する
+export interface IQiitaItem {
+  id: string;
+  title: string;
+  created_at: string;
+  tags: string[];
+  userId: string;
+  profile_image_url: string;
+}
+
 export const requestToAuthorizationServer = (
   authorizationRequest: IAuthorizationRequest
 ) => {

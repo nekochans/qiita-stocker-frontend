@@ -1,21 +1,26 @@
 <template>
   <article class="media">
     <figure class="media-left">
-      <p class="image is-48x48 ">
-        <img src="https://avatars3.githubusercontent.com/u/32682645?v=4">
-      </p>
+      <a class="image is-48x48" :href="`https://qiita.com/${qiitaItem.userId}`" target="_blank">
+        <img :src="qiitaItem.profile_image_url">
+      </a>
     </figure>
     <div class="media-content">
       <div class="content">
         <div class="item-info">
-          <p>m42-kobayashiが2018/1/1に投稿しました</p>
+          <p><a :href="`https://qiita.com/${qiitaItem.userId}`" target="_blank">{{ qiitaItem.userId }}</a>が{{ qiitaItem.created_at}}に投稿しました</p>
         </div>
         <div class="item-title">
-          <a href="https://qiita.com/kobayashi-m42/items/c0a2609ae61a72dcc60f">CORSについて理解してLaravel5.6で対応する</a>
+          <a :href="`https://qiita.com/kobayashi-m42/items/${qiitaItem.id}`" target="_blank">{{ qiitaItem.title}}</a>
         </div>
         <div class="tags">
-          <span class="tag">CORS</span>
-          <span class="tag">laravel5.6</span>
+          <span
+            v-for="(tag, key) in qiitaItem.tags"
+            :key="key"
+            class="tag"
+          >
+            {{ tag }}
+          </span>
         </div>
       </div>
     </div>
@@ -23,13 +28,25 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Prop } from "vue-property-decorator";
+import { IQiitaItem } from "@/domain/Qiita";
 
 @Component
-export default class Media extends Vue {}
+export default class Media extends Vue {
+  @Prop()
+  qiitaItem!: IQiitaItem[];
+}
 </script>
 
 <style scoped>
+a {
+  color: #337ab7;
+}
+
+a:hover {
+  color: #23527c;
+}
+
 .media {
   font-size: 12px;
 }
