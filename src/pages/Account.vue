@@ -57,7 +57,7 @@ export default class Account extends Vue {
       profile_image_url: "https://avatars3.githubusercontent.com/u/32682645?v=4"
     },
     {
-      id: "c0a2609ae61a72dcc60f",
+      id: "1",
       title: "CORSについて理解してLaravel5.6で対応する",
       created_at: "2018/09/30",
       tags: ["CORS", "laravel5.6", "laravel", "php"],
@@ -65,7 +65,7 @@ export default class Account extends Vue {
       profile_image_url: "https://avatars3.githubusercontent.com/u/32682645?v=4"
     },
     {
-      id: "c0a2609ae61a72dcc60f",
+      id: "2",
       title: "CORSについて理解してLaravel5.6で対応する",
       created_at: "2018/09/30",
       tags: ["CORS", "laravel5.6", "laravel", "php"],
