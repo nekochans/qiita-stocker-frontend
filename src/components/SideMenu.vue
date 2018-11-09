@@ -2,6 +2,7 @@
   <aside class="submenu menu">
     <SideMenuSearch/>
     <SideMenuList :categories="categories"/>
+    <CreateCategory />
   </aside>
 </template>
 
@@ -9,12 +10,14 @@
 import { Component, Vue, Prop } from "vue-property-decorator";
 import SideMenuSearch from "@/components/SideMenuSearch.vue";
 import SideMenuList from "@/components/SideMenuList.vue";
+import CreateCategory from "@/components/CreateCategory.vue";
 import { ICategory } from "@/domain/Qiita";
 
 @Component({
   components: {
     SideMenuSearch,
-    SideMenuList
+    SideMenuList,
+    CreateCategory
   }
 })
 export default class SideMenu extends Vue {
