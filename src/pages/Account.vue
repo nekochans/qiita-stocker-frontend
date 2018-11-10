@@ -3,10 +3,10 @@
     <Header />
     <main class="container">
       <div class="columns">
-        <div class="column is-2">
+        <div class="column is-3">
           <SideMenu :categories="categories" />
         </div>
-        <div class="column is-10">
+        <div class="column is-9">
           <MediaList :qiitaItems="qiitaItems" />
           <Pagination />
         </div>

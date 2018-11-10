@@ -4,18 +4,11 @@
       カテゴリ一覧
     </p>
     <ul class="menu-list">
-      <li
+      <Category
         v-for="category in categories"
         :key="category.id"
-      >
-        <a
-          :data-category="category.id"
-          @click="clickHandle"
-          :class="`${isActive(category.id) && 'is-active'}`"
-        >
-          {{ category.name }}
-        </a>
-      </li>
+        :category="category"
+      />
     </ul>
   </section>
 </template>
@@ -23,21 +16,16 @@
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
 import { ICategory } from "@/domain/Qiita";
+import Category from "@/components/Category.vue";
 
-@Component
+@Component({
+  components: {
+    Category
+  }
+})
 export default class SideMenuList extends Vue {
   @Prop()
   categories!: ICategory[];
-
-  clickHandle(event: any) {
-    // TODO カテゴリが選択済みの場合、何もしない
-    // TODO 選択されたカテゴリの記事を表示する
-    console.log(`${event.target.dataset.category} clicked!!`);
-  }
-
-  isActive(id: ICategory["id"]) {
-    return id === 1;
-  }
 }
 </script>
 
