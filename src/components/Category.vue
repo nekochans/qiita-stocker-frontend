@@ -13,11 +13,12 @@
     <div v-show="editing">
       <div class="field">
         <input
-           class="input"
+           class="input edit-field"
            type="text"
            v-focus="editing"
            :value="category.name"
         >
+        <a class="has-text-grey is-size-7 destroy">削除</a>
       </div>
       <div class="field">
         <p class="control">
@@ -85,6 +86,14 @@ li:hover .edit {
 }
 
 .cancel {
+  float: right;
+}
+
+.edit-field {
+  width: auto;
+}
+
+.destroy {
   float: right;
 }
 </style>
