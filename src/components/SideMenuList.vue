@@ -1,8 +1,6 @@
 <template>
   <section class="side-menu-list">
-    <p class="menu-label">
-      カテゴリ一覧
-    </p>
+    <p class="menu-label">カテゴリ一覧</p>
     <ul class="menu-list">
       <Category
         v-for="category in categories"

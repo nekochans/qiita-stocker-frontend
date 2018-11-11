@@ -1,6 +1,6 @@
 <template>
   <section class="hero is-fullheight">
-    <Header />
+    <AppHeader />
     <main>
       <div class="container has-text-centered">
         <h1 class="title">アカウント作成</h1>
@@ -8,23 +8,23 @@
         <p v-show="permanentId">PermanentId :{{ permanentId }}</p>
       </div>
     </main>
-    <Footer />
+    <AppFooter />
   </section>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import { Getter, Action, namespace } from "vuex-class";
-import Header from "@/components/Header.vue";
-import Footer from "@/components/Footer.vue";
+import AppHeader from "@/components/AppHeader.vue";
+import AppFooter from "@/components/AppFooter.vue";
 
 const QiitaAction = namespace("QiitaModule", Action);
 const QiitaGetter = namespace("QiitaModule", Getter);
 
 @Component({
   components: {
-    Header,
-    Footer
+    AppHeader,
+    AppFooter
   }
 })
 export default class SignUp extends Vue {

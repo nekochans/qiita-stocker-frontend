@@ -1,26 +1,24 @@
 <template>
   <section class="hero is-fullheight">
-    <Header />
+    <AppHeader />
     <main class="container has-text-centered">
       <h1 class="title">Error</h1>
-      <h2 class="subtitle">
-        {{ errorMessage }}
-      </h2>
+      <h2 class="subtitle">{{ errorMessage }}</h2>
       <a href="/">TOPページへ</a>
     </main>
-    <Footer />
+    <AppFooter />
   </section>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
-import Header from "@/components/Header.vue";
-import Footer from "@/components/Footer.vue";
+import AppHeader from "@/components/AppHeader.vue";
+import AppFooter from "@/components/AppFooter.vue";
 
 @Component({
   components: {
-    Header,
-    Footer
+    AppHeader,
+    AppFooter
   }
 })
 export default class Error extends Vue {

@@ -3,7 +3,9 @@
     <nav class="navbar navbar-guest">
       <div class="container">
         <div class="navbar-brand">
-          <a class="navbar-item" href="/"><p class="is-size-5 has-text-black">Qiita Stocker</p></a>
+          <a class="navbar-item" href="/"
+            ><p class="is-size-5 has-text-black">Qiita Stocker</p></a
+          >
         </div>
         <div class="navbar-menu is-active">
           <div class="navbar-end">
@@ -21,7 +23,7 @@
 import { Component, Vue } from "vue-property-decorator";
 
 @Component
-export default class Header extends Vue {}
+export default class AppHeader extends Vue {}
 </script>
 
 <style scoped>

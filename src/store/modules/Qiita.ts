@@ -27,13 +27,13 @@ import {
   cancelAccount,
   unauthorizedMessage
 } from "@/domain/Qiita";
-import LocalStorage from "@/infrastructure/repository/localStorage";
 import uuid from "uuid";
 import router from "@/router";
+import LocalStorageFactory from "@/factory/repository/LocalStorageFactory";
 
 Vue.use(Vuex);
 
-const localStorage = new LocalStorage();
+const localStorage = LocalStorageFactory.create();
 
 const clientId = (): string => {
   return process.env.VUE_APP_QIITA_CLIENT_ID === undefined
@@ -51,6 +51,11 @@ const apiUrlBase = (): string => {
     ? ""
     : process.env.VUE_APP_API_URL_BASE;
 };
+
+interface IFetchUserPayload {
+  params: IAuthorizationResponse;
+  accountAction: "signUp" | "login";
+}
 
 const state: LoginState = {
   authorizationCode: "",
@@ -93,10 +98,7 @@ const actions: ActionTree<LoginState, RootState> = {
   },
   fetchUser: async (
     { dispatch, commit },
-    {
-      params,
-      accountAction
-    }: { params: IAuthorizationResponse; accountAction: "signUp" | "login" }
+    { params, accountAction }: IFetchUserPayload
   ) => {
     if (params.code === undefined) {
       return;

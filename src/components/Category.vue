@@ -7,17 +7,17 @@
         :class="`${isActive(category.id) && 'is-active'}`"
       >
         {{ category.name }}
-        <p class="edit" @click="editing = true">編集</p>
+        <p class="edit" @click="editing = true;">編集</p>
       </a>
     </div>
     <div v-show="editing">
       <div class="field">
         <input
-           class="input edit-field"
-           type="text"
-           v-focus="editing"
-           :value="category.name"
-        >
+          class="input edit-field"
+          type="text"
+          v-focus="editing"
+          :value="category.name"
+        />
         <a class="has-text-grey is-size-7 destroy">削除</a>
       </div>
       <div class="field">
@@ -25,7 +25,9 @@
           <button class="button is-small is-danger" @click="doneEdit">
             カテゴリを追加
           </button>
-          <a class="has-text-grey is-size-7 cancel" @click="cancelEdit">キャンセル</a>
+          <a class="has-text-grey is-size-7 cancel" @click="cancelEdit"
+            >キャンセル</a
+          >
         </p>
       </div>
     </div>

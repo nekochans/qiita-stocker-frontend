@@ -1,13 +1,13 @@
 import { AxiosResponse, AxiosError } from "axios";
-import QiitaStockerApi from "@/infrastructure/api/qiitaStockerApi";
-import QiitaApi from "@/infrastructure/api/qiitaApi";
+import QiitaStockerApiFactory from "@/factory/api/QiitaStockerApiFactory";
+import QiitaApiFactory from "@/factory/api/QiitaApiFactory";
 
 export const STORAGE_KEY_AUTH_STATE = "authorizationState";
 export const STORAGE_KEY_ACCOUNT_ACTION = "accountAction";
 export const STORAGE_KEY_SESSION_ID = "sessionId";
 
-const qiitaStockerApi = new QiitaStockerApi();
-const qiitaApi = new QiitaApi();
+const qiitaStockerApi = QiitaStockerApiFactory.create();
+const qiitaApi = QiitaApiFactory.create();
 
 export interface IQiitaStockerSessionStorage {
   save(key: string, value: string): void;
