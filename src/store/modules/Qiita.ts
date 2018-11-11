@@ -27,13 +27,13 @@ import {
   cancelAccount,
   unauthorizedMessage
 } from "@/domain/Qiita";
-import LocalStorage from "@/infrastructure/repository/localStorage";
 import uuid from "uuid";
 import router from "@/router";
+import LocalStorageFactory from "@/factory/repository/LocalStorageFactory";
 
 Vue.use(Vuex);
 
-const localStorage = new LocalStorage();
+const localStorage = LocalStorageFactory.create();
 
 const clientId = (): string => {
   return process.env.VUE_APP_QIITA_CLIENT_ID === undefined

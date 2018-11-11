@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts">
-import LocalStorage from "@/infrastructure/repository/localStorage";
+import LocalStorageFactory from "@/factory/repository/LocalStorageFactory";
 import { Component, Vue } from "vue-property-decorator";
 import { Action, namespace } from "vuex-class";
 import {
@@ -13,7 +13,7 @@ import {
 } from "../../../domain/Qiita";
 
 const QiitaAction = namespace("QiitaModule", Action);
-const localStorage = new LocalStorage();
+const localStorage = LocalStorageFactory.create();
 
 @Component
 export default class OAuthCallback extends Vue {

@@ -1,6 +1,6 @@
 import { AxiosResponse, AxiosError } from "axios";
-import QiitaStockerApiFactory from "@/factory/QiitaStockerApiFactory";
-import QiitaApiFactory from "@/factory/QiitaApiFactory";
+import QiitaStockerApiFactory from "@/factory/api/QiitaStockerApiFactory";
+import QiitaApiFactory from "@/factory/api/QiitaApiFactory";
 
 export const STORAGE_KEY_AUTH_STATE = "authorizationState";
 export const STORAGE_KEY_ACCOUNT_ACTION = "accountAction";

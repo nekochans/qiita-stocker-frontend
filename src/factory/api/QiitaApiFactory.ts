@@ -1,4 +1,4 @@
-import QiitaApi from "@/infrastructure/api/qiitaApi";
+import QiitaApi from "../../infrastructure/api/qiitaApi";
 import { IQiitaApi } from "@/domain/Qiita";
 
 export default class QiitaApiFactory {
