@@ -22,7 +22,8 @@ describe("SignUp.vue", () => {
     state = {
       authorizationCode: "",
       accessToken: "",
-      permanentId: ""
+      permanentId: "",
+      isLogin: false
     };
 
     actions = {

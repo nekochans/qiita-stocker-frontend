@@ -60,7 +60,8 @@ interface IFetchUserPayload {
 const state: LoginState = {
   authorizationCode: "",
   accessToken: "",
-  permanentId: ""
+  permanentId: "",
+  isLogin: false
 };
 
 const getters: GetterTree<LoginState, RootState> = {
