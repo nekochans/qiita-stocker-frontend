@@ -23,7 +23,7 @@
 import { Component, Vue } from "vue-property-decorator";
 
 @Component
-export default class Header extends Vue {}
+export default class AppHeader extends Vue {}
 </script>
 
 <style scoped>

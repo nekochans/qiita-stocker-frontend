@@ -1,6 +1,6 @@
 <template>
   <section class="hero is-fullheight">
-    <header />
+    <AppHeader />
     <main class="container has-text-centered">
       <h1 class="title">Error</h1>
       <h2 class="subtitle">{{ errorMessage }}</h2>
@@ -12,12 +12,12 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
-import Header from "@/components/Header.vue";
+import AppHeader from "@/components/AppHeader.vue";
 import AppFooter from "@/components/AppFooter.vue";
 
 @Component({
   components: {
-    Header,
+    AppHeader,
     AppFooter
   }
 })

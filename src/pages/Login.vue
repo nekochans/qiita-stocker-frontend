@@ -1,6 +1,6 @@
 <template>
   <section class="hero is-fullheight">
-    <header />
+    <AppHeader />
     <main>
       <div class="container has-text-centered">
         <h1 class="title">ログイン</h1>
@@ -17,14 +17,14 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import { Action, namespace } from "vuex-class";
-import Header from "@/components/Header.vue";
+import AppHeader from "@/components/AppHeader.vue";
 import AppFooter from "@/components/AppFooter.vue";
 
 const QiitaAction = namespace("QiitaModule", Action);
 
 @Component({
   components: {
-    Header,
+    AppHeader,
     AppFooter
   }
 })

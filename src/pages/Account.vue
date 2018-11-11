@@ -1,6 +1,6 @@
 <template>
   <section>
-    <header />
+    <AppHeader />
     <main class="container">
       <div class="columns">
         <div class="column is-3"><SideMenu :categories="categories" /></div>
@@ -14,7 +14,7 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import HeaderApp from "@/components/Header.vue";
+import AppHeader from "@/components/AppHeader.vue";
 import SideMenu from "@/components/SideMenu.vue";
 import MediaList from "@/components/MediaList.vue";
 import Pagination from "@/components/Pagination.vue";
@@ -22,7 +22,7 @@ import { ICategory, IQiitaItem } from "@/domain/Qiita";
 
 @Component({
   components: {
-    HeaderApp,
+    AppHeader,
     SideMenu,
     MediaList,
     Pagination
