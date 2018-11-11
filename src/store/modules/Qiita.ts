@@ -61,7 +61,7 @@ const state: LoginState = {
   authorizationCode: "",
   accessToken: "",
   permanentId: "",
-  isLogin: false
+  isLogin: true
 };
 
 const getters: GetterTree<LoginState, RootState> = {
@@ -73,6 +73,9 @@ const getters: GetterTree<LoginState, RootState> = {
   },
   permanentId: (state): LoginState["permanentId"] => {
     return state.permanentId;
+  },
+  isLogin: (state): LoginState["isLogin"] => {
+    return state.isLogin;
   }
 };
 
