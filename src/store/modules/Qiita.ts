@@ -60,7 +60,8 @@ interface IFetchUserPayload {
 const state: LoginState = {
   authorizationCode: "",
   accessToken: "",
-  permanentId: ""
+  permanentId: "",
+  isLoggedIn: true
 };
 
 const getters: GetterTree<LoginState, RootState> = {
@@ -72,6 +73,9 @@ const getters: GetterTree<LoginState, RootState> = {
   },
   permanentId: (state): LoginState["permanentId"] => {
     return state.permanentId;
+  },
+  isLoggedIn: (state): LoginState["isLoggedIn"] => {
+    return state.isLoggedIn;
   }
 };
 

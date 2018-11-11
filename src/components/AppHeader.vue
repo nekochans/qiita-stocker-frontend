@@ -6,11 +6,28 @@
           <a class="navbar-item" href="/"
             ><p class="is-size-5 has-text-black">Qiita Stocker</p></a
           >
+          <a
+            role="button"
+            class="navbar-burger"
+            :class="{ 'is-active': isMenuActive }"
+            @click="menuToggle();"
+          >
+            <span></span> <span></span> <span></span>
+          </a>
         </div>
-        <div class="navbar-menu is-active">
-          <div class="navbar-end">
+        <div class="navbar-menu" :class="{ 'is-active': isMenuActive }">
+          <div class="navbar-end" v-if="!isLoggedIn">
             <div class="navbar-item">
-              <a href="/login" class="button">ログイン</a>
+              <a href="/login" class="has-text-grey">ログイン</a>
+            </div>
+          </div>
+          <div class="navbar-end" v-else>
+            <div class="navbar-item has-dropdown is-hoverable">
+              <a class="navbar-link">アカウント</a>
+              <div class="navbar-dropdown is-right">
+                <a class="navbar-item" href="/cancel">設定</a>
+                <a class="navbar-item">ログアウト</a>
+              </div>
             </div>
           </div>
         </div>
@@ -21,9 +38,22 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import { Getter, namespace } from "vuex-class";
+import { LoginState } from "@/types/login";
+
+const QiitaGetter = namespace("QiitaModule", Getter);
 
 @Component
-export default class AppHeader extends Vue {}
+export default class AppHeader extends Vue {
+  @QiitaGetter
+  isLoggedIn!: LoginState["isLoggedIn"];
+
+  isMenuActive: boolean = false;
+
+  menuToggle() {
+    this.isMenuActive = !this.isMenuActive;
+  }
+}
 </script>
 
 <style scoped>
