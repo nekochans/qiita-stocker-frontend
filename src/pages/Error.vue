@@ -1,14 +1,12 @@
 <template>
   <section class="hero is-fullheight">
-    <Header />
+    <header />
     <main class="container has-text-centered">
       <h1 class="title">Error</h1>
-      <h2 class="subtitle">
-        {{ errorMessage }}
-      </h2>
+      <h2 class="subtitle">{{ errorMessage }}</h2>
       <a href="/">TOPページへ</a>
     </main>
-    <Footer />
+    <footer />
   </section>
 </template>
 

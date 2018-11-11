@@ -1,14 +1,11 @@
 <template>
   <section>
-    <Header />
+    <header />
     <main class="container">
       <div class="columns">
-        <div class="column is-3">
-          <SideMenu :categories="categories" />
-        </div>
+        <div class="column is-3"><SideMenu :categories="categories" /></div>
         <div class="column is-9">
-          <MediaList :qiitaItems="qiitaItems" />
-          <Pagination />
+          <MediaList :qiitaItems="qiitaItems" /> <Pagination />
         </div>
       </div>
     </main>
@@ -17,7 +14,7 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import Header from "@/components/Header.vue";
+import HeaderApp from "@/components/Header.vue";
 import SideMenu from "@/components/SideMenu.vue";
 import MediaList from "@/components/MediaList.vue";
 import Pagination from "@/components/Pagination.vue";
@@ -25,7 +22,7 @@ import { ICategory, IQiitaItem } from "@/domain/Qiita";
 
 @Component({
   components: {
-    Header,
+    HeaderApp,
     SideMenu,
     MediaList,
     Pagination

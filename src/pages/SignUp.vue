@@ -1,6 +1,6 @@
 <template>
   <section class="hero is-fullheight">
-    <Header />
+    <header />
     <main>
       <div class="container has-text-centered">
         <h1 class="title">アカウント作成</h1>
@@ -8,7 +8,7 @@
         <p v-show="permanentId">PermanentId :{{ permanentId }}</p>
       </div>
     </main>
-    <Footer />
+    <footer />
   </section>
 </template>
 

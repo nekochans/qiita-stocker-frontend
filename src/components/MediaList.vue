@@ -8,9 +8,7 @@
         :key="qiitaItem.id"
       />
     </div>
-    <div v-else>
-      <h1 class="subtitle">ストックされた記事はありません。</h1>
-    </div>
+    <div v-else><h1 class="subtitle">ストックされた記事はありません。</h1></div>
   </div>
 </template>
 

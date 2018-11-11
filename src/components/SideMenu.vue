@@ -1,7 +1,6 @@
 <template>
   <aside class="submenu menu">
-    <SideMenuSearch/>
-    <SideMenuList :categories="categories"/>
+    <SideMenuSearch /> <SideMenuList :categories="categories" />
     <CreateCategory />
   </aside>
 </template>

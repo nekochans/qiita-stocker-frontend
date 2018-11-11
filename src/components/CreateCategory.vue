@@ -1,26 +1,20 @@
 <template>
   <section>
-    <button
-       v-if="!editing"
-       @click="editing = true"
-       class="button view"
-    >
+    <button v-if="!editing" @click="editing = true;" class="button view">
       カテゴリを追加
     </button>
     <div v-show="editing">
       <div class="field">
-        <input
-          class="input"
-          type="text"
-          v-focus="editing"
-        >
+        <input class="input" type="text" v-focus="editing" />
       </div>
       <div class="field">
         <p class="control">
           <button class="button is-small is-danger" @click="saveCategory">
             カテゴリを追加
           </button>
-          <a class="has-text-grey is-size-7 cancel" @click="cancelEdit">キャンセル</a>
+          <a class="has-text-grey is-size-7 cancel" @click="cancelEdit"
+            >キャンセル</a
+          >
         </p>
       </div>
     </div>

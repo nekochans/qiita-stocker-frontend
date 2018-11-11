@@ -1,14 +1,12 @@
 <template>
   <section class="hero is-fullheight">
-    <Header />
+    <header />
     <main class="container has-text-centered">
       <h1 class="title">404 Not Found</h1>
-      <h2 class="subtitle">
-        アクセスされたページが見つかりません。
-      </h2>
+      <h2 class="subtitle">アクセスされたページが見つかりません。</h2>
       <a href="/">TOPページへ</a>
     </main>
-    <Footer />
+    <footer />
   </section>
 </template>
 

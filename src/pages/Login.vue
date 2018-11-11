@@ -1,6 +1,6 @@
 <template>
   <section class="hero is-fullheight">
-    <Header />
+    <header />
     <main>
       <div class="container has-text-centered">
         <h1 class="title">ログイン</h1>
@@ -10,7 +10,7 @@
         </h2>
       </div>
     </main>
-    <Footer />
+    <footer />
   </section>
 </template>
 
