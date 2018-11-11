@@ -52,6 +52,11 @@ const apiUrlBase = (): string => {
     : process.env.VUE_APP_API_URL_BASE;
 };
 
+interface IFetchUserPayload {
+  params: IAuthorizationResponse;
+  accountAction: "signUp" | "login";
+}
+
 const state: LoginState = {
   authorizationCode: "",
   accessToken: "",
@@ -93,10 +98,7 @@ const actions: ActionTree<LoginState, RootState> = {
   },
   fetchUser: async (
     { dispatch, commit },
-    {
-      params,
-      accountAction
-    }: { params: IAuthorizationResponse; accountAction: "signUp" | "login" }
+    { params, accountAction }: IFetchUserPayload
   ) => {
     if (params.code === undefined) {
       return;
