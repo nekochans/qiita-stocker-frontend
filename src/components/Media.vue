@@ -1,11 +1,7 @@
 <template>
   <article class="media">
     <figure class="media-left">
-      <a
-        class="image is-48x48"
-        :href="`https://qiita.com/${qiitaItem.userId}`"
-        target="_blank"
-      >
+      <a class="image is-48x48" :href="`https://qiita.com/${qiitaItem.userId}`">
         <img :src="qiitaItem.profile_image_url" />
       </a>
     </figure>
@@ -13,19 +9,16 @@
       <div class="content">
         <div class="item-info">
           <p>
-            <a
-              :href="`https://qiita.com/${qiitaItem.userId}`"
-              target="_blank"
-              >{{ qiitaItem.userId }}</a
+            <a :href="`https://qiita.com/${qiitaItem.userId}`">{{
+              qiitaItem.userId
+            }}</a
             >が{{ qiitaItem.created_at }}に投稿しました
           </p>
         </div>
         <div class="item-title">
-          <a
-            :href="`https://qiita.com/kobayashi-m42/items/${qiitaItem.id}`"
-            target="_blank"
-            >{{ qiitaItem.title }}</a
-          >
+          <a :href="`https://qiita.com/kobayashi-m42/items/${qiitaItem.id}`">{{
+            qiitaItem.title
+          }}</a>
         </div>
         <div class="tags">
           <span v-for="(tag, key) in qiitaItem.tags" :key="key" class="tag">
