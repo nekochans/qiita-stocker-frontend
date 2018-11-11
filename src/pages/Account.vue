@@ -3,7 +3,12 @@
     <AppHeader />
     <main class="container">
       <div class="columns">
-        <div class="column is-3"><SideMenu :categories="categories" /></div>
+        <div class="column is-3">
+          <SideMenu
+            :categories="categories"
+            @clickSaveCategory="onClickSaveCategory"
+          />
+        </div>
         <div class="column is-9">
           <MediaList :qiitaItems="qiitaItems" /> <Pagination />
         </div>
@@ -14,11 +19,15 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import { Action, namespace } from "vuex-class";
+
 import AppHeader from "@/components/AppHeader.vue";
 import SideMenu from "@/components/SideMenu.vue";
 import MediaList from "@/components/MediaList.vue";
 import Pagination from "@/components/Pagination.vue";
 import { ICategory, IQiitaItem } from "@/domain/Qiita";
+
+const QiitaAction = namespace("QiitaModule", Action);
 
 @Component({
   components: {
@@ -70,6 +79,13 @@ export default class Account extends Vue {
       profile_image_url: "https://avatars3.githubusercontent.com/u/32682645?v=4"
     }
   ];
+
+  @QiitaAction
+  saveCategory!: (category: string) => void;
+
+  onClickSaveCategory(category: string) {
+    this.saveCategory(category);
+  }
 }
 </script>
 

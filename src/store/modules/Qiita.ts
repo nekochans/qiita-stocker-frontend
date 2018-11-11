@@ -249,6 +249,10 @@ const actions: ActionTree<LoginState, RootState> = {
       });
       return;
     }
+  },
+  saveCategory: async ({ commit }, category: string) => {
+    // TODO QiitaStockerAPIクラスにカテゴリ作成APIへのリクエスト処理を作成し、それを呼び出す
+    console.log(category);
   }
 };
 

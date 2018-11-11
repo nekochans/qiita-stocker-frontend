@@ -5,14 +5,23 @@
     </button>
     <div v-show="editing">
       <div class="field">
-        <input class="input" type="text" v-focus="editing" />
+        <input
+          class="input"
+          type="text"
+          v-focus="editing"
+          v-model="category"
+          @input="setCategory"
+        />
       </div>
       <div class="field">
         <p class="control">
-          <button class="button is-small is-danger" @click="saveCategory">
+          <button
+            class="button is-small is-danger"
+            @click="onClickSaveCategory"
+          >
             カテゴリを追加
           </button>
-          <a class="has-text-grey is-size-7 cancel" @click="cancelEdit"
+          <a class="has-text-grey is-size-7 cancel" @click="doneEdit"
             >キャンセル</a
           >
         </p>
@@ -36,13 +45,21 @@ import { ICategory } from "@/domain/Qiita";
 })
 export default class CreateCategory extends Vue {
   editing: boolean = false;
+  category: string = "";
 
-  cancelEdit() {
+  doneEdit() {
+    this.category = "";
     this.editing = false;
   }
 
-  saveCategory() {
-    this.editing = false;
+  onClickSaveCategory() {
+    // TODO バリデーションを追加する
+    this.$emit("clickSaveCategory", this.category);
+    this.doneEdit();
+  }
+
+  setCategory(event: any) {
+    this.category = event.target.value;
   }
 }
 </script>
