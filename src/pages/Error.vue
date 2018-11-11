@@ -6,19 +6,19 @@
       <h2 class="subtitle">{{ errorMessage }}</h2>
       <a href="/">TOPページへ</a>
     </main>
-    <footer />
+    <AppFooter />
   </section>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
 import Header from "@/components/Header.vue";
-import Footer from "@/components/Footer.vue";
+import AppFooter from "@/components/AppFooter.vue";
 
 @Component({
   components: {
     Header,
-    Footer
+    AppFooter
   }
 })
 export default class Error extends Vue {

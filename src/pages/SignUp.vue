@@ -8,7 +8,7 @@
         <p v-show="permanentId">PermanentId :{{ permanentId }}</p>
       </div>
     </main>
-    <footer />
+    <AppFooter />
   </section>
 </template>
 
@@ -16,7 +16,7 @@
 import { Component, Vue } from "vue-property-decorator";
 import { Getter, Action, namespace } from "vuex-class";
 import Header from "@/components/Header.vue";
-import Footer from "@/components/Footer.vue";
+import AppFooter from "@/components/AppFooter.vue";
 
 const QiitaAction = namespace("QiitaModule", Action);
 const QiitaGetter = namespace("QiitaModule", Getter);
@@ -24,7 +24,7 @@ const QiitaGetter = namespace("QiitaModule", Getter);
 @Component({
   components: {
     Header,
-    Footer
+    AppFooter
   }
 })
 export default class SignUp extends Vue {

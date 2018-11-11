@@ -10,7 +10,7 @@
         </h2>
       </div>
     </main>
-    <footer />
+    <AppFooter />
   </section>
 </template>
 
@@ -18,14 +18,14 @@
 import { Component, Vue } from "vue-property-decorator";
 import { Action, namespace } from "vuex-class";
 import Header from "@/components/Header.vue";
-import Footer from "@/components/Footer.vue";
+import AppFooter from "@/components/AppFooter.vue";
 
 const QiitaAction = namespace("QiitaModule", Action);
 
 @Component({
   components: {
     Header,
-    Footer
+    AppFooter
   }
 })
 export default class Login extends Vue {

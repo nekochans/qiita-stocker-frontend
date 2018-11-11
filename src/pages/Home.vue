@@ -45,19 +45,19 @@
         </div>
       </div>
     </section>
-    <footer />
+    <AppFooter />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import Header from "@/components/Header.vue";
-import Footer from "@/components/Footer.vue";
+import AppFooter from "@/components/AppFooter.vue";
 
 @Component({
   components: {
     Header,
-    Footer
+    AppFooter
   }
 })
 export default class Home extends Vue {}
