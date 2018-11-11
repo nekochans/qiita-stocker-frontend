@@ -16,7 +16,7 @@
           </a>
         </div>
         <div class="navbar-menu" :class="{ 'is-active': isMenuActive }">
-          <div class="navbar-end" v-if="!isLogin">
+          <div class="navbar-end" v-if="!isLoggedIn">
             <div class="navbar-item">
               <a href="/login" class="has-text-grey">ログイン</a>
             </div>
@@ -46,7 +46,7 @@ const QiitaGetter = namespace("QiitaModule", Getter);
 @Component
 export default class AppHeader extends Vue {
   @QiitaGetter
-  isLogin!: LoginState["isLogin"];
+  isLoggedIn!: LoginState["isLoggedIn"];
 
   isMenuActive: boolean = false;
 

@@ -23,7 +23,7 @@ describe("Login.vue", () => {
       authorizationCode: "",
       accessToken: "",
       permanentId: "",
-      isLogin: false
+      isLoggedIn: false
     };
 
     actions = {
