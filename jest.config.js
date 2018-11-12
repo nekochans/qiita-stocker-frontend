@@ -13,11 +13,5 @@ module.exports = {
   testMatch: [
     "**/tests/unit/**/*.spec.(js|jsx|ts|tsx)|**/__tests__/*.(js|jsx|ts|tsx)"
   ],
-  testURL: "http://localhost/",
-  globals: {
-    "ts-jest": {
-      pathRegex: /\.(spec|test)\.ts$/,
-      diagnostics: false
-    }
-  }
+  testURL: "http://localhost/"
 };
