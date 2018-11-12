@@ -25,6 +25,9 @@ import {
   issueLoginSession,
   ICancelAccountRequest,
   cancelAccount,
+  saveCategory,
+  ISaveCategoryRequest,
+  ISaveCategoryResponse,
   unauthorizedMessage
 } from "@/domain/Qiita";
 import uuid from "uuid";
@@ -251,8 +254,27 @@ const actions: ActionTree<LoginState, RootState> = {
     }
   },
   saveCategory: async ({ commit }, category: string) => {
-    // TODO QiitaStockerAPIクラスにカテゴリ作成APIへのリクエスト処理を作成し、それを呼び出す
-    console.log(category);
+    try {
+      const sessionId = localStorage.load(STORAGE_KEY_SESSION_ID);
+      const saveCategoryRequest: ISaveCategoryRequest = {
+        apiUrlBase: apiUrlBase(),
+        name: category,
+        sessionId: sessionId
+      };
+
+      const saveCategoryResponse: ISaveCategoryResponse = await saveCategory(
+        saveCategoryRequest
+      );
+      console.log(saveCategoryResponse);
+
+      // TODO stateにレスポンスのカテゴリーを保存する
+    } catch (error) {
+      router.push({
+        name: "error",
+        params: { errorMessage: error.response.data.message }
+      });
+      return;
+    }
   }
 };
 

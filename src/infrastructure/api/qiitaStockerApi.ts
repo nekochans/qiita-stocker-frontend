@@ -6,7 +6,9 @@ import {
   IIssueLoginSessionRequest,
   IIssueLoginSessionResponse,
   IQiitaStockerError,
-  ICancelAccountRequest
+  ICancelAccountRequest,
+  ISaveCategoryRequest,
+  ISaveCategoryResponse
 } from "@/domain/Qiita";
 
 export default class QiitaStockerApi implements IQiitaStockerApi {
@@ -16,7 +18,10 @@ export default class QiitaStockerApi implements IQiitaStockerApi {
     return await axios
       .post<ICreateAccountResponse>(
         `${request.apiUrlBase}/api/accounts`,
-        request,
+        {
+          permanentId: request.permanentId,
+          accessToken: request.accessToken
+        },
         {
           headers: {
             "Content-Type": "application/json"
@@ -52,9 +57,34 @@ export default class QiitaStockerApi implements IQiitaStockerApi {
     return await axios
       .post<IIssueLoginSessionResponse>(
         `${request.apiUrlBase}/api/login-sessions`,
-        request,
+        {
+          permanentId: request.permanentId,
+          accessToken: request.accessToken
+        },
         {
           headers: {
+            "Content-Type": "application/json"
+          }
+        }
+      )
+      .then((axiosResponse: AxiosResponse) => {
+        return Promise.resolve(axiosResponse.data);
+      })
+      .catch((axiosError: IQiitaStockerError) => {
+        return Promise.reject(axiosError);
+      });
+  }
+
+  async saveCategory(
+    request: ISaveCategoryRequest
+  ): Promise<ISaveCategoryResponse> {
+    return await axios
+      .post<IIssueLoginSessionResponse>(
+        `${request.apiUrlBase}/api/categories`,
+        { name: request.name },
+        {
+          headers: {
+            Authorization: `Bearer ${request.sessionId}`,
             "Content-Type": "application/json"
           }
         }
