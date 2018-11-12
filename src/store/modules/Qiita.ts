@@ -275,7 +275,6 @@ const actions: ActionTree<LoginState, RootState> = {
         name: saveCategoryResponse.name
       };
 
-      console.log(savedCategory);
       commit("addCategory", savedCategory);
     } catch (error) {
       router.push({
