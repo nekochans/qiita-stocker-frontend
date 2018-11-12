@@ -19,7 +19,8 @@ describe("QiitaModule", () => {
         authorizationCode: "34d97d024861f098d2e45fb4d9ed7757f97f5b0f",
         accessToken: "72d79c218c16c65b8076c7de8ef6ec55504ca6a0",
         permanentId: "1",
-        isLoggedIn: false
+        isLoggedIn: false,
+        categories: []
       };
     });
 
@@ -53,7 +54,8 @@ describe("QiitaModule", () => {
         authorizationCode: "",
         accessToken: "",
         permanentId: "",
-        isLoggedIn: false
+        isLoggedIn: false,
+        categories: []
       };
     });
 

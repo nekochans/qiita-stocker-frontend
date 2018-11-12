@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex, { GetterTree, MutationTree, ActionTree, Module } from "vuex";
-import { LoginState } from "@/types/login";
+import { LoginState, Category } from "@/types/login";
 import { RootState } from "@/store";
 import {
   requestToAuthorizationServer,
@@ -64,7 +64,8 @@ const state: LoginState = {
   authorizationCode: "",
   accessToken: "",
   permanentId: "",
-  isLoggedIn: true
+  isLoggedIn: true,
+  categories: []
 };
 
 const getters: GetterTree<LoginState, RootState> = {
@@ -91,6 +92,9 @@ const mutations: MutationTree<LoginState> = {
   },
   savePermanentId: (state, permanentId: string) => {
     state.permanentId = permanentId;
+  },
+  addCategory: (state, category: Category) => {
+    state.categories.push(category);
   }
 };
 
@@ -265,9 +269,14 @@ const actions: ActionTree<LoginState, RootState> = {
       const saveCategoryResponse: ISaveCategoryResponse = await saveCategory(
         saveCategoryRequest
       );
-      console.log(saveCategoryResponse);
 
-      // TODO stateにレスポンスのカテゴリーを保存する
+      const savedCategory: Category = {
+        id: saveCategoryResponse.categoryId,
+        name: saveCategoryResponse.name
+      };
+
+      console.log(savedCategory);
+      commit("addCategory", savedCategory);
     } catch (error) {
       router.push({
         name: "error",
