@@ -1,7 +1,7 @@
 <template>
   <aside class="submenu menu">
     <SideMenuSearch /> <SideMenuList :categories="categories" />
-    <CreateCategory />
+    <CreateCategory @clickSaveCategory="onClickSaveCategory" />
   </aside>
 </template>
 
@@ -22,5 +22,9 @@ import { ICategory } from "@/domain/Qiita";
 export default class SideMenu extends Vue {
   @Prop()
   categories!: ICategory[];
+
+  onClickSaveCategory(category: string) {
+    this.$emit("clickSaveCategory", category);
+  }
 }
 </script>
