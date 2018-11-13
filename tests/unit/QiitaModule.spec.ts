@@ -27,23 +27,38 @@ describe("QiitaModule", () => {
 
     it("should be able to get authorizationCode", () => {
       const wrapper = (getters: any) => getters.authorizationCode(state);
-      const authorizationCode: ILoginState = wrapper(QiitaModule.getters);
+      const authorizationCode: ILoginState["authorizationCode"] = wrapper(
+        QiitaModule.getters
+      );
 
       expect(authorizationCode).toEqual(state.authorizationCode);
     });
 
     it("should be able to get accessToken", () => {
       const wrapper = (getters: any) => getters.accessToken(state);
-      const accessToken: ILoginState = wrapper(QiitaModule.getters);
+      const accessToken: ILoginState["accessToken"] = wrapper(
+        QiitaModule.getters
+      );
 
       expect(accessToken).toEqual(state.accessToken);
     });
 
     it("should be able to get permanentId", () => {
       const wrapper = (getters: any) => getters.permanentId(state);
-      const permanentId: ILoginState = wrapper(QiitaModule.getters);
+      const permanentId: ILoginState["permanentId"] = wrapper(
+        QiitaModule.getters
+      );
 
       expect(permanentId).toEqual(state.permanentId);
+    });
+
+    it("should be able to get categories", () => {
+      const wrapper = (getters: any) => getters.categories(state);
+      const categories: ILoginState["categories"] = wrapper(
+        QiitaModule.getters
+      );
+
+      expect(categories).toEqual(state.categories);
     });
   });
 
@@ -91,6 +106,28 @@ describe("QiitaModule", () => {
       wrapper(QiitaModule.mutations);
 
       expect(state.permanentId).toEqual("1");
+    });
+
+    it("should be able to save categories", () => {
+      const categories: ICategory[] = [
+        {
+          id: "1",
+          name: "テストカテゴリー1"
+        },
+        {
+          id: "2",
+          name: "テストカテゴリー2"
+        },
+        {
+          id: "3",
+          name: "テストカテゴリー3"
+        }
+      ];
+      const wrapper = (mutations: any) =>
+        mutations.saveCategory(state, categories);
+      wrapper(QiitaModule.mutations);
+
+      expect(state.categories).toEqual(categories);
     });
 
     it("should be able to add categories", () => {
