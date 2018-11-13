@@ -30,7 +30,8 @@ describe("Account.vue", () => {
     };
 
     actions = {
-      saveCategory: jest.fn()
+      saveCategory: jest.fn(),
+      fetchCategory: jest.fn()
     };
 
     store = new Vuex.Store({
@@ -58,6 +59,15 @@ describe("Account.vue", () => {
         inputtedCategory,
         undefined
       );
+    });
+
+    it('calls store action "fetchCategory" on initializeCategory()', () => {
+      const wrapper = shallowMount(Account, { store, localVue, router });
+
+      // @ts-ignore
+      wrapper.vm.initializeCategory();
+
+      expect(actions.fetchCategory).toHaveBeenCalled();
     });
   });
 

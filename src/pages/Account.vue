@@ -81,6 +81,10 @@ export default class Account extends Vue {
   }
 
   created() {
+    this.initializeCategory();
+  }
+
+  initializeCategory() {
     if (!this.categories.length) {
       this.fetchCategory();
     }
