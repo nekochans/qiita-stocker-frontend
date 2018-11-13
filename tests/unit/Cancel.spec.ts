@@ -23,7 +23,8 @@ describe("Cancel.vue", () => {
       authorizationCode: "",
       accessToken: "",
       permanentId: "",
-      isLoggedIn: true
+      isLoggedIn: true,
+      categories: []
     };
 
     actions = {

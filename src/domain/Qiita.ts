@@ -23,6 +23,7 @@ export interface IQiitaStockerApi {
   issueLoginSession(
     request: IIssueLoginSessionRequest
   ): Promise<IIssueLoginSessionResponse>;
+  saveCategory(request: ISaveCategoryRequest): Promise<ISaveCategoryResponse>;
 }
 
 export interface IQiitaApi {
@@ -91,6 +92,17 @@ export interface ICancelAccountRequest {
   sessionId: string;
 }
 
+export interface ISaveCategoryRequest {
+  apiUrlBase: string;
+  name: string;
+  sessionId: string;
+}
+
+export interface ISaveCategoryResponse {
+  categoryId: string;
+  name: string;
+}
+
 interface IQiitaStockerErrorData {
   code: number;
   message: string;
@@ -152,6 +164,12 @@ export const cancelAccount = async (
   request: ICancelAccountRequest
 ): Promise<void> => {
   return await qiitaStockerApi.cancelAccount(request);
+};
+
+export const saveCategory = async (
+  request: ISaveCategoryRequest
+): Promise<ISaveCategoryResponse> => {
+  return await qiitaStockerApi.saveCategory(request);
 };
 
 export const matchState = (responseState: string, state: string): boolean => {

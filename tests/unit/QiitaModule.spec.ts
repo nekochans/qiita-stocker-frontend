@@ -1,10 +1,11 @@
-import { LoginState } from "@/types/login";
+import { LoginState, Category } from "@/types/login";
 import { QiitaModule } from "@/store/modules/qiita";
 import axios from "axios";
 import {
   IIssueAccessTokensResponse,
   IFetchAuthenticatedUserResponse,
-  IAuthorizationResponse
+  IAuthorizationResponse,
+  ISaveCategoryResponse
 } from "@/domain/Qiita";
 
 jest.mock("@/domain/Qiita");
@@ -19,7 +20,8 @@ describe("QiitaModule", () => {
         authorizationCode: "34d97d024861f098d2e45fb4d9ed7757f97f5b0f",
         accessToken: "72d79c218c16c65b8076c7de8ef6ec55504ca6a0",
         permanentId: "1",
-        isLoggedIn: false
+        isLoggedIn: false,
+        categories: []
       };
     });
 
@@ -53,7 +55,8 @@ describe("QiitaModule", () => {
         authorizationCode: "",
         accessToken: "",
         permanentId: "",
-        isLoggedIn: false
+        isLoggedIn: false,
+        categories: []
       };
     });
 
@@ -88,6 +91,18 @@ describe("QiitaModule", () => {
       wrapper(QiitaModule.mutations);
 
       expect(state.permanentId).toEqual("1");
+    });
+
+    it("should be able to add categories", () => {
+      const category: Category = {
+        id: "1",
+        name: "テストカテゴリー"
+      };
+      const wrapper = (mutations: any) =>
+        mutations.addCategory(state, category);
+      wrapper(QiitaModule.mutations);
+
+      expect(state.categories[0]).toEqual(category);
     });
   });
 
@@ -197,6 +212,34 @@ describe("QiitaModule", () => {
       await wrapper(QiitaModule.actions);
 
       expect(commit.mock.calls).toEqual([]);
+    });
+
+    it("should be able to save category", async () => {
+      const categoryId = "1";
+      const categoryName: string = "テストカテゴリー";
+
+      const mockPostResponse: { data: ISaveCategoryResponse } = {
+        data: {
+          categoryId: categoryId,
+          name: categoryName
+        }
+      };
+
+      const mockAxios: any = axios;
+      mockAxios.post.mockResolvedValue(mockPostResponse);
+
+      const commit = jest.fn();
+
+      const wrapper = (actions: any) =>
+        actions.saveCategory({ commit }, categoryName);
+      await wrapper(QiitaModule.actions);
+
+      const savedCategory: Category = {
+        id: categoryId,
+        name: categoryName
+      };
+
+      expect(commit.mock.calls).toEqual([["addCategory", savedCategory]]);
     });
   });
 });

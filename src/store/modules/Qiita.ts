@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex, { GetterTree, MutationTree, ActionTree, Module } from "vuex";
-import { LoginState } from "@/types/login";
+import { LoginState, Category } from "@/types/login";
 import { RootState } from "@/store";
 import {
   requestToAuthorizationServer,
@@ -25,6 +25,9 @@ import {
   issueLoginSession,
   ICancelAccountRequest,
   cancelAccount,
+  saveCategory,
+  ISaveCategoryRequest,
+  ISaveCategoryResponse,
   unauthorizedMessage
 } from "@/domain/Qiita";
 import uuid from "uuid";
@@ -61,7 +64,8 @@ const state: LoginState = {
   authorizationCode: "",
   accessToken: "",
   permanentId: "",
-  isLoggedIn: true
+  isLoggedIn: true,
+  categories: []
 };
 
 const getters: GetterTree<LoginState, RootState> = {
@@ -88,6 +92,9 @@ const mutations: MutationTree<LoginState> = {
   },
   savePermanentId: (state, permanentId: string) => {
     state.permanentId = permanentId;
+  },
+  addCategory: (state, category: Category) => {
+    state.categories.push(category);
   }
 };
 
@@ -251,8 +258,31 @@ const actions: ActionTree<LoginState, RootState> = {
     }
   },
   saveCategory: async ({ commit }, category: string) => {
-    // TODO QiitaStockerAPIクラスにカテゴリ作成APIへのリクエスト処理を作成し、それを呼び出す
-    console.log(category);
+    try {
+      const sessionId = localStorage.load(STORAGE_KEY_SESSION_ID);
+      const saveCategoryRequest: ISaveCategoryRequest = {
+        apiUrlBase: apiUrlBase(),
+        name: category,
+        sessionId: sessionId
+      };
+
+      const saveCategoryResponse: ISaveCategoryResponse = await saveCategory(
+        saveCategoryRequest
+      );
+
+      const savedCategory: Category = {
+        id: saveCategoryResponse.categoryId,
+        name: saveCategoryResponse.name
+      };
+
+      commit("addCategory", savedCategory);
+    } catch (error) {
+      router.push({
+        name: "error",
+        params: { errorMessage: error.response.data.message }
+      });
+      return;
+    }
   }
 };
 
