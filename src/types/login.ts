@@ -1,12 +1,12 @@
-export interface LoginState {
+export interface ILoginState {
   authorizationCode: string;
   accessToken: string;
   permanentId: string;
   isLoggedIn: boolean;
-  categories: Category[];
+  categories: ICategory[];
 }
 
-export interface Category {
+export interface ICategory {
   id: string;
   name: string;
 }

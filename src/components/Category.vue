@@ -36,7 +36,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
-import { ICategory } from "@/domain/Qiita";
+import { ICategory } from "@/types/login";
 
 @Component({
   directives: {
@@ -59,7 +59,7 @@ export default class Category extends Vue {
   }
 
   isActive(id: ICategory["id"]) {
-    return id === 1;
+    return id === "1";
   }
 
   doneEdit() {

@@ -19,15 +19,17 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { Action, namespace } from "vuex-class";
+import { Getter, Action, namespace } from "vuex-class";
 
 import AppHeader from "@/components/AppHeader.vue";
 import SideMenu from "@/components/SideMenu.vue";
 import MediaList from "@/components/MediaList.vue";
 import Pagination from "@/components/Pagination.vue";
-import { ICategory, IQiitaItem } from "@/domain/Qiita";
+import { IQiitaItem } from "@/domain/Qiita";
+import { ICategory } from "@/types/login";
 
 const QiitaAction = namespace("QiitaModule", Action);
+const QiitaGetter = namespace("QiitaModule", Getter);
 
 @Component({
   components: {
@@ -38,21 +40,6 @@ const QiitaAction = namespace("QiitaModule", Action);
   }
 })
 export default class Account extends Vue {
-  categories: ICategory[] = [
-    {
-      id: 1,
-      name: "設計"
-    },
-    {
-      id: 2,
-      name: "テスト"
-    },
-    {
-      id: 3,
-      name: "ドメイン駆動設計"
-    }
-  ];
-
   qiitaItems: IQiitaItem[] = [
     {
       id: "c0a2609ae61a72dcc60f",
@@ -80,11 +67,23 @@ export default class Account extends Vue {
     }
   ];
 
+  @QiitaGetter
+  categories!: ICategory[];
+
   @QiitaAction
   saveCategory!: (category: string) => void;
 
+  @QiitaAction
+  fetchCategory!: () => ICategory[];
+
   onClickSaveCategory(category: string) {
     this.saveCategory(category);
+  }
+
+  created() {
+    if (!this.categories.length) {
+      this.fetchCategory();
+    }
   }
 }
 </script>

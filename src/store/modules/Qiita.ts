@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex, { GetterTree, MutationTree, ActionTree, Module } from "vuex";
-import { LoginState, Category } from "@/types/login";
+import { ILoginState, ICategory } from "@/types/login";
 import { RootState } from "@/store";
 import {
   requestToAuthorizationServer,
@@ -60,7 +60,7 @@ interface IFetchUserPayload {
   accountAction: "signUp" | "login";
 }
 
-const state: LoginState = {
+const state: ILoginState = {
   authorizationCode: "",
   accessToken: "",
   permanentId: "",
@@ -68,22 +68,25 @@ const state: LoginState = {
   categories: []
 };
 
-const getters: GetterTree<LoginState, RootState> = {
-  authorizationCode: (state): LoginState["authorizationCode"] => {
+const getters: GetterTree<ILoginState, RootState> = {
+  authorizationCode: (state): ILoginState["authorizationCode"] => {
     return state.authorizationCode;
   },
-  accessToken: (state): LoginState["accessToken"] => {
+  accessToken: (state): ILoginState["accessToken"] => {
     return state.accessToken;
   },
-  permanentId: (state): LoginState["permanentId"] => {
+  permanentId: (state): ILoginState["permanentId"] => {
     return state.permanentId;
   },
-  isLoggedIn: (state): LoginState["isLoggedIn"] => {
+  isLoggedIn: (state): ILoginState["isLoggedIn"] => {
     return state.isLoggedIn;
+  },
+  categories: (state): ILoginState["categories"] => {
+    return state.categories;
   }
 };
 
-const mutations: MutationTree<LoginState> = {
+const mutations: MutationTree<ILoginState> = {
   saveAuthorizationCode: (state, authorizationCode: string) => {
     state.authorizationCode = authorizationCode;
   },
@@ -93,12 +96,15 @@ const mutations: MutationTree<LoginState> = {
   savePermanentId: (state, permanentId: string) => {
     state.permanentId = permanentId;
   },
-  addCategory: (state, category: Category) => {
+  saveCategory: (state, categories: ICategory[]) => {
+    state.categories = categories;
+  },
+  addCategory: (state, category: ICategory) => {
     state.categories.push(category);
   }
 };
 
-const actions: ActionTree<LoginState, RootState> = {
+const actions: ActionTree<ILoginState, RootState> = {
   signUp: ({ commit }) => {
     localStorage.save(STORAGE_KEY_ACCOUNT_ACTION, "signUp");
     requestToAuthorizationServer(createAuthRequestParam());
@@ -270,12 +276,41 @@ const actions: ActionTree<LoginState, RootState> = {
         saveCategoryRequest
       );
 
-      const savedCategory: Category = {
+      const savedCategory: ICategory = {
         id: saveCategoryResponse.categoryId,
         name: saveCategoryResponse.name
       };
 
       commit("addCategory", savedCategory);
+    } catch (error) {
+      router.push({
+        name: "error",
+        params: { errorMessage: error.response.data.message }
+      });
+      return;
+    }
+  },
+  fetchCategory: async ({ commit }) => {
+    try {
+      // TODO カテゴリ取得APIからカテゴリ一覧を取得する
+
+      // 仮実装として仮のカテゴリ一覧を用意
+      const categories: ICategory[] = [
+        {
+          id: "1",
+          name: "設計"
+        },
+        {
+          id: "2",
+          name: "テスト"
+        },
+        {
+          id: "3",
+          name: "ドメイン駆動設計"
+        }
+      ];
+
+      commit("saveCategory", categories);
     } catch (error) {
       router.push({
         name: "error",
@@ -298,7 +333,7 @@ const createAuthRequestParam = (): IAuthorizationRequest => {
   return authorizationRequest;
 };
 
-export const QiitaModule: Module<LoginState, RootState> = {
+export const QiitaModule: Module<ILoginState, RootState> = {
   namespaced: true,
   state,
   mutations,
