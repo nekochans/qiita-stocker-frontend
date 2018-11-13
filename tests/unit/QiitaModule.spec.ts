@@ -1,4 +1,4 @@
-import { LoginState, Category } from "@/types/login";
+import { ILoginState, ICategory } from "@/types/login";
 import { QiitaModule } from "@/store/modules/qiita";
 import axios from "axios";
 import {
@@ -13,7 +13,7 @@ jest.mock("axios");
 
 describe("QiitaModule", () => {
   describe("getters", () => {
-    let state: LoginState;
+    let state: ILoginState;
 
     beforeEach(() => {
       state = {
@@ -27,28 +27,43 @@ describe("QiitaModule", () => {
 
     it("should be able to get authorizationCode", () => {
       const wrapper = (getters: any) => getters.authorizationCode(state);
-      const authorizationCode: LoginState = wrapper(QiitaModule.getters);
+      const authorizationCode: ILoginState["authorizationCode"] = wrapper(
+        QiitaModule.getters
+      );
 
       expect(authorizationCode).toEqual(state.authorizationCode);
     });
 
     it("should be able to get accessToken", () => {
       const wrapper = (getters: any) => getters.accessToken(state);
-      const accessToken: LoginState = wrapper(QiitaModule.getters);
+      const accessToken: ILoginState["accessToken"] = wrapper(
+        QiitaModule.getters
+      );
 
       expect(accessToken).toEqual(state.accessToken);
     });
 
     it("should be able to get permanentId", () => {
       const wrapper = (getters: any) => getters.permanentId(state);
-      const permanentId: LoginState = wrapper(QiitaModule.getters);
+      const permanentId: ILoginState["permanentId"] = wrapper(
+        QiitaModule.getters
+      );
 
       expect(permanentId).toEqual(state.permanentId);
+    });
+
+    it("should be able to get categories", () => {
+      const wrapper = (getters: any) => getters.categories(state);
+      const categories: ILoginState["categories"] = wrapper(
+        QiitaModule.getters
+      );
+
+      expect(categories).toEqual(state.categories);
     });
   });
 
   describe("mutations", () => {
-    let state: LoginState;
+    let state: ILoginState;
 
     beforeEach(() => {
       state = {
@@ -93,8 +108,30 @@ describe("QiitaModule", () => {
       expect(state.permanentId).toEqual("1");
     });
 
+    it("should be able to save categories", () => {
+      const categories: ICategory[] = [
+        {
+          id: "1",
+          name: "テストカテゴリー1"
+        },
+        {
+          id: "2",
+          name: "テストカテゴリー2"
+        },
+        {
+          id: "3",
+          name: "テストカテゴリー3"
+        }
+      ];
+      const wrapper = (mutations: any) =>
+        mutations.saveCategory(state, categories);
+      wrapper(QiitaModule.mutations);
+
+      expect(state.categories).toEqual(categories);
+    });
+
     it("should be able to add categories", () => {
-      const category: Category = {
+      const category: ICategory = {
         id: "1",
         name: "テストカテゴリー"
       };
@@ -234,7 +271,7 @@ describe("QiitaModule", () => {
         actions.saveCategory({ commit }, categoryName);
       await wrapper(QiitaModule.actions);
 
-      const savedCategory: Category = {
+      const savedCategory: ICategory = {
         id: categoryId,
         name: categoryName
       };

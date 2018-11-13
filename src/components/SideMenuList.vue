@@ -13,7 +13,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
-import { ICategory } from "@/domain/Qiita";
+import { ICategory } from "@/types/login";
 import Category from "@/components/Category.vue";
 
 @Component({

@@ -113,12 +113,6 @@ export interface IQiitaStockerError extends AxiosError {
 }
 
 // TODO 適切な値に修正する
-export interface ICategory {
-  id: number;
-  name: string;
-}
-
-// TODO 適切な値に修正する
 export interface IQiitaItem {
   id: string;
   title: string;

@@ -3,7 +3,7 @@ import Vuex from "vuex";
 import SignUp from "../../src/pages/SignUp.vue";
 import { QiitaModule } from "@/store/modules/Qiita";
 
-import { LoginState } from "@/types/login";
+import { ILoginState } from "@/types/login";
 import VueRouter from "vue-router";
 
 const localVue = createLocalVue();
@@ -15,7 +15,7 @@ const router = new VueRouter();
 
 describe("SignUp.vue", () => {
   let store: any;
-  let state: LoginState;
+  let state: ILoginState;
   let actions: any;
 
   it('calls store action "signUp" when button is clicked', () => {
