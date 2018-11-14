@@ -59,7 +59,6 @@ export default class Category extends Vue {
   }
 
   isActive(id: ICategory["categoryId"]) {
-    console.log(id);
     return id === 1;
   }
 
