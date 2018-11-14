@@ -111,15 +111,15 @@ describe("QiitaModule", () => {
     it("should be able to save categories", () => {
       const categories: ICategory[] = [
         {
-          id: "1",
+          id: 1,
           name: "テストカテゴリー1"
         },
         {
-          id: "2",
+          id: 2,
           name: "テストカテゴリー2"
         },
         {
-          id: "3",
+          id: 3,
           name: "テストカテゴリー3"
         }
       ];
@@ -132,7 +132,7 @@ describe("QiitaModule", () => {
 
     it("should be able to add categories", () => {
       const category: ICategory = {
-        id: "1",
+        id: 1,
         name: "テストカテゴリー"
       };
       const wrapper = (mutations: any) =>
@@ -252,12 +252,12 @@ describe("QiitaModule", () => {
     });
 
     it("should be able to save category", async () => {
-      const categoryId = "1";
+      const categoryId = 1;
       const categoryName: string = "テストカテゴリー";
 
       const mockPostResponse: { data: ISaveCategoryResponse } = {
         data: {
-          categoryId: categoryId,
+          id: categoryId,
           name: categoryName
         }
       };

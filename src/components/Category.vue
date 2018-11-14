@@ -59,7 +59,7 @@ export default class Category extends Vue {
   }
 
   isActive(id: ICategory["id"]) {
-    return id === "1";
+    return id === 1;
   }
 
   doneEdit() {
