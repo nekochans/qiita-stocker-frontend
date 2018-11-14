@@ -7,6 +7,6 @@ export interface ILoginState {
 }
 
 export interface ICategory {
-  id: number;
+  categoryId: number;
   name: string;
 }

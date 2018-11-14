@@ -280,7 +280,7 @@ const actions: ActionTree<ILoginState, RootState> = {
       );
 
       const savedCategory: ICategory = {
-        id: saveCategoryResponse.id,
+        categoryId: saveCategoryResponse.categoryId,
         name: saveCategoryResponse.name
       };
 
