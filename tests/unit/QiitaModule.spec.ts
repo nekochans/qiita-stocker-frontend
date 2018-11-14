@@ -5,7 +5,8 @@ import {
   IIssueAccessTokensResponse,
   IFetchAuthenticatedUserResponse,
   IAuthorizationResponse,
-  ISaveCategoryResponse
+  ISaveCategoryResponse,
+  IFetchCategoriesResponse
 } from "@/domain/Qiita";
 
 jest.mock("@/domain/Qiita");
@@ -111,15 +112,15 @@ describe("QiitaModule", () => {
     it("should be able to save categories", () => {
       const categories: ICategory[] = [
         {
-          id: "1",
+          categoryId: 1,
           name: "テストカテゴリー1"
         },
         {
-          id: "2",
+          categoryId: 2,
           name: "テストカテゴリー2"
         },
         {
-          id: "3",
+          categoryId: 3,
           name: "テストカテゴリー3"
         }
       ];
@@ -132,7 +133,7 @@ describe("QiitaModule", () => {
 
     it("should be able to add categories", () => {
       const category: ICategory = {
-        id: "1",
+        categoryId: 1,
         name: "テストカテゴリー"
       };
       const wrapper = (mutations: any) =>
@@ -252,7 +253,7 @@ describe("QiitaModule", () => {
     });
 
     it("should be able to save category", async () => {
-      const categoryId = "1";
+      const categoryId = 1;
       const categoryName: string = "テストカテゴリー";
 
       const mockPostResponse: { data: ISaveCategoryResponse } = {
@@ -272,11 +273,42 @@ describe("QiitaModule", () => {
       await wrapper(QiitaModule.actions);
 
       const savedCategory: ICategory = {
-        id: categoryId,
+        categoryId: categoryId,
         name: categoryName
       };
 
       expect(commit.mock.calls).toEqual([["addCategory", savedCategory]]);
+    });
+
+    it("should be able to fetch categories", async () => {
+      const categories: IFetchCategoriesResponse[] = [
+        {
+          categoryId: 1,
+          name: "テストカテゴリー1"
+        },
+        {
+          categoryId: 2,
+          name: "テストカテゴリー2"
+        },
+        {
+          categoryId: 3,
+          name: "テストカテゴリー3"
+        }
+      ];
+
+      const mockPostResponse: { data: IFetchCategoriesResponse[] } = {
+        data: categories
+      };
+
+      const mockAxios: any = axios;
+      mockAxios.get.mockResolvedValue(mockPostResponse);
+
+      const commit = jest.fn();
+
+      const wrapper = (actions: any) => actions.fetchCategory({ commit });
+      await wrapper(QiitaModule.actions);
+
+      expect(commit.mock.calls).toEqual([["saveCategory", categories]]);
     });
   });
 });

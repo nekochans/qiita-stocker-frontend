@@ -1,6 +1,7 @@
 import { AxiosResponse, AxiosError } from "axios";
 import QiitaStockerApiFactory from "@/factory/api/QiitaStockerApiFactory";
 import QiitaApiFactory from "@/factory/api/QiitaApiFactory";
+import { ICategory } from "@/types/login";
 
 export const STORAGE_KEY_AUTH_STATE = "authorizationState";
 export const STORAGE_KEY_ACCOUNT_ACTION = "accountAction";
@@ -23,6 +24,9 @@ export interface IQiitaStockerApi {
   issueLoginSession(
     request: IIssueLoginSessionRequest
   ): Promise<IIssueLoginSessionResponse>;
+  fetchCategories(
+    request: IFetchCategoriesRequest
+  ): Promise<IFetchCategoriesResponse[]>;
   saveCategory(request: ISaveCategoryRequest): Promise<ISaveCategoryResponse>;
 }
 
@@ -92,16 +96,20 @@ export interface ICancelAccountRequest {
   sessionId: string;
 }
 
+export interface IFetchCategoriesRequest {
+  apiUrlBase: string;
+  sessionId: string;
+}
+
+export interface IFetchCategoriesResponse extends ICategory {}
+
 export interface ISaveCategoryRequest {
   apiUrlBase: string;
   name: string;
   sessionId: string;
 }
 
-export interface ISaveCategoryResponse {
-  categoryId: string;
-  name: string;
-}
+export interface ISaveCategoryResponse extends ICategory {}
 
 interface IQiitaStockerErrorData {
   code: number;
@@ -164,6 +172,12 @@ export const saveCategory = async (
   request: ISaveCategoryRequest
 ): Promise<ISaveCategoryResponse> => {
   return await qiitaStockerApi.saveCategory(request);
+};
+
+export const fetchCategories = async (
+  request: IFetchCategoriesRequest
+): Promise<IFetchCategoriesResponse[]> => {
+  return await qiitaStockerApi.fetchCategories(request);
 };
 
 export const matchState = (responseState: string, state: string): boolean => {

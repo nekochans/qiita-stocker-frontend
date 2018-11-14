@@ -8,7 +8,9 @@ import {
   IQiitaStockerError,
   ICancelAccountRequest,
   ISaveCategoryRequest,
-  ISaveCategoryResponse
+  ISaveCategoryResponse,
+  IFetchCategoriesRequest,
+  IFetchCategoriesResponse
 } from "@/domain/Qiita";
 
 export default class QiitaStockerApi implements IQiitaStockerApi {
@@ -67,6 +69,22 @@ export default class QiitaStockerApi implements IQiitaStockerApi {
           }
         }
       )
+      .then((axiosResponse: AxiosResponse) => {
+        return Promise.resolve(axiosResponse.data);
+      })
+      .catch((axiosError: IQiitaStockerError) => {
+        return Promise.reject(axiosError);
+      });
+  }
+  async fetchCategories(
+    request: IFetchCategoriesRequest
+  ): Promise<IFetchCategoriesResponse[]> {
+    return await axios
+      .get<IFetchCategoriesRequest>(`${request.apiUrlBase}/api/categories`, {
+        headers: {
+          Authorization: `Bearer ${request.sessionId}`
+        }
+      })
       .then((axiosResponse: AxiosResponse) => {
         return Promise.resolve(axiosResponse.data);
       })

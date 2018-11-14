@@ -28,6 +28,9 @@ import {
   saveCategory,
   ISaveCategoryRequest,
   ISaveCategoryResponse,
+  fetchCategories,
+  IFetchCategoriesRequest,
+  IFetchCategoriesResponse,
   unauthorizedMessage
 } from "@/domain/Qiita";
 import uuid from "uuid";
@@ -277,7 +280,7 @@ const actions: ActionTree<ILoginState, RootState> = {
       );
 
       const savedCategory: ICategory = {
-        id: saveCategoryResponse.categoryId,
+        categoryId: saveCategoryResponse.categoryId,
         name: saveCategoryResponse.name
       };
 
@@ -292,23 +295,15 @@ const actions: ActionTree<ILoginState, RootState> = {
   },
   fetchCategory: async ({ commit }) => {
     try {
-      // TODO カテゴリ取得APIからカテゴリ一覧を取得する
+      const sessionId = localStorage.load(STORAGE_KEY_SESSION_ID);
+      const fetchCategoriesRequest: IFetchCategoriesRequest = {
+        apiUrlBase: apiUrlBase(),
+        sessionId: sessionId
+      };
 
-      // 仮実装として仮のカテゴリ一覧を用意
-      const categories: ICategory[] = [
-        {
-          id: "1",
-          name: "設計"
-        },
-        {
-          id: "2",
-          name: "テスト"
-        },
-        {
-          id: "3",
-          name: "ドメイン駆動設計"
-        }
-      ];
+      const categories: IFetchCategoriesResponse[] = await fetchCategories(
+        fetchCategoriesRequest
+      );
 
       commit("saveCategory", categories);
     } catch (error) {

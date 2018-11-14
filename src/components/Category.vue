@@ -2,9 +2,9 @@
   <li>
     <div v-if="!editing">
       <a
-        :data-category="category.id"
+        :data-category="category.categoryId"
         @click="clickHandle"
-        :class="`${isActive(category.id) && 'is-active'}`"
+        :class="`${isActive(category.categoryId) && 'is-active'}`"
       >
         {{ category.name }}
         <p class="edit" @click="editing = true;">編集</p>
@@ -58,8 +58,8 @@ export default class Category extends Vue {
     console.log(`${event.target.dataset.category} clicked!!`);
   }
 
-  isActive(id: ICategory["id"]) {
-    return id === "1";
+  isActive(id: ICategory["categoryId"]) {
+    return id === 1;
   }
 
   doneEdit() {
