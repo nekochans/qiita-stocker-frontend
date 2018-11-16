@@ -1,6 +1,6 @@
 import { shallowMount, mount, createLocalVue, config } from "@vue/test-utils";
 import Vuex from "vuex";
-import { QiitaModule } from "@/store/modules/Qiita";
+import { QiitaModule } from "@/store/modules/qiita";
 import Account from "@/pages/Account.vue";
 import SideMenu from "@/components/SideMenu.vue";
 import { IQiitaState } from "@/types/qiita";
