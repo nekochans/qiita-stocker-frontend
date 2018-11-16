@@ -1,5 +1,5 @@
 import QiitaStockerApi from "../../infrastructure/api/qiitaStockerApi";
-import { IQiitaStockerApi } from "@/domain/Qiita";
+import { IQiitaStockerApi } from "@/domain/qiita";
 
 export default class QiitaStockerApiFactory {
   static create(): IQiitaStockerApi {

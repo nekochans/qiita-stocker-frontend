@@ -2,7 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import { CounterModule } from "./modules/counter";
 import { WeatherModule } from "./modules/weather";
-import { QiitaModule } from "./modules/Qiita";
+import { QiitaModule } from "./modules/qiita";
 
 Vue.use(Vuex);
 

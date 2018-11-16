@@ -1,4 +1,4 @@
-import { IQiitaStockerSessionStorage } from "@/domain/Qiita";
+import { IQiitaStockerSessionStorage } from "@/domain/qiita";
 
 export default class LocalStorage implements IQiitaStockerSessionStorage {
   save(key: string, value: string) {

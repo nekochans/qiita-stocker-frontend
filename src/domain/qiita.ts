@@ -1,7 +1,6 @@
 import { AxiosResponse, AxiosError } from "axios";
 import QiitaStockerApiFactory from "@/factory/api/QiitaStockerApiFactory";
 import QiitaApiFactory from "@/factory/api/QiitaApiFactory";
-import { ICategory } from "@/types/login";
 
 export const STORAGE_KEY_AUTH_STATE = "authorizationState";
 export const STORAGE_KEY_ACCOUNT_ACTION = "accountAction";
@@ -118,6 +117,11 @@ interface IQiitaStockerErrorData {
 
 export interface IQiitaStockerError extends AxiosError {
   response: AxiosResponse<IQiitaStockerErrorData>;
+}
+
+export interface ICategory {
+  categoryId: number;
+  name: string;
 }
 
 // TODO 適切な値に修正する

@@ -11,7 +11,7 @@ import {
   ISaveCategoryResponse,
   IFetchCategoriesRequest,
   IFetchCategoriesResponse
-} from "@/domain/Qiita";
+} from "@/domain/qiita";
 
 export default class QiitaStockerApi implements IQiitaStockerApi {
   async createAccount(

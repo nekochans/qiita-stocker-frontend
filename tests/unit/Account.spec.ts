@@ -1,9 +1,9 @@
 import { shallowMount, mount, createLocalVue, config } from "@vue/test-utils";
 import Vuex from "vuex";
-import { QiitaModule } from "@/store/modules/Qiita";
+import { QiitaModule } from "@/store/modules/qiita";
 import Account from "@/pages/Account.vue";
 import SideMenu from "@/components/SideMenu.vue";
-import { ILoginState } from "@/types/login";
+import { IQiitaState } from "@/types/qiita";
 import VueRouter from "vue-router";
 
 config.logModifiedComponents = false;
@@ -17,7 +17,7 @@ const router = new VueRouter();
 
 describe("Account.vue", () => {
   let store: any;
-  let state: ILoginState;
+  let state: IQiitaState;
   let actions: any;
 
   beforeAll(() => {

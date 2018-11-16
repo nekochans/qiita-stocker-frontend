@@ -1,9 +1,9 @@
 import { shallowMount, createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
 import SignUp from "../../src/pages/SignUp.vue";
-import { QiitaModule } from "@/store/modules/Qiita";
+import { QiitaModule } from "@/store/modules/qiita";
 
-import { ILoginState } from "@/types/login";
+import { IQiitaState } from "@/types/qiita";
 import VueRouter from "vue-router";
 
 const localVue = createLocalVue();
@@ -15,7 +15,7 @@ const router = new VueRouter();
 
 describe("SignUp.vue", () => {
   let store: any;
-  let state: ILoginState;
+  let state: IQiitaState;
   let actions: any;
 
   it('calls store action "signUp" when button is clicked', () => {

@@ -1,4 +1,5 @@
-import { ILoginState, ICategory } from "@/types/login";
+import { IQiitaState } from "@/types/qiita";
+import { ICategory } from "@/domain/qiita";
 import { QiitaModule } from "@/store/modules/qiita";
 import axios from "axios";
 import {
@@ -7,14 +8,14 @@ import {
   IAuthorizationResponse,
   ISaveCategoryResponse,
   IFetchCategoriesResponse
-} from "@/domain/Qiita";
+} from "@/domain/qiita";
 
 jest.mock("@/domain/Qiita");
 jest.mock("axios");
 
 describe("QiitaModule", () => {
   describe("getters", () => {
-    let state: ILoginState;
+    let state: IQiitaState;
 
     beforeEach(() => {
       state = {
@@ -28,7 +29,7 @@ describe("QiitaModule", () => {
 
     it("should be able to get authorizationCode", () => {
       const wrapper = (getters: any) => getters.authorizationCode(state);
-      const authorizationCode: ILoginState["authorizationCode"] = wrapper(
+      const authorizationCode: IQiitaState["authorizationCode"] = wrapper(
         QiitaModule.getters
       );
 
@@ -37,7 +38,7 @@ describe("QiitaModule", () => {
 
     it("should be able to get accessToken", () => {
       const wrapper = (getters: any) => getters.accessToken(state);
-      const accessToken: ILoginState["accessToken"] = wrapper(
+      const accessToken: IQiitaState["accessToken"] = wrapper(
         QiitaModule.getters
       );
 
@@ -46,7 +47,7 @@ describe("QiitaModule", () => {
 
     it("should be able to get permanentId", () => {
       const wrapper = (getters: any) => getters.permanentId(state);
-      const permanentId: ILoginState["permanentId"] = wrapper(
+      const permanentId: IQiitaState["permanentId"] = wrapper(
         QiitaModule.getters
       );
 
@@ -55,7 +56,7 @@ describe("QiitaModule", () => {
 
     it("should be able to get categories", () => {
       const wrapper = (getters: any) => getters.categories(state);
-      const categories: ILoginState["categories"] = wrapper(
+      const categories: IQiitaState["categories"] = wrapper(
         QiitaModule.getters
       );
 
@@ -64,7 +65,7 @@ describe("QiitaModule", () => {
   });
 
   describe("mutations", () => {
-    let state: ILoginState;
+    let state: IQiitaState;
 
     beforeEach(() => {
       state = {

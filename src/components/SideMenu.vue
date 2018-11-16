@@ -10,7 +10,7 @@ import { Component, Vue, Prop } from "vue-property-decorator";
 import SideMenuSearch from "@/components/SideMenuSearch.vue";
 import SideMenuList from "@/components/SideMenuList.vue";
 import CreateCategory from "@/components/CreateCategory.vue";
-import { ICategory } from "@/types/login";
+import { ICategory } from "@/domain/qiita";
 
 @Component({
   components: {
