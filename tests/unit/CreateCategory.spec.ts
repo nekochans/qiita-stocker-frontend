@@ -18,6 +18,19 @@ describe("CreateCategory.vue", () => {
         inputtedCategory
       );
     });
+
+    it("should not emit clickSaveCategory on onClickSaveCategory()", () => {
+      const wrapper = shallowMount(CreateCategory);
+      const inputtedCategory = " ";
+
+      // @ts-ignore
+      wrapper.vm.category = inputtedCategory;
+
+      // @ts-ignore
+      wrapper.vm.onClickSaveCategory();
+
+      expect(wrapper.emitted("clickSaveCategory")).toBeFalsy();
+    });
   });
 
   describe("template", () => {
