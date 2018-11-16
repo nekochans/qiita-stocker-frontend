@@ -3,7 +3,7 @@ import Vuex from "vuex";
 import Cancel from "../../src/pages/cencel/Cancel.vue";
 import { QiitaModule } from "@/store/modules/Qiita";
 
-import { ILoginState } from "@/types/login";
+import { IQiitaState } from "@/types/qiita";
 import VueRouter from "vue-router";
 
 const localVue = createLocalVue();
@@ -15,7 +15,7 @@ const router = new VueRouter();
 
 describe("Cancel.vue", () => {
   let store: any;
-  let state: ILoginState;
+  let state: IQiitaState;
   let actions: any;
 
   it('calls store action "cancel" when button is clicked', () => {

@@ -1,6 +1,6 @@
 import { ICategory} from "@/domain/Qiita";
 
-export interface ILoginState {
+export interface IQiitaState {
   authorizationCode: string;
   accessToken: string;
   permanentId: string;

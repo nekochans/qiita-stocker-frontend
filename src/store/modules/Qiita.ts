@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex, { GetterTree, MutationTree, ActionTree, Module } from "vuex";
-import { ILoginState } from "@/types/login";
+import { IQiitaState } from "@/types/qiita";
 import { RootState } from "@/store";
 import {
   requestToAuthorizationServer,
@@ -64,7 +64,7 @@ interface IFetchUserPayload {
   accountAction: "signUp" | "login";
 }
 
-const state: ILoginState = {
+const state: IQiitaState = {
   authorizationCode: "",
   accessToken: "",
   permanentId: "",
@@ -72,25 +72,25 @@ const state: ILoginState = {
   categories: []
 };
 
-const getters: GetterTree<ILoginState, RootState> = {
-  authorizationCode: (state): ILoginState["authorizationCode"] => {
+const getters: GetterTree<IQiitaState, RootState> = {
+  authorizationCode: (state): IQiitaState["authorizationCode"] => {
     return state.authorizationCode;
   },
-  accessToken: (state): ILoginState["accessToken"] => {
+  accessToken: (state): IQiitaState["accessToken"] => {
     return state.accessToken;
   },
-  permanentId: (state): ILoginState["permanentId"] => {
+  permanentId: (state): IQiitaState["permanentId"] => {
     return state.permanentId;
   },
-  isLoggedIn: (state): ILoginState["isLoggedIn"] => {
+  isLoggedIn: (state): IQiitaState["isLoggedIn"] => {
     return state.isLoggedIn;
   },
-  categories: (state): ILoginState["categories"] => {
+  categories: (state): IQiitaState["categories"] => {
     return state.categories;
   }
 };
 
-const mutations: MutationTree<ILoginState> = {
+const mutations: MutationTree<IQiitaState> = {
   saveAuthorizationCode: (state, authorizationCode: string) => {
     state.authorizationCode = authorizationCode;
   },
@@ -108,7 +108,7 @@ const mutations: MutationTree<ILoginState> = {
   }
 };
 
-const actions: ActionTree<ILoginState, RootState> = {
+const actions: ActionTree<IQiitaState, RootState> = {
   signUp: ({ commit }) => {
     localStorage.save(STORAGE_KEY_ACCOUNT_ACTION, "signUp");
     requestToAuthorizationServer(createAuthRequestParam());
@@ -329,7 +329,7 @@ const createAuthRequestParam = (): IAuthorizationRequest => {
   return authorizationRequest;
 };
 
-export const QiitaModule: Module<ILoginState, RootState> = {
+export const QiitaModule: Module<IQiitaState, RootState> = {
   namespaced: true,
   state,
   mutations,

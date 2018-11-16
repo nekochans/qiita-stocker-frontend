@@ -39,7 +39,7 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import { Getter, namespace } from "vuex-class";
-import { ILoginState } from "@/types/login";
+import { ILoginState } from "@/types/qiita";
 
 const QiitaGetter = namespace("QiitaModule", Getter);
 
