@@ -15,7 +15,7 @@
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
 import Media from "@/components/Media.vue";
-import { IQiitaItem } from "@/domain/Qiita";
+import { IQiitaItem } from "@/domain/qiita";
 
 @Component({
   components: {

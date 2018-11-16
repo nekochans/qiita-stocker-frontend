@@ -5,7 +5,7 @@ import {
   IIssueAccessTokensResponse,
   IFetchAuthenticatedUserResponse,
   IFetchAuthenticatedUserRequest
-} from "@/domain/Qiita";
+} from "@/domain/qiita";
 
 export default class QiitaApi implements IQiitaApi {
   async issueAccessToken(

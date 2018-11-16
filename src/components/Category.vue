@@ -36,7 +36,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
-import { ICategory } from "@/domain/Qiita";
+import { ICategory } from "@/domain/qiita";
 
 @Component({
   directives: {

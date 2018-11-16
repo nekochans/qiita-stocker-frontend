@@ -1,4 +1,4 @@
-import { IQiitaStockerSessionStorage } from "../../domain/Qiita";
+import { IQiitaStockerSessionStorage } from "../../domain/qiita";
 import LocalStorage from "@/infrastructure/repository/localStorage";
 
 export default class LocalStorageFactory {

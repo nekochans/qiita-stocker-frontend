@@ -1,5 +1,5 @@
 import { IQiitaState } from "@/types/qiita";
-import { ICategory } from "@/domain/Qiita";
+import { ICategory } from "@/domain/qiita";
 import { QiitaModule } from "@/store/modules/qiita";
 import axios from "axios";
 import {
@@ -8,7 +8,7 @@ import {
   IAuthorizationResponse,
   ISaveCategoryResponse,
   IFetchCategoriesResponse
-} from "@/domain/Qiita";
+} from "@/domain/qiita";
 
 jest.mock("@/domain/Qiita");
 jest.mock("axios");

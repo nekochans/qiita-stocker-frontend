@@ -33,7 +33,7 @@ import {
   IFetchCategoriesResponse,
   unauthorizedMessage,
   ICategory
-} from "@/domain/Qiita";
+} from "@/domain/qiita";
 import uuid from "uuid";
 import router from "@/router";
 import LocalStorageFactory from "@/factory/repository/LocalStorageFactory";

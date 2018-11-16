@@ -32,7 +32,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
-import { IQiitaItem } from "@/domain/Qiita";
+import { IQiitaItem } from "@/domain/qiita";
 
 @Component
 export default class Media extends Vue {
