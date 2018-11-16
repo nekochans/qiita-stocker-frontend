@@ -25,8 +25,7 @@ import AppHeader from "@/components/AppHeader.vue";
 import SideMenu from "@/components/SideMenu.vue";
 import MediaList from "@/components/MediaList.vue";
 import Pagination from "@/components/Pagination.vue";
-import { IQiitaItem } from "@/domain/Qiita";
-import { ICategory } from "@/types/login";
+import { IQiitaItem, ICategory } from "@/domain/Qiita";
 
 const QiitaAction = namespace("QiitaModule", Action);
 const QiitaGetter = namespace("QiitaModule", Getter);

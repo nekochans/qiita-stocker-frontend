@@ -1,4 +1,5 @@
-import { ILoginState, ICategory } from "@/types/login";
+import { ILoginState } from "@/types/login";
+import { ICategory } from "@/domain/Qiita";
 import { QiitaModule } from "@/store/modules/qiita";
 import axios from "axios";
 import {

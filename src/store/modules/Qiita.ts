@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex, { GetterTree, MutationTree, ActionTree, Module } from "vuex";
-import { ILoginState, ICategory } from "@/types/login";
+import { ILoginState } from "@/types/login";
 import { RootState } from "@/store";
 import {
   requestToAuthorizationServer,
@@ -31,7 +31,8 @@ import {
   fetchCategories,
   IFetchCategoriesRequest,
   IFetchCategoriesResponse,
-  unauthorizedMessage
+  unauthorizedMessage,
+  ICategory
 } from "@/domain/Qiita";
 import uuid from "uuid";
 import router from "@/router";
