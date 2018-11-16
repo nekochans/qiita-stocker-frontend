@@ -6,12 +6,15 @@
     <div v-show="editing">
       <div class="field">
         <input
-          class="input"
+          :class="`input ${isValidationError && 'is-danger'}`"
           type="text"
           v-focus="editing"
           v-model="category"
           @input="setCategory"
         />
+        <p v-if="isValidationError" class="help is-danger">
+          カテゴリを入力してください。
+        </p>
       </div>
       <div class="field">
         <p class="control">
@@ -45,14 +48,21 @@ import { Component, Vue } from "vue-property-decorator";
 export default class CreateCategory extends Vue {
   editing: boolean = false;
   category: string = "";
+  isValidationError: boolean = false;
 
   doneEdit() {
+    this.isValidationError = false;
     this.category = "";
     this.editing = false;
   }
 
   onClickSaveCategory() {
-    // TODO バリデーションを追加する
+    this.category = this.category.trim();
+    if (this.category === "") {
+      this.isValidationError = true;
+      return;
+    }
+
     this.$emit("clickSaveCategory", this.category);
     this.doneEdit();
   }
