@@ -13,19 +13,25 @@
     <div v-show="editing">
       <div class="field">
         <input
-          class="input edit-field"
+          :class="`input edit-field ${isValidationError && 'is-danger'}`"
           type="text"
           v-focus="editing"
-          :value="category.name"
+          v-model="editCategoryName"
         />
         <a class="has-text-grey is-size-7 destroy">削除</a>
+        <p v-if="isValidationError" class="help is-danger">
+          カテゴリを入力してください。
+        </p>
       </div>
       <div class="field">
         <p class="control">
-          <button class="button is-small is-danger" @click="doneEdit">
-            カテゴリを追加
+          <button
+            class="button is-small is-danger"
+            @click="onClickUpdateCategory"
+          >
+            保存
           </button>
-          <a class="has-text-grey is-size-7 cancel" @click="cancelEdit"
+          <a class="has-text-grey is-size-7 cancel" @click="doneEdit"
             >キャンセル</a
           >
         </p>
@@ -37,6 +43,7 @@
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
 import { ICategory } from "@/domain/qiita";
+import { IUpdateCategoryPayload } from "@/store/modules/qiita";
 
 @Component({
   directives: {
@@ -52,6 +59,8 @@ export default class Category extends Vue {
   category!: ICategory;
 
   editing: boolean = false;
+  editCategoryName = this.category.name;
+  isValidationError: boolean = false;
 
   clickHandle(event: any) {
     // TODO 選択されたカテゴリの記事を表示する
@@ -63,11 +72,25 @@ export default class Category extends Vue {
   }
 
   doneEdit() {
+    this.isValidationError = false;
+    this.editCategoryName = this.category.name;
     this.editing = false;
   }
 
-  cancelEdit() {
-    this.editing = false;
+  onClickUpdateCategory() {
+    this.editCategoryName = this.editCategoryName.trim();
+    if (this.editCategoryName === "") {
+      this.isValidationError = true;
+      return;
+    }
+
+    const updateCategoryPayload: IUpdateCategoryPayload = {
+      stateCategory: this.category,
+      categoryName: this.editCategoryName
+    };
+
+    this.$emit("clickUpdateCategory", updateCategoryPayload);
+    this.doneEdit();
   }
 }
 </script>

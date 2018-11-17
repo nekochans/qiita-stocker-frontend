@@ -39,14 +39,14 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import { Getter, namespace } from "vuex-class";
-import { ILoginState } from "@/types/qiita";
+import { IQiitaState } from "@/types/qiita";
 
 const QiitaGetter = namespace("QiitaModule", Getter);
 
 @Component
 export default class AppHeader extends Vue {
   @QiitaGetter
-  isLoggedIn!: ILoginState["isLoggedIn"];
+  isLoggedIn!: IQiitaState["isLoggedIn"];
 
   isMenuActive: boolean = false;
 

@@ -7,6 +7,7 @@
           <SideMenu
             :categories="categories"
             @clickSaveCategory="onClickSaveCategory"
+            @clickUpdateCategory="onClickUpdateCategory"
           />
         </div>
         <div class="column is-9">
@@ -26,6 +27,7 @@ import SideMenu from "@/components/SideMenu.vue";
 import MediaList from "@/components/MediaList.vue";
 import Pagination from "@/components/Pagination.vue";
 import { IQiitaItem, ICategory } from "@/domain/qiita";
+import { IUpdateCategoryPayload } from "@/store/modules/qiita";
 
 const QiitaAction = namespace("QiitaModule", Action);
 const QiitaGetter = namespace("QiitaModule", Getter);
@@ -73,10 +75,17 @@ export default class Account extends Vue {
   saveCategory!: (category: string) => void;
 
   @QiitaAction
-  fetchCategory!: () => ICategory[];
+  fetchCategory!: () => void;
 
-  onClickSaveCategory(category: string) {
-    this.saveCategory(category);
+  @QiitaAction
+  updateCategory!: (updateCategoryPayload: IUpdateCategoryPayload) => void;
+
+  onClickSaveCategory(categoryName: string) {
+    this.saveCategory(categoryName);
+  }
+
+  onClickUpdateCategory(updateCategoryPayload: IUpdateCategoryPayload) {
+    this.updateCategory(updateCategoryPayload);
   }
 
   created() {

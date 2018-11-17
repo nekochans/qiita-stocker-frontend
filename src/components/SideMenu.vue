@@ -1,6 +1,10 @@
 <template>
   <aside class="submenu menu">
-    <SideMenuSearch /> <SideMenuList :categories="categories" />
+    <SideMenuSearch />
+    <SideMenuList
+      :categories="categories"
+      @clickUpdateCategory="onClickUpdateCategory"
+    />
     <CreateCategory @clickSaveCategory="onClickSaveCategory" />
   </aside>
 </template>
@@ -11,6 +15,7 @@ import SideMenuSearch from "@/components/SideMenuSearch.vue";
 import SideMenuList from "@/components/SideMenuList.vue";
 import CreateCategory from "@/components/CreateCategory.vue";
 import { ICategory } from "@/domain/qiita";
+import { IUpdateCategoryPayload } from "@/store/modules/qiita";
 
 @Component({
   components: {
@@ -25,6 +30,10 @@ export default class SideMenu extends Vue {
 
   onClickSaveCategory(category: string) {
     this.$emit("clickSaveCategory", category);
+  }
+
+  onClickUpdateCategory(updateCategoryPayload: IUpdateCategoryPayload) {
+    this.$emit("clickUpdateCategory", updateCategoryPayload);
   }
 }
 </script>
