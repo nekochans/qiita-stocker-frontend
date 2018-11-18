@@ -143,6 +143,24 @@ describe("QiitaModule", () => {
 
       expect(state.categories[0]).toEqual(category);
     });
+
+    it("should be able to update category", () => {
+      state.categories = [{ categoryId: 1, name: "テストカテゴリ" }];
+
+      const updateCategory: {
+        stateCategory: ICategory;
+        categoryName: string;
+      } = {
+        stateCategory: state.categories[0],
+        categoryName: "編集したカテゴリ名"
+      };
+
+      const wrapper = (mutations: any) =>
+        mutations.updateCategory(state, updateCategory);
+      wrapper(QiitaModule.mutations);
+
+      expect(state.categories[0].name).toEqual(updateCategory.categoryName);
+    });
   });
 
   describe("actions", () => {
@@ -310,6 +328,24 @@ describe("QiitaModule", () => {
       await wrapper(QiitaModule.actions);
 
       expect(commit.mock.calls).toEqual([["saveCategory", categories]]);
+    });
+
+    it("should be able to update category", async () => {
+      const updateCategory: {
+        stateCategory: ICategory;
+        categoryName: string;
+      } = {
+        stateCategory: { categoryId: 1, name: "テストカテゴリ" },
+        categoryName: "編集したカテゴリ名"
+      };
+
+      const commit = jest.fn();
+
+      const wrapper = (actions: any) =>
+        actions.updateCategory({ commit }, updateCategory);
+      await wrapper(QiitaModule.actions);
+
+      expect(commit.mock.calls).toEqual([["updateCategory", updateCategory]]);
     });
   });
 });

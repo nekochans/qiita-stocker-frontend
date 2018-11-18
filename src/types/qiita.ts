@@ -1,4 +1,4 @@
-import { ICategory} from "@/domain/qiita";
+import { ICategory } from "@/domain/qiita";
 
 export interface IQiitaState {
   authorizationCode: string;

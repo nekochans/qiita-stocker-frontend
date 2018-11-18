@@ -64,6 +64,11 @@ interface IFetchUserPayload {
   accountAction: "signUp" | "login";
 }
 
+export interface IUpdateCategoryPayload {
+  stateCategory: ICategory;
+  categoryName: string;
+}
+
 const state: IQiitaState = {
   authorizationCode: "",
   accessToken: "",
@@ -105,6 +110,12 @@ const mutations: MutationTree<IQiitaState> = {
   },
   addCategory: (state, category: ICategory) => {
     state.categories.push(category);
+  },
+  updateCategory: (
+    state,
+    updateCategory: { stateCategory: ICategory; categoryName: string }
+  ) => {
+    updateCategory.stateCategory.name = updateCategory.categoryName;
   }
 };
 
@@ -307,6 +318,21 @@ const actions: ActionTree<IQiitaState, RootState> = {
       );
 
       commit("saveCategory", categories);
+    } catch (error) {
+      router.push({
+        name: "error",
+        params: { errorMessage: error.response.data.message }
+      });
+      return;
+    }
+  },
+  updateCategory: async (
+    { commit },
+    updateCategory: IUpdateCategoryPayload
+  ) => {
+    try {
+      // TODO カテゴリ変更APIへのリクエスト処理
+      commit("updateCategory", updateCategory);
     } catch (error) {
       router.push({
         name: "error",
