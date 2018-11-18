@@ -23,7 +23,7 @@ import Category from "@/components/Category.vue";
     Category
   }
 })
-export default class SideMenuList extends Vue {
+export default class CategoryList extends Vue {
   @Prop()
   categories!: ICategory[];
 
