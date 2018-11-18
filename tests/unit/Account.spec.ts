@@ -1,8 +1,9 @@
 import { shallowMount, mount, createLocalVue, config } from "@vue/test-utils";
 import Vuex from "vuex";
-import { QiitaModule } from "@/store/modules/qiita";
+import { IUpdateCategoryPayload, QiitaModule } from "@/store/modules/qiita";
 import Account from "@/pages/Account.vue";
 import SideMenu from "@/components/SideMenu.vue";
+import CategoryList from "@/components/CategoryList.vue";
 import { IQiitaState } from "@/types/qiita";
 import VueRouter from "vue-router";
 
@@ -31,6 +32,7 @@ describe("Account.vue", () => {
 
     actions = {
       saveCategory: jest.fn(),
+      updateCategory: jest.fn(),
       fetchCategory: jest.fn()
     };
 
@@ -57,6 +59,27 @@ describe("Account.vue", () => {
       expect(actions.saveCategory).toHaveBeenCalledWith(
         expect.anything(),
         inputtedCategory,
+        undefined
+      );
+    });
+
+    it('calls store action "updateCategory" on onClickUpdateCategory()', () => {
+      state.categories = [{ categoryId: 1, name: "テストカテゴリ" }];
+
+      const wrapper = shallowMount(Account, { store, localVue, router });
+      const editedCategory = "編集されたカテゴリ名";
+
+      const updateCategoryPayload: IUpdateCategoryPayload = {
+        stateCategory: state.categories[0],
+        categoryName: editedCategory
+      };
+
+      // @ts-ignore
+      wrapper.vm.onClickUpdateCategory(updateCategoryPayload);
+
+      expect(actions.updateCategory).toHaveBeenCalledWith(
+        expect.anything(),
+        updateCategoryPayload,
         undefined
       );
     });
@@ -89,5 +112,29 @@ describe("Account.vue", () => {
 
       expect(mock).toHaveBeenCalledWith(inputtedCategory);
     });
+  });
+
+  it("should call onClickUpdateCategory when button is clicked", () => {
+    state.categories = [{ categoryId: 1, name: "テストカテゴリ" }];
+
+    const mock = jest.fn();
+    const wrapper = mount(Account, { store, localVue, router });
+
+    wrapper.setMethods({
+      onClickUpdateCategory: mock
+    });
+
+    const categoryList = wrapper.find(CategoryList);
+    const editedCategory = "編集されたカテゴリ名";
+
+    const updateCategoryPayload: IUpdateCategoryPayload = {
+      stateCategory: state.categories[0],
+      categoryName: editedCategory
+    };
+
+    // @ts-ignore
+    categoryList.vm.onClickUpdateCategory(updateCategoryPayload);
+
+    expect(mock).toHaveBeenCalledWith(updateCategoryPayload);
   });
 });
