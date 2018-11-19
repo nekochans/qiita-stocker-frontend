@@ -32,7 +32,10 @@ import {
   IFetchCategoriesRequest,
   IFetchCategoriesResponse,
   unauthorizedMessage,
-  ICategory
+  ICategory,
+  updateCategory,
+  IUpdateCategoryRequest,
+  IUpdateCategoryResponse
 } from "@/domain/qiita";
 import uuid from "uuid";
 import router from "@/router";
@@ -328,11 +331,25 @@ const actions: ActionTree<IQiitaState, RootState> = {
   },
   updateCategory: async (
     { commit },
-    updateCategory: IUpdateCategoryPayload
+    updateCategoryItem: IUpdateCategoryPayload
   ) => {
     try {
-      // TODO カテゴリ変更APIへのリクエスト処理
-      commit("updateCategory", updateCategory);
+      const sessionId = localStorage.load(STORAGE_KEY_SESSION_ID);
+      const updateCategoryRequest: IUpdateCategoryRequest = {
+        apiUrlBase: apiUrlBase(),
+        sessionId: sessionId,
+        categoryId: updateCategoryItem.stateCategory.categoryId,
+        name: updateCategoryItem.categoryName
+      };
+
+      const updateCategoryResponse: IUpdateCategoryResponse = await updateCategory(
+        updateCategoryRequest
+      );
+
+      commit("updateCategory", {
+        stateCategory: updateCategoryItem.stateCategory,
+        categoryName: updateCategoryResponse.name
+      });
     } catch (error) {
       router.push({
         name: "error",

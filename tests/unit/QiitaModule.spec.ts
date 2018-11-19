@@ -7,7 +7,8 @@ import {
   IFetchAuthenticatedUserResponse,
   IAuthorizationResponse,
   ISaveCategoryResponse,
-  IFetchCategoriesResponse
+  IFetchCategoriesResponse,
+  IUpdateCategoryResponse
 } from "@/domain/qiita";
 
 jest.mock("@/domain/Qiita");
@@ -331,7 +332,7 @@ describe("QiitaModule", () => {
     });
 
     it("should be able to update category", async () => {
-      const updateCategory: {
+      const updateCategoryItem: {
         stateCategory: ICategory;
         categoryName: string;
       } = {
@@ -339,13 +340,25 @@ describe("QiitaModule", () => {
         categoryName: "編集したカテゴリ名"
       };
 
+      const mockPostResponse: { data: IUpdateCategoryResponse } = {
+        data: {
+          categoryId: updateCategoryItem.stateCategory.categoryId,
+          name: updateCategoryItem.categoryName
+        }
+      };
+
+      const mockAxios: any = axios;
+      mockAxios.patch.mockResolvedValue(mockPostResponse);
+
       const commit = jest.fn();
 
       const wrapper = (actions: any) =>
-        actions.updateCategory({ commit }, updateCategory);
+        actions.updateCategory({ commit }, updateCategoryItem);
       await wrapper(QiitaModule.actions);
 
-      expect(commit.mock.calls).toEqual([["updateCategory", updateCategory]]);
+      expect(commit.mock.calls).toEqual([
+        ["updateCategory", updateCategoryItem]
+      ]);
     });
   });
 });
