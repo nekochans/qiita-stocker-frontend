@@ -10,7 +10,9 @@ import {
   ISaveCategoryRequest,
   ISaveCategoryResponse,
   IFetchCategoriesRequest,
-  IFetchCategoriesResponse
+  IFetchCategoriesResponse,
+  IUpdateCategoryRequest,
+  IUpdateCategoryResponse
 } from "@/domain/qiita";
 
 export default class QiitaStockerApi implements IQiitaStockerApi {
@@ -97,8 +99,30 @@ export default class QiitaStockerApi implements IQiitaStockerApi {
     request: ISaveCategoryRequest
   ): Promise<ISaveCategoryResponse> {
     return await axios
-      .post<IIssueLoginSessionResponse>(
+      .post<ISaveCategoryResponse>(
         `${request.apiUrlBase}/api/categories`,
+        { name: request.name },
+        {
+          headers: {
+            Authorization: `Bearer ${request.sessionId}`,
+            "Content-Type": "application/json"
+          }
+        }
+      )
+      .then((axiosResponse: AxiosResponse) => {
+        return Promise.resolve(axiosResponse.data);
+      })
+      .catch((axiosError: IQiitaStockerError) => {
+        return Promise.reject(axiosError);
+      });
+  }
+
+  async updateCategory(
+    request: IUpdateCategoryRequest
+  ): Promise<IUpdateCategoryResponse> {
+    return await axios
+      .patch<IUpdateCategoryResponse>(
+        `${request.apiUrlBase}/api/categories/${request.categoryId}`,
         { name: request.name },
         {
           headers: {

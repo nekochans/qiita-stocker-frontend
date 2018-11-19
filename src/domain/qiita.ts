@@ -27,6 +27,9 @@ export interface IQiitaStockerApi {
     request: IFetchCategoriesRequest
   ): Promise<IFetchCategoriesResponse[]>;
   saveCategory(request: ISaveCategoryRequest): Promise<ISaveCategoryResponse>;
+  updateCategory(
+    request: IUpdateCategoryRequest
+  ): Promise<IUpdateCategoryResponse>;
 }
 
 export interface IQiitaApi {
@@ -110,6 +113,15 @@ export interface ISaveCategoryRequest {
 
 export interface ISaveCategoryResponse extends ICategory {}
 
+export interface IUpdateCategoryRequest {
+  apiUrlBase: string;
+  sessionId: string;
+  categoryId: number;
+  name: string;
+}
+
+export interface IUpdateCategoryResponse extends ICategory {}
+
 interface IQiitaStockerErrorData {
   code: number;
   message: string;
@@ -182,6 +194,12 @@ export const fetchCategories = async (
   request: IFetchCategoriesRequest
 ): Promise<IFetchCategoriesResponse[]> => {
   return await qiitaStockerApi.fetchCategories(request);
+};
+
+export const updateCategory = async (
+  request: IUpdateCategoryRequest
+): Promise<IUpdateCategoryResponse> => {
+  return await qiitaStockerApi.updateCategory(request);
 };
 
 export const matchState = (responseState: string, state: string): boolean => {
