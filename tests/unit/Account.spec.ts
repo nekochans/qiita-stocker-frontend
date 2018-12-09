@@ -25,6 +25,7 @@ describe("Account.vue", () => {
     state = {
       authorizationCode: "",
       accessToken: "",
+      qiitaAccountId: "",
       permanentId: "",
       isLoggedIn: true,
       categories: []

@@ -22,6 +22,7 @@ describe("Cancel.vue", () => {
     state = {
       authorizationCode: "",
       accessToken: "",
+      qiitaAccountId: "",
       permanentId: "",
       isLoggedIn: true,
       categories: []

@@ -69,11 +69,13 @@ export interface IFetchAuthenticatedUserRequest {
 }
 
 export interface IFetchAuthenticatedUserResponse {
+  id: string;
   permanent_id: string;
 }
 
 export interface ICreateAccountRequest {
   apiUrlBase: string;
+  qiitaAccountId: string;
   permanentId: string;
   accessToken: string;
 }
@@ -85,6 +87,7 @@ export interface ICreateAccountResponse {
 
 export interface IIssueLoginSessionRequest {
   apiUrlBase: string;
+  qiitaAccountId: string;
   permanentId: string;
   accessToken: string;
 }
