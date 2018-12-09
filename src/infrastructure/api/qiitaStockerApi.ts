@@ -23,6 +23,7 @@ export default class QiitaStockerApi implements IQiitaStockerApi {
       .post<ICreateAccountResponse>(
         `${request.apiUrlBase}/api/accounts`,
         {
+          qiitaAccountId: request.qiitaAccountId,
           permanentId: request.permanentId,
           accessToken: request.accessToken
         },
@@ -62,6 +63,7 @@ export default class QiitaStockerApi implements IQiitaStockerApi {
       .post<IIssueLoginSessionResponse>(
         `${request.apiUrlBase}/api/login-sessions`,
         {
+          qiitaAccountId: request.qiitaAccountId,
           permanentId: request.permanentId,
           accessToken: request.accessToken
         },

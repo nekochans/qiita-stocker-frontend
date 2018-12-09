@@ -22,6 +22,7 @@ describe("QiitaModule", () => {
       state = {
         authorizationCode: "34d97d024861f098d2e45fb4d9ed7757f97f5b0f",
         accessToken: "72d79c218c16c65b8076c7de8ef6ec55504ca6a0",
+        qiitaAccountId: "test-user",
         permanentId: "1",
         isLoggedIn: false,
         categories: []
@@ -72,6 +73,7 @@ describe("QiitaModule", () => {
       state = {
         authorizationCode: "",
         accessToken: "",
+        qiitaAccountId: "",
         permanentId: "",
         isLoggedIn: false,
         categories: []
@@ -102,6 +104,14 @@ describe("QiitaModule", () => {
       expect(state.accessToken).toEqual(
         "72d79c218c16c65b8076c7de8ef6ec55504ca6a0"
       );
+    });
+
+    it("should be able to save qiitaAccountId", () => {
+      const wrapper = (mutations: any) =>
+        mutations.saveQiitaAccountId(state, "test-user");
+      wrapper(QiitaModule.mutations);
+
+      expect(state.qiitaAccountId).toEqual("test-user");
     });
 
     it("should be able to save permanentId", () => {
@@ -176,6 +186,7 @@ describe("QiitaModule", () => {
 
       const mockGetResponse: { data: IFetchAuthenticatedUserResponse } = {
         data: {
+          id: "test-user",
           permanent_id: "1"
         }
       };
@@ -203,7 +214,8 @@ describe("QiitaModule", () => {
       expect(commit.mock.calls).toEqual([
         ["saveAuthorizationCode", "34d97d024861f098d2e45fb4d9ed7757f97f5b0f"],
         ["saveAccessToken", "72d79c218c16c65b8076c7de8ef6ec55504ca6a0"],
-        ["savePermanentId", "1"]
+        ["savePermanentId", "1"],
+        ["saveQiitaAccountId", "test-user"]
       ]);
 
       expect(dispatch.mock.calls).toEqual([["createAccount"]]);
@@ -220,6 +232,7 @@ describe("QiitaModule", () => {
 
       const mockGetResponse: { data: IFetchAuthenticatedUserResponse } = {
         data: {
+          id: "test-user",
           permanent_id: "1"
         }
       };
@@ -247,7 +260,8 @@ describe("QiitaModule", () => {
       expect(commit.mock.calls).toEqual([
         ["saveAuthorizationCode", "34d97d024861f098d2e45fb4d9ed7757f97f5b0f"],
         ["saveAccessToken", "72d79c218c16c65b8076c7de8ef6ec55504ca6a0"],
-        ["savePermanentId", "1"]
+        ["savePermanentId", "1"],
+        ["saveQiitaAccountId", "test-user"]
       ]);
 
       expect(dispatch.mock.calls).toEqual([["issueLoginSession"]]);

@@ -74,6 +74,7 @@ export interface IUpdateCategoryPayload {
 
 const state: IQiitaState = {
   authorizationCode: "",
+  qiitaAccountId: "",
   accessToken: "",
   permanentId: "",
   isLoggedIn: true,
@@ -104,6 +105,9 @@ const mutations: MutationTree<IQiitaState> = {
   },
   saveAccessToken: (state, accessToken: string) => {
     state.accessToken = accessToken;
+  },
+  saveQiitaAccountId: (state, qiitaAccountId: string) => {
+    state.qiitaAccountId = qiitaAccountId;
   },
   savePermanentId: (state, permanentId: string) => {
     state.permanentId = permanentId;
@@ -174,6 +178,7 @@ const actions: ActionTree<IQiitaState, RootState> = {
       );
 
       commit("savePermanentId", authenticatedUser.permanent_id);
+      commit("saveQiitaAccountId", authenticatedUser.id);
 
       switch (accountAction) {
         case "signUp":
@@ -204,6 +209,7 @@ const actions: ActionTree<IQiitaState, RootState> = {
     try {
       const createAccountRequest: ICreateAccountRequest = {
         apiUrlBase: apiUrlBase(),
+        qiitaAccountId: state.qiitaAccountId,
         permanentId: state.permanentId,
         accessToken: state.accessToken
       };
@@ -234,6 +240,7 @@ const actions: ActionTree<IQiitaState, RootState> = {
     try {
       const issueLoginSessionRequest: IIssueLoginSessionRequest = {
         apiUrlBase: apiUrlBase(),
+        qiitaAccountId: state.qiitaAccountId,
         permanentId: state.permanentId,
         accessToken: state.accessToken
       };
