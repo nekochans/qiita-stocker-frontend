@@ -34,7 +34,8 @@ describe("Account.vue", () => {
     actions = {
       saveCategory: jest.fn(),
       updateCategory: jest.fn(),
-      fetchCategory: jest.fn()
+      fetchCategory: jest.fn(),
+      synchronizeStock: jest.fn(),
     };
 
     store = new Vuex.Store({
@@ -92,6 +93,15 @@ describe("Account.vue", () => {
       wrapper.vm.initializeCategory();
 
       expect(actions.fetchCategory).toHaveBeenCalled();
+    });
+
+    it('calls store action "synchronizeStock" on initializeStock()', () => {
+      const wrapper = shallowMount(Account, { store, localVue, router });
+
+      // @ts-ignore
+      wrapper.vm.initializeStock();
+
+      expect(actions.synchronizeStock).toHaveBeenCalled();
     });
   });
 
