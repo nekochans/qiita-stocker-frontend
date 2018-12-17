@@ -5,6 +5,6 @@ export interface IQiitaState {
   accessToken: string;
   qiitaAccountId: string;
   permanentId: string;
-  isLoggedIn: boolean;
+  sessionId: string;
   categories: ICategory[];
 }

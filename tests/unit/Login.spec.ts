@@ -24,7 +24,7 @@ describe("Login.vue", () => {
       accessToken: "",
       qiitaAccountId: "",
       permanentId: "",
-      isLoggedIn: false,
+      sessionId: "",
       categories: []
     };
 

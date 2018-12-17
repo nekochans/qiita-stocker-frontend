@@ -24,7 +24,7 @@ describe("QiitaModule", () => {
         accessToken: "72d79c218c16c65b8076c7de8ef6ec55504ca6a0",
         qiitaAccountId: "test-user",
         permanentId: "1",
-        isLoggedIn: false,
+        sessionId: "",
         categories: []
       };
     });
@@ -75,7 +75,7 @@ describe("QiitaModule", () => {
         accessToken: "",
         qiitaAccountId: "",
         permanentId: "",
-        isLoggedIn: false,
+        sessionId: "",
         categories: []
       };
     });
