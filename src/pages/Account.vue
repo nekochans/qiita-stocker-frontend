@@ -80,6 +80,9 @@ export default class Account extends Vue {
   @QiitaAction
   updateCategory!: (updateCategoryPayload: IUpdateCategoryPayload) => void;
 
+  @QiitaAction
+  synchronizeStock!: () => void;
+
   onClickSaveCategory(categoryName: string) {
     this.saveCategory(categoryName);
   }
@@ -90,12 +93,17 @@ export default class Account extends Vue {
 
   created() {
     this.initializeCategory();
+    this.initializeStock();
   }
 
   initializeCategory() {
     if (!this.categories.length) {
       this.fetchCategory();
     }
+  }
+
+  initializeStock() {
+    this.synchronizeStock();
   }
 }
 </script>

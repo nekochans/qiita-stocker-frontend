@@ -35,7 +35,9 @@ import {
   ICategory,
   updateCategory,
   IUpdateCategoryRequest,
-  IUpdateCategoryResponse
+  IUpdateCategoryResponse,
+  ISynchronizeStockRequest,
+  synchronizeStock
 } from "@/domain/qiita";
 import uuid from "uuid";
 import router from "@/router";
@@ -221,9 +223,6 @@ const actions: ActionTree<IQiitaState, RootState> = {
         createAccountRequest
       );
 
-      // TODO 発行されたアカウントIDをstateに保存するのか検討
-      console.log(createAccountResponse.accountId);
-
       commit("saveSessionId", createAccountResponse._embedded.sessionId);
 
       localStorage.save(
@@ -365,6 +364,23 @@ const actions: ActionTree<IQiitaState, RootState> = {
         stateCategory: updateCategoryItem.stateCategory,
         categoryName: updateCategoryResponse.name
       });
+    } catch (error) {
+      router.push({
+        name: "error",
+        params: { errorMessage: error.response.data.message }
+      });
+      return;
+    }
+  },
+  synchronizeStock: async ({ commit }) => {
+    try {
+      const sessionId = localStorage.load(STORAGE_KEY_SESSION_ID);
+      const synchronizeStockRequest: ISynchronizeStockRequest = {
+        apiUrlBase: apiUrlBase(),
+        sessionId: sessionId
+      };
+
+      await synchronizeStock(synchronizeStockRequest);
     } catch (error) {
       router.push({
         name: "error",

@@ -30,6 +30,7 @@ export interface IQiitaStockerApi {
   updateCategory(
     request: IUpdateCategoryRequest
   ): Promise<IUpdateCategoryResponse>;
+  synchronizeStock(request: ISynchronizeStockRequest): Promise<void>;
 }
 
 export interface IQiitaApi {
@@ -130,6 +131,11 @@ interface IQiitaStockerErrorData {
   message: string;
 }
 
+export interface ISynchronizeStockRequest {
+  apiUrlBase: string;
+  sessionId: string;
+}
+
 export interface IQiitaStockerError extends AxiosError {
   response: AxiosResponse<IQiitaStockerErrorData>;
 }
@@ -203,6 +209,12 @@ export const updateCategory = async (
   request: IUpdateCategoryRequest
 ): Promise<IUpdateCategoryResponse> => {
   return await qiitaStockerApi.updateCategory(request);
+};
+
+export const synchronizeStock = async (
+  request: ISynchronizeStockRequest
+): Promise<void> => {
+  return await qiitaStockerApi.synchronizeStock(request);
 };
 
 export const matchState = (responseState: string, state: string): boolean => {
