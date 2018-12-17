@@ -12,7 +12,8 @@ import {
   IFetchCategoriesRequest,
   IFetchCategoriesResponse,
   IUpdateCategoryRequest,
-  IUpdateCategoryResponse
+  IUpdateCategoryResponse,
+  ISynchronizeStockRequest
 } from "@/domain/qiita";
 
 export default class QiitaStockerApi implements IQiitaStockerApi {
@@ -135,6 +136,25 @@ export default class QiitaStockerApi implements IQiitaStockerApi {
       )
       .then((axiosResponse: AxiosResponse) => {
         return Promise.resolve(axiosResponse.data);
+      })
+      .catch((axiosError: IQiitaStockerError) => {
+        return Promise.reject(axiosError);
+      });
+  }
+
+  async synchronizeStock(request: ISynchronizeStockRequest): Promise<void> {
+    return await axios
+      .put(
+        `${request.apiUrlBase}/api/stocks`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${request.sessionId}`
+          }
+        }
+      )
+      .then(() => {
+        return Promise.resolve();
       })
       .catch((axiosError: IQiitaStockerError) => {
         return Promise.reject(axiosError);
