@@ -5,7 +5,6 @@
       <div class="container has-text-centered">
         <h1 class="title">アカウント作成</h1>
         <button class="button" @click="signUp">Qiitaアカウントで登録</button>
-        <p v-show="permanentId">PermanentId :{{ permanentId }}</p>
       </div>
     </main>
     <AppFooter />
@@ -19,7 +18,6 @@ import AppHeader from "@/components/AppHeader.vue";
 import AppFooter from "@/components/AppFooter.vue";
 
 const QiitaAction = namespace("QiitaModule", Action);
-const QiitaGetter = namespace("QiitaModule", Getter);
 
 @Component({
   components: {
@@ -28,9 +26,6 @@ const QiitaGetter = namespace("QiitaModule", Getter);
   }
 })
 export default class SignUp extends Vue {
-  @QiitaGetter
-  permanentId!: string;
-
   @QiitaAction
   signUp!: () => void;
 }
