@@ -77,7 +77,7 @@ const state: IQiitaState = {
   qiitaAccountId: "",
   accessToken: "",
   permanentId: "",
-  isLoggedIn: true,
+  sessionId: localStorage.load(STORAGE_KEY_SESSION_ID) || "",
   categories: []
 };
 
@@ -91,8 +91,8 @@ const getters: GetterTree<IQiitaState, RootState> = {
   permanentId: (state): IQiitaState["permanentId"] => {
     return state.permanentId;
   },
-  isLoggedIn: (state): IQiitaState["isLoggedIn"] => {
-    return state.isLoggedIn;
+  isLoggedIn: (state): boolean => {
+    return !!state.sessionId;
   },
   categories: (state): IQiitaState["categories"] => {
     return state.categories;
@@ -111,6 +111,9 @@ const mutations: MutationTree<IQiitaState> = {
   },
   savePermanentId: (state, permanentId: string) => {
     state.permanentId = permanentId;
+  },
+  saveSessionId: (state, sessionId: string) => {
+    state.sessionId = sessionId;
   },
   saveCategory: (state, categories: ICategory[]) => {
     state.categories = categories;
@@ -220,6 +223,9 @@ const actions: ActionTree<IQiitaState, RootState> = {
 
       // TODO 発行されたアカウントIDをstateに保存するのか検討
       console.log(createAccountResponse.accountId);
+
+      commit("saveSessionId", createAccountResponse._embedded.sessionId);
+
       localStorage.save(
         STORAGE_KEY_SESSION_ID,
         createAccountResponse._embedded.sessionId
@@ -248,6 +254,8 @@ const actions: ActionTree<IQiitaState, RootState> = {
       const issueAccessTokensResponse: IIssueLoginSessionResponse = await issueLoginSession(
         issueLoginSessionRequest
       );
+
+      commit("saveSessionId", issueAccessTokensResponse.sessionId);
 
       localStorage.save(
         STORAGE_KEY_SESSION_ID,

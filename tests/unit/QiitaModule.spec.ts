@@ -1,5 +1,9 @@
 import { IQiitaState } from "@/types/qiita";
-import { ICategory } from "@/domain/qiita";
+import {
+  ICategory,
+  ICreateAccountResponse,
+  IIssueLoginSessionResponse
+} from "@/domain/qiita";
 import { QiitaModule } from "@/store/modules/qiita";
 import axios from "axios";
 import {
@@ -24,7 +28,7 @@ describe("QiitaModule", () => {
         accessToken: "72d79c218c16c65b8076c7de8ef6ec55504ca6a0",
         qiitaAccountId: "test-user",
         permanentId: "1",
-        isLoggedIn: false,
+        sessionId: "",
         categories: []
       };
     });
@@ -56,6 +60,13 @@ describe("QiitaModule", () => {
       expect(permanentId).toEqual(state.permanentId);
     });
 
+    it("should be able to get isLoggedIn", () => {
+      const wrapper = (getters: any) => getters.isLoggedIn(state);
+      const isLoggedIn: boolean = wrapper(QiitaModule.getters);
+
+      expect(isLoggedIn).toEqual(false);
+    });
+
     it("should be able to get categories", () => {
       const wrapper = (getters: any) => getters.categories(state);
       const categories: IQiitaState["categories"] = wrapper(
@@ -75,7 +86,7 @@ describe("QiitaModule", () => {
         accessToken: "",
         qiitaAccountId: "",
         permanentId: "",
-        isLoggedIn: false,
+        sessionId: "",
         categories: []
       };
     });
@@ -119,6 +130,14 @@ describe("QiitaModule", () => {
       wrapper(QiitaModule.mutations);
 
       expect(state.permanentId).toEqual("1");
+    });
+
+    it("should be able to save sessionId", () => {
+      const wrapper = (mutations: any) =>
+        mutations.saveSessionId(state, "d690e4de-0a4e-4f14-a5c5-f4303fbd8a08");
+      wrapper(QiitaModule.mutations);
+
+      expect(state.sessionId).toEqual("d690e4de-0a4e-4f14-a5c5-f4303fbd8a08");
     });
 
     it("should be able to save categories", () => {
@@ -221,6 +240,28 @@ describe("QiitaModule", () => {
       expect(dispatch.mock.calls).toEqual([["createAccount"]]);
     });
 
+    it("should be able to save sessionId when create account", async () => {
+      const sessionId = "d690e4de-0a4e-4f14-a5c5-f4303fbd8a08";
+      const mockResponse: { data: ICreateAccountResponse } = {
+        data: {
+          accountId: "1",
+          _embedded: {
+            sessionId: sessionId
+          }
+        }
+      };
+
+      const mockAxios: any = axios;
+      mockAxios.post.mockResolvedValue(mockResponse);
+
+      const commit = jest.fn();
+
+      const wrapper = (actions: any) => actions.createAccount({ commit });
+      await wrapper(QiitaModule.actions);
+
+      expect(commit.mock.calls).toEqual([["saveSessionId", sessionId]]);
+    });
+
     it("should be able to login", async () => {
       const mockPostResponse: { data: IIssueAccessTokensResponse } = {
         data: {
@@ -265,6 +306,25 @@ describe("QiitaModule", () => {
       ]);
 
       expect(dispatch.mock.calls).toEqual([["issueLoginSession"]]);
+    });
+
+    it("should be able to save sessionId when login", async () => {
+      const sessionId = "d690e4de-0a4e-4f14-a5c5-f4303fbd8a08";
+      const mockResponse: { data: IIssueLoginSessionResponse } = {
+        data: {
+          sessionId: sessionId
+        }
+      };
+
+      const mockAxios: any = axios;
+      mockAxios.post.mockResolvedValue(mockResponse);
+
+      const commit = jest.fn();
+
+      const wrapper = (actions: any) => actions.issueLoginSession({ commit });
+      await wrapper(QiitaModule.actions);
+
+      expect(commit.mock.calls).toEqual([["saveSessionId", sessionId]]);
     });
 
     it("should not commit when callbackState don't match localState", async () => {

@@ -24,7 +24,7 @@ describe("SignUp.vue", () => {
       accessToken: "",
       qiitaAccountId: "",
       permanentId: "",
-      isLoggedIn: false,
+      sessionId: "-0a4e-4f14-a5c5-f4303fbd8a08",
       categories: []
     };
 
