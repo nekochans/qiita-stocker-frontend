@@ -2,6 +2,7 @@ import { IQiitaState } from "@/types/qiita";
 import {
   ICategory,
   ICreateAccountResponse,
+  IFetchStockResponse,
   IIssueLoginSessionResponse
 } from "@/domain/qiita";
 import { QiitaModule } from "@/store/modules/qiita";
@@ -12,7 +13,9 @@ import {
   IAuthorizationResponse,
   ISaveCategoryResponse,
   IFetchCategoriesResponse,
-  IUpdateCategoryResponse
+  IUpdateCategoryResponse,
+  IStock,
+  IPage
 } from "@/domain/qiita";
 
 jest.mock("@/domain/Qiita");
@@ -21,6 +24,26 @@ jest.mock("axios");
 describe("QiitaModule", () => {
   describe("getters", () => {
     let state: IQiitaState;
+    const stocks: IStock[] = [
+      {
+        id: "1",
+        article_id: "c0a2609ae61a72dcc60f",
+        title: "title1",
+        user_id: "test-user1",
+        profile_image_url: "https://test.com/test/image",
+        article_created_at: "2018/09/30",
+        tags: ["laravel", "php"]
+      },
+      {
+        id: "2",
+        article_id: "c0a2609ae61a72dcc60f",
+        title: "title2",
+        user_id: "test-user12",
+        profile_image_url: "https://test.com/test/image",
+        article_created_at: "2018/09/30",
+        tags: ["Vue.js", "Vuex", "TypeScript"]
+      }
+    ];
 
     beforeEach(() => {
       state = {
@@ -29,7 +52,9 @@ describe("QiitaModule", () => {
         qiitaAccountId: "test-user",
         permanentId: "1",
         sessionId: "",
-        categories: []
+        categories: [],
+        stocks: stocks,
+        paging: []
       };
     });
 
@@ -75,6 +100,13 @@ describe("QiitaModule", () => {
 
       expect(categories).toEqual(state.categories);
     });
+
+    it("should be able to get stocks", () => {
+      const wrapper = (getters: any) => getters.stocks(state);
+      const stocks: IQiitaState["stocks"] = wrapper(QiitaModule.getters);
+
+      expect(stocks).toEqual(state.stocks);
+    });
   });
 
   describe("mutations", () => {
@@ -87,7 +119,9 @@ describe("QiitaModule", () => {
         qiitaAccountId: "",
         permanentId: "",
         sessionId: "",
-        categories: []
+        categories: [],
+        stocks: [],
+        paging: []
       };
     });
 
@@ -190,6 +224,63 @@ describe("QiitaModule", () => {
       wrapper(QiitaModule.mutations);
 
       expect(state.categories[0].name).toEqual(updateCategory.categoryName);
+    });
+
+    it("should be able to save stocks", () => {
+      const stocks: IStock[] = [
+        {
+          id: "1",
+          article_id: "c0a2609ae61a72dcc60f",
+          title: "title1",
+          user_id: "test-user1",
+          profile_image_url: "https://test.com/test/image",
+          article_created_at: "2018/09/30",
+          tags: ["laravel", "php"]
+        },
+        {
+          id: "2",
+          article_id: "c0a2609ae61a72dcc60f",
+          title: "title2",
+          user_id: "test-user12",
+          profile_image_url: "https://test.com/test/image",
+          article_created_at: "2018/09/30",
+          tags: ["Vue.js", "Vuex", "TypeScript"]
+        }
+      ];
+      const wrapper = (mutations: any) => mutations.saveStocks(state, stocks);
+      wrapper(QiitaModule.mutations);
+
+      expect(state.stocks).toEqual(stocks);
+    });
+
+    it("should be able to save paging", () => {
+      const paging: IPage[] = [
+        {
+          page: "4",
+          perPage: "20",
+          relation: "next"
+        },
+        {
+          page: "5",
+          perPage: "20",
+          relation: "last"
+        },
+        {
+          page: "1",
+          perPage: "20",
+          relation: "first"
+        },
+        {
+          page: "2",
+          perPage: "20",
+          relation: "prev"
+        }
+      ];
+
+      const wrapper = (mutations: any) => mutations.savePaging(state, paging);
+      wrapper(QiitaModule.mutations);
+
+      expect(state.paging).toEqual(paging);
     });
   });
 
@@ -432,6 +523,78 @@ describe("QiitaModule", () => {
 
       expect(commit.mock.calls).toEqual([
         ["updateCategory", updateCategoryItem]
+      ]);
+    });
+
+    it("should be able to fetch stocks", async () => {
+      const stocks: IStock[] = [
+        {
+          id: "1",
+          article_id: "c0a2609ae61a72dcc60f",
+          title: "title1",
+          user_id: "test-user1",
+          profile_image_url: "https://test.com/test/image",
+          article_created_at: "2018/09/30",
+          tags: ["laravel", "php"]
+        },
+        {
+          id: "2",
+          article_id: "c0a2609ae61a72dcc60f",
+          title: "title2",
+          user_id: "test-user12",
+          profile_image_url: "https://test.com/test/image",
+          article_created_at: "2018/09/30",
+          tags: ["Vue.js", "Vuex", "TypeScript"]
+        }
+      ];
+
+      const paging: IPage[] = [
+        {
+          page: "4",
+          perPage: "20",
+          relation: "next"
+        },
+        {
+          page: "5",
+          perPage: "20",
+          relation: "last"
+        },
+        {
+          page: "1",
+          perPage: "20",
+          relation: "first"
+        },
+        {
+          page: "2",
+          perPage: "20",
+          relation: "prev"
+        }
+      ];
+
+      const link =
+        '<http://127.0.0.1/api/stocks?page=4&per_page=20>; rel="next",' +
+        '<http://127.0.0.1/api/stocks?page=5&per_page=20>; rel="last",' +
+        '<http://127.0.0.1/api/stocks?page=1&per_page=20>; rel="first",' +
+        '<http://127.0.0.1/api/stocks?page=2&per_page=20>; rel="prev"';
+
+      const mockResponse: { data: any; headers: any } = {
+        data: stocks,
+        headers: {
+          link: link
+        }
+      };
+
+      const mockAxios: any = axios;
+      mockAxios.get.mockResolvedValue(mockResponse);
+
+      const commit = jest.fn();
+
+      const wrapper = (actions: any) => actions.fetchStock({ commit });
+      await wrapper(QiitaModule.actions);
+
+      expect(commit.mock.calls).toEqual([
+        ["saveStocks", stocks],
+        ["savePaging", paging]
       ]);
     });
   });

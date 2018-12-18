@@ -25,7 +25,9 @@ describe("Login.vue", () => {
       qiitaAccountId: "",
       permanentId: "",
       sessionId: "",
-      categories: []
+      categories: [],
+      stocks: [],
+      paging: []
     };
 
     actions = {

@@ -11,7 +11,7 @@
           />
         </div>
         <div class="column is-9">
-          <MediaList :qiitaItems="qiitaItems" /> <Pagination />
+          <MediaList :stocks="stocks" /> <Pagination />
         </div>
       </div>
     </main>
@@ -26,7 +26,7 @@ import AppHeader from "@/components/AppHeader.vue";
 import SideMenu from "@/components/SideMenu.vue";
 import MediaList from "@/components/MediaList.vue";
 import Pagination from "@/components/Pagination.vue";
-import { IQiitaItem, ICategory } from "@/domain/qiita";
+import { IStock, ICategory } from "@/domain/qiita";
 import { IUpdateCategoryPayload } from "@/store/modules/qiita";
 
 const QiitaAction = namespace("QiitaModule", Action);
@@ -41,35 +41,11 @@ const QiitaGetter = namespace("QiitaModule", Getter);
   }
 })
 export default class Account extends Vue {
-  qiitaItems: IQiitaItem[] = [
-    {
-      id: "c0a2609ae61a72dcc60f",
-      title: "CORSについて理解してLaravel5.6で対応する",
-      created_at: "2018/09/30",
-      tags: ["CORS", "laravel5.6", "laravel", "php"],
-      userId: "kobayashi-m42",
-      profile_image_url: "https://avatars3.githubusercontent.com/u/32682645?v=4"
-    },
-    {
-      id: "1",
-      title: "CORSについて理解してLaravel5.6で対応する",
-      created_at: "2018/09/30",
-      tags: ["CORS", "laravel5.6", "laravel", "php"],
-      userId: "kobayashi-m42",
-      profile_image_url: "https://avatars3.githubusercontent.com/u/32682645?v=4"
-    },
-    {
-      id: "2",
-      title: "CORSについて理解してLaravel5.6で対応する",
-      created_at: "2018/09/30",
-      tags: ["CORS", "laravel5.6", "laravel", "php"],
-      userId: "kobayashi-m42",
-      profile_image_url: "https://avatars3.githubusercontent.com/u/32682645?v=4"
-    }
-  ];
-
   @QiitaGetter
   categories!: ICategory[];
+
+  @QiitaGetter
+  stocks!: IStock[];
 
   @QiitaAction
   saveCategory!: (category: string) => void;
@@ -82,6 +58,9 @@ export default class Account extends Vue {
 
   @QiitaAction
   synchronizeStock!: () => void;
+
+  @QiitaAction
+  fetchStock!: () => void;
 
   onClickSaveCategory(categoryName: string) {
     this.saveCategory(categoryName);
@@ -102,8 +81,9 @@ export default class Account extends Vue {
     }
   }
 
-  initializeStock() {
-    this.synchronizeStock();
+  async initializeStock() {
+    await this.synchronizeStock();
+    await this.fetchStock();
   }
 }
 </script>

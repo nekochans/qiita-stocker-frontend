@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div v-if="qiitaItems.length">
+    <div v-if="stocks.length">
       <Media
-        v-if="qiitaItems.length"
-        v-for="qiitaItem in qiitaItems"
-        :qiitaItem="qiitaItem"
-        :key="qiitaItem.id"
+        v-if="stocks.length"
+        v-for="stock in stocks"
+        :stock="stock"
+        :key="stock.id"
       />
     </div>
     <div v-else><h1 class="subtitle">ストックされた記事はありません。</h1></div>
@@ -15,7 +15,7 @@
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
 import Media from "@/components/Media.vue";
-import { IQiitaItem } from "@/domain/qiita";
+import { IStock } from "@/domain/qiita";
 
 @Component({
   components: {
@@ -24,6 +24,6 @@ import { IQiitaItem } from "@/domain/qiita";
 })
 export default class MediaList extends Vue {
   @Prop()
-  qiitaItems!: IQiitaItem[];
+  stocks!: IStock[];
 }
 </script>

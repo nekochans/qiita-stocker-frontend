@@ -1,27 +1,30 @@
 <template>
   <article class="media">
     <figure class="media-left">
-      <a class="image is-48x48" :href="`https://qiita.com/${qiitaItem.userId}`">
-        <img :src="qiitaItem.profile_image_url" />
+      <a class="image is-48x48" :href="`https://qiita.com/${stock.user_id}`">
+        <img :src="stock.profile_image_url" />
       </a>
     </figure>
     <div class="media-content">
       <div class="content">
         <div class="item-info">
           <p>
-            <a :href="`https://qiita.com/${qiitaItem.userId}`">{{
-              qiitaItem.userId
+            <a :href="`https://qiita.com/${stock.user_id}`">{{
+              stock.user_id
             }}</a
-            >が{{ qiitaItem.created_at }}に投稿しました
+            >が{{ stock.article_created_at }}に投稿しました
           </p>
         </div>
         <div class="item-title">
-          <a :href="`https://qiita.com/kobayashi-m42/items/${qiitaItem.id}`">{{
-            qiitaItem.title
-          }}</a>
+          <a
+            :href="
+              `https://qiita.com/${stock.user_id}/items/${stock.article_id}`
+            "
+            >{{ stock.title }}</a
+          >
         </div>
         <div class="tags">
-          <span v-for="(tag, key) in qiitaItem.tags" :key="key" class="tag">
+          <span v-for="(tag, key) in stock.tags" :key="key" class="tag">
             {{ tag }}
           </span>
         </div>
@@ -32,12 +35,12 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
-import { IQiitaItem } from "@/domain/qiita";
+import { IStock } from "@/domain/qiita";
 
 @Component
 export default class Media extends Vue {
   @Prop()
-  qiitaItem!: IQiitaItem[];
+  stock!: IStock[];
 }
 </script>
 

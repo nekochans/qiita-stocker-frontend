@@ -24,7 +24,9 @@ describe("AppHeader.vue", () => {
     qiitaAccountId: "",
     permanentId: "",
     sessionId: "",
-    categories: []
+    categories: [],
+    stocks: [],
+    paging: []
   };
 
   it("renders login", () => {
