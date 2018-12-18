@@ -13,7 +13,10 @@ import {
   IFetchCategoriesResponse,
   IUpdateCategoryRequest,
   IUpdateCategoryResponse,
-  ISynchronizeStockRequest
+  ISynchronizeStockRequest,
+  IFetchStockRequest,
+  IFetchStockResponse,
+  IPage
 } from "@/domain/qiita";
 
 export default class QiitaStockerApi implements IQiitaStockerApi {
@@ -81,6 +84,7 @@ export default class QiitaStockerApi implements IQiitaStockerApi {
         return Promise.reject(axiosError);
       });
   }
+
   async fetchCategories(
     request: IFetchCategoriesRequest
   ): Promise<IFetchCategoriesResponse[]> {
@@ -159,5 +163,53 @@ export default class QiitaStockerApi implements IQiitaStockerApi {
       .catch((axiosError: IQiitaStockerError) => {
         return Promise.reject(axiosError);
       });
+  }
+
+  async fetchStocks(request: IFetchStockRequest): Promise<IFetchStockResponse> {
+    return await axios
+      .get<IFetchStockRequest>(
+        `${request.apiUrlBase}/api/stocks?page=${request.page}&per_page${
+          request.parPage
+        }`,
+        {
+          headers: {
+            Authorization: `Bearer ${request.sessionId}`
+          }
+        }
+      )
+      .then((axiosResponse: AxiosResponse) => {
+        const linkHeader: string = axiosResponse.headers["link"];
+        const paging: IPage[] = this.parseLinkHeader(linkHeader);
+
+        const response: IFetchStockResponse = {
+          stocks: axiosResponse.data,
+          paging
+        };
+
+        return Promise.resolve(response);
+      })
+      .catch((axiosError: IQiitaStockerError) => {
+        return Promise.reject(axiosError);
+      });
+  }
+
+  private parseLinkHeader(linkHeader: string): IPage[] {
+    let paging: IPage[] = [];
+
+    if (linkHeader) {
+      paging = linkHeader.split(",").map(info => {
+        const [_, page, perPage, relation]: any = info.match(
+          /page=(.*?)&per_page=(.*?)>; rel="(\w+)"/
+        );
+
+        return {
+          page,
+          perPage,
+          relation
+        };
+      });
+    }
+
+    return paging;
   }
 }

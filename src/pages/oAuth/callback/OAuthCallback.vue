@@ -20,12 +20,6 @@ export default class OAuthCallback extends Vue {
   @QiitaAction
   fetchUser!: (query: object) => void;
 
-  @QiitaAction
-  createAccount!: () => void;
-
-  @QiitaAction
-  issueLoginSession!: () => void;
-
   created() {
     const query: any = this.$route.query;
     const params: IAuthorizationResponse = {

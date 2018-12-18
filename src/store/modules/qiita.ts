@@ -37,7 +37,12 @@ import {
   IUpdateCategoryRequest,
   IUpdateCategoryResponse,
   ISynchronizeStockRequest,
-  synchronizeStock
+  synchronizeStock,
+  IFetchStockRequest,
+  IFetchStockResponse,
+  fetchStocks,
+  IStock,
+  IPage
 } from "@/domain/qiita";
 import uuid from "uuid";
 import router from "@/router";
@@ -80,7 +85,9 @@ const state: IQiitaState = {
   accessToken: "",
   permanentId: "",
   sessionId: localStorage.load(STORAGE_KEY_SESSION_ID) || "",
-  categories: []
+  categories: [],
+  stocks: [],
+  paging: []
 };
 
 const getters: GetterTree<IQiitaState, RootState> = {
@@ -98,6 +105,9 @@ const getters: GetterTree<IQiitaState, RootState> = {
   },
   categories: (state): IQiitaState["categories"] => {
     return state.categories;
+  },
+  stocks: (state): IQiitaState["stocks"] => {
+    return state.stocks;
   }
 };
 
@@ -128,6 +138,12 @@ const mutations: MutationTree<IQiitaState> = {
     updateCategory: { stateCategory: ICategory; categoryName: string }
   ) => {
     updateCategory.stateCategory.name = updateCategory.categoryName;
+  },
+  saveStocks: (state, stocks: IStock[]) => {
+    state.stocks = stocks;
+  },
+  savePaging: (state, paging: IPage[]) => {
+    state.paging = paging;
   }
 };
 
@@ -381,6 +397,38 @@ const actions: ActionTree<IQiitaState, RootState> = {
       };
 
       await synchronizeStock(synchronizeStockRequest);
+    } catch (error) {
+      router.push({
+        name: "error",
+        params: { errorMessage: error.response.data.message }
+      });
+      return;
+    }
+  },
+  fetchStock: async (
+    { commit },
+    page: IPage = { page: "1", perPage: "20", relation: "" }
+  ) => {
+    try {
+      const sessionId = localStorage.load(STORAGE_KEY_SESSION_ID);
+      const fetchStockRequest: IFetchStockRequest = {
+        apiUrlBase: apiUrlBase(),
+        sessionId: sessionId,
+        page: page.page,
+        parPage: page.perPage
+      };
+
+      const fetchStockResponse: IFetchStockResponse = await fetchStocks(
+        fetchStockRequest
+      );
+
+      for (const stock of fetchStockResponse.stocks) {
+        const date: string[] = stock.article_created_at.split(" ");
+        stock.article_created_at = date[0];
+      }
+
+      commit("saveStocks", fetchStockResponse.stocks);
+      commit("savePaging", fetchStockResponse.paging);
     } catch (error) {
       router.push({
         name: "error",

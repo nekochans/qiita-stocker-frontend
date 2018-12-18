@@ -31,6 +31,7 @@ export interface IQiitaStockerApi {
     request: IUpdateCategoryRequest
   ): Promise<IUpdateCategoryResponse>;
   synchronizeStock(request: ISynchronizeStockRequest): Promise<void>;
+  fetchStocks(request: IFetchStockRequest): Promise<IFetchStockResponse>;
 }
 
 export interface IQiitaApi {
@@ -136,6 +137,24 @@ export interface ISynchronizeStockRequest {
   sessionId: string;
 }
 
+export interface IFetchStockRequest {
+  apiUrlBase: string;
+  sessionId: string;
+  page: string;
+  parPage: string;
+}
+
+export interface IPage {
+  page: string;
+  perPage: string;
+  relation: string;
+}
+
+export interface IFetchStockResponse {
+  paging: IPage[];
+  stocks: IStock[];
+}
+
 export interface IQiitaStockerError extends AxiosError {
   response: AxiosResponse<IQiitaStockerErrorData>;
 }
@@ -145,14 +164,14 @@ export interface ICategory {
   name: string;
 }
 
-// TODO 適切な値に修正する
-export interface IQiitaItem {
+export interface IStock {
   id: string;
+  article_id: string;
   title: string;
-  created_at: string;
-  tags: string[];
-  userId: string;
+  user_id: string;
   profile_image_url: string;
+  article_created_at: string;
+  tags: string[];
 }
 
 export const requestToAuthorizationServer = (
@@ -215,6 +234,12 @@ export const synchronizeStock = async (
   request: ISynchronizeStockRequest
 ): Promise<void> => {
   return await qiitaStockerApi.synchronizeStock(request);
+};
+
+export const fetchStocks = async (
+  request: IFetchStockRequest
+): Promise<IFetchStockResponse> => {
+  return await qiitaStockerApi.fetchStocks(request);
 };
 
 export const matchState = (responseState: string, state: string): boolean => {

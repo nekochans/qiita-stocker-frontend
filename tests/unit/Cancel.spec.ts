@@ -25,7 +25,9 @@ describe("Cancel.vue", () => {
       qiitaAccountId: "",
       permanentId: "",
       sessionId: "d690e4de-0a4e-4f14-a5c5-f4303fbd8a08",
-      categories: []
+      categories: [],
+      stocks: [],
+      paging: []
     };
 
     actions = {
