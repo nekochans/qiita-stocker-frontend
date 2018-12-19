@@ -38,7 +38,7 @@ import { Component, Vue, Prop } from "vue-property-decorator";
 import { IStock } from "@/domain/qiita";
 
 @Component
-export default class Media extends Vue {
+export default class Stock extends Vue {
   @Prop()
   stock!: IStock[];
 }

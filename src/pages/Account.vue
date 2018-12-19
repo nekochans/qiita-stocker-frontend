@@ -11,7 +11,7 @@
           />
         </div>
         <div class="column is-9">
-          <MediaList :stocks="stocks" /> <Pagination />
+          <StockList :stocks="stocks" /> <Pagination />
         </div>
       </div>
     </main>
@@ -24,7 +24,7 @@ import { Getter, Action, namespace } from "vuex-class";
 
 import AppHeader from "@/components/AppHeader.vue";
 import SideMenu from "@/components/SideMenu.vue";
-import MediaList from "@/components/MediaList.vue";
+import StockList from "@/components/StockList.vue";
 import Pagination from "@/components/Pagination.vue";
 import { IStock, ICategory } from "@/domain/qiita";
 import { IUpdateCategoryPayload } from "@/store/modules/qiita";
@@ -36,7 +36,7 @@ const QiitaGetter = namespace("QiitaModule", Getter);
   components: {
     AppHeader,
     SideMenu,
-    MediaList,
+    StockList,
     Pagination
   }
 })
