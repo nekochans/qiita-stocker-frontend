@@ -64,4 +64,27 @@ describe("AppHeader.vue", () => {
     const navbarItem = wrapper.findAll("a").at(4);
     expect(navbarItem.text()).toBe("ログアウト");
   });
+
+  it('calls store action "logout" when logoutLink is clicked', () => {
+    const actions = {
+      logout: jest.fn()
+    };
+
+    store = new Vuex.Store({
+      modules: {
+        QiitaModule: {
+          namespaced: true,
+          state,
+          actions,
+          getters: QiitaModule.getters
+        }
+      }
+    });
+
+    const wrapper = shallowMount(AppHeader, { store, localVue, router });
+    const logoutLink = wrapper.findAll("a").at(4);
+
+    logoutLink.trigger("click");
+    expect(actions.logout).toHaveBeenCalled();
+  });
 });

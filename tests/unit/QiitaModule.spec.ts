@@ -417,6 +417,28 @@ describe("QiitaModule", () => {
       expect(commit.mock.calls).toEqual([["saveSessionId", sessionId]]);
     });
 
+    it("should be able to logout", async () => {
+      const mockAxios: any = axios;
+      mockAxios.delete.mockResolvedValue({});
+      const commit = jest.fn();
+
+      const wrapper = (actions: any) => actions.logout({ commit });
+      await wrapper(QiitaModule.actions);
+
+      expect(commit.mock.calls).toEqual([["saveSessionId", ""]]);
+    });
+
+    it("should be able to cancel", async () => {
+      const mockAxios: any = axios;
+      mockAxios.delete.mockResolvedValue({});
+      const commit = jest.fn();
+
+      const wrapper = (actions: any) => actions.cancel({ commit });
+      await wrapper(QiitaModule.actions);
+
+      expect(commit.mock.calls).toEqual([["saveSessionId", ""]]);
+    });
+
     it("should not commit when callbackState don't match localState", async () => {
       const commit = jest.fn();
 
