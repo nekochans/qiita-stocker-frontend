@@ -23,6 +23,7 @@ export interface IQiitaStockerApi {
   issueLoginSession(
     request: IIssueLoginSessionRequest
   ): Promise<IIssueLoginSessionResponse>;
+  logout(request: ILogoutRequest): Promise<void>;
   fetchCategories(
     request: IFetchCategoriesRequest
   ): Promise<IFetchCategoriesResponse[]>;
@@ -95,6 +96,11 @@ export interface IIssueLoginSessionRequest {
 }
 
 export interface IIssueLoginSessionResponse {
+  sessionId: string;
+}
+
+export interface ILogoutRequest {
+  apiUrlBase: string;
   sessionId: string;
 }
 
@@ -210,6 +216,10 @@ export const cancelAccount = async (
   request: ICancelAccountRequest
 ): Promise<void> => {
   return await qiitaStockerApi.cancelAccount(request);
+};
+
+export const logout = async (request: ILogoutRequest): Promise<void> => {
+  return await qiitaStockerApi.logout(request);
 };
 
 export const saveCategory = async (

@@ -42,7 +42,9 @@ import {
   IFetchStockResponse,
   fetchStocks,
   IStock,
-  IPage
+  IPage,
+  ILogoutRequest,
+  logout
 } from "@/domain/qiita";
 import uuid from "uuid";
 import router from "@/router";
@@ -288,6 +290,29 @@ const actions: ActionTree<IQiitaState, RootState> = {
       return;
     }
   },
+  logout: async ({ commit }) => {
+    try {
+      const sessionId = localStorage.load(STORAGE_KEY_SESSION_ID);
+      const logoutRequest: ILogoutRequest = {
+        apiUrlBase: apiUrlBase(),
+        sessionId: sessionId
+      };
+
+      await logout(logoutRequest);
+
+      localStorage.remove(STORAGE_KEY_SESSION_ID);
+
+      router.push({
+        name: "home"
+      });
+    } catch (error) {
+      router.push({
+        name: "error",
+        params: { errorMessage: error.response.data.message }
+      });
+      return;
+    }
+  },
   cancel: async ({ commit }) => {
     try {
       const sessionId = localStorage.load(STORAGE_KEY_SESSION_ID);
@@ -429,17 +454,6 @@ const actions: ActionTree<IQiitaState, RootState> = {
 
       commit("saveStocks", fetchStockResponse.stocks);
       commit("savePaging", fetchStockResponse.paging);
-    } catch (error) {
-      router.push({
-        name: "error",
-        params: { errorMessage: error.response.data.message }
-      });
-      return;
-    }
-  },
-  logout: async ({ commit }) => {
-    try {
-      // TODO ログアウト処理を作成
     } catch (error) {
       router.push({
         name: "error",
