@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="stocks.length">
-      <Media
+      <Stock
         v-if="stocks.length"
         v-for="stock in stocks"
         :stock="stock"
@@ -14,15 +14,15 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
-import Media from "@/components/Media.vue";
+import Stock from "@/components/Stock.vue";
 import { IStock } from "@/domain/qiita";
 
 @Component({
   components: {
-    Media
+    Stock
   }
 })
-export default class MediaList extends Vue {
+export default class StockList extends Vue {
   @Prop()
   stocks!: IStock[];
 }
