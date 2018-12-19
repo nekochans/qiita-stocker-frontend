@@ -168,7 +168,7 @@ export default class QiitaStockerApi implements IQiitaStockerApi {
   async fetchStocks(request: IFetchStockRequest): Promise<IFetchStockResponse> {
     return await axios
       .get<IFetchStockRequest>(
-        `${request.apiUrlBase}/api/stocks?page=${request.page}&per_page${
+        `${request.apiUrlBase}/api/stocks?page=${request.page}&per_page=${
           request.parPage
         }`,
         {

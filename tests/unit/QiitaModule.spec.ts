@@ -2,7 +2,6 @@ import { IQiitaState } from "@/types/qiita";
 import {
   ICategory,
   ICreateAccountResponse,
-  IFetchStockResponse,
   IIssueLoginSessionResponse
 } from "@/domain/qiita";
 import { QiitaModule } from "@/store/modules/qiita";
