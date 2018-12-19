@@ -301,6 +301,7 @@ const actions: ActionTree<IQiitaState, RootState> = {
       await logout(logoutRequest);
 
       localStorage.remove(STORAGE_KEY_SESSION_ID);
+      commit("saveSessionId", "");
 
       router.push({
         name: "home"
