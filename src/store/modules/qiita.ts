@@ -325,6 +325,7 @@ const actions: ActionTree<IQiitaState, RootState> = {
       await cancelAccount(cancelAccountRequest);
 
       localStorage.remove(STORAGE_KEY_SESSION_ID);
+      commit("saveSessionId", "");
 
       router.push({
         name: "cancelComplete"
