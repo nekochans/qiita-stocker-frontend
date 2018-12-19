@@ -436,6 +436,17 @@ const actions: ActionTree<IQiitaState, RootState> = {
       });
       return;
     }
+  },
+  logout: async ({ commit }) => {
+    try {
+      // TODO ログアウト処理を作成
+    } catch (error) {
+      router.push({
+        name: "error",
+        params: { errorMessage: error.response.data.message }
+      });
+      return;
+    }
   }
 };
 

@@ -26,7 +26,7 @@
               <a class="navbar-link">アカウント</a>
               <div class="navbar-dropdown is-right">
                 <a class="navbar-item" href="/cancel">設定</a>
-                <a class="navbar-item">ログアウト</a>
+                <a class="navbar-item" @click="logout">ログアウト</a>
               </div>
             </div>
           </div>
@@ -38,14 +38,18 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { Getter, namespace } from "vuex-class";
+import { Getter, Action, namespace } from "vuex-class";
 
+const QiitaAction = namespace("QiitaModule", Action);
 const QiitaGetter = namespace("QiitaModule", Getter);
 
 @Component
 export default class AppHeader extends Vue {
   @QiitaGetter
   isLoggedIn!: boolean;
+
+  @QiitaAction
+  logout!: () => void;
 
   isMenuActive: boolean = false;
 
