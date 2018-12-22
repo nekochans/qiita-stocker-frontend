@@ -53,7 +53,8 @@ describe("QiitaModule", () => {
         sessionId: "",
         categories: [],
         stocks: stocks,
-        paging: []
+        paging: [],
+        isCategorizing: false
       };
     });
 
@@ -120,7 +121,8 @@ describe("QiitaModule", () => {
         sessionId: "",
         categories: [],
         stocks: [],
-        paging: []
+        paging: [],
+        isCategorizing: false
       };
     });
 

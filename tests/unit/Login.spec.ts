@@ -27,7 +27,8 @@ describe("Login.vue", () => {
       sessionId: "",
       categories: [],
       stocks: [],
-      paging: []
+      paging: [],
+      isCategorizing: false
     };
 
     actions = {

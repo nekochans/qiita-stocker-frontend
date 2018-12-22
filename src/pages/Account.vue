@@ -11,7 +11,13 @@
           />
         </div>
         <div class="column is-9">
-          <StockList :stocks="stocks" /> <Pagination />
+          <StockEdit
+            :isCategorizing="isCategorizing"
+            :categories="categories"
+            @clickSetIsCategorizing="onSetIsCategorizing"
+          />
+          <StockList :stocks="stocks" :isCategorizing="isCategorizing" />
+          <Pagination />
         </div>
       </div>
     </main>
@@ -24,6 +30,7 @@ import { Getter, Action, namespace } from "vuex-class";
 
 import AppHeader from "@/components/AppHeader.vue";
 import SideMenu from "@/components/SideMenu.vue";
+import StockEdit from "@/components/StockEdit.vue";
 import StockList from "@/components/StockList.vue";
 import Pagination from "@/components/Pagination.vue";
 import { IStock, ICategory } from "@/domain/qiita";
@@ -36,6 +43,7 @@ const QiitaGetter = namespace("QiitaModule", Getter);
   components: {
     AppHeader,
     SideMenu,
+    StockEdit,
     StockList,
     Pagination
   }
@@ -46,6 +54,9 @@ export default class Account extends Vue {
 
   @QiitaGetter
   stocks!: IStock[];
+
+  @QiitaGetter
+  isCategorizing!: boolean;
 
   @QiitaAction
   saveCategory!: (category: string) => void;
@@ -61,6 +72,9 @@ export default class Account extends Vue {
 
   @QiitaAction
   fetchStock!: () => void;
+
+  @QiitaAction
+  setIsCategorizing!: () => void;
 
   onClickSaveCategory(categoryName: string) {
     this.saveCategory(categoryName);
@@ -84,6 +98,10 @@ export default class Account extends Vue {
   async initializeStock() {
     await this.synchronizeStock();
     await this.fetchStock();
+  }
+
+  onSetIsCategorizing() {
+    this.setIsCategorizing();
   }
 }
 </script>
