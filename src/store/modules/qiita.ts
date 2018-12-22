@@ -90,7 +90,7 @@ const state: IQiitaState = {
   categories: [],
   stocks: [],
   paging: [],
-  isCategorizing: true
+  isCategorizing: false
 };
 
 const getters: GetterTree<IQiitaState, RootState> = {

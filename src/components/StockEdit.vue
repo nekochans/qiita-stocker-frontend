@@ -28,7 +28,6 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
-import { IStock } from "@/domain/qiita";
 import { ICategory } from "@/domain/qiita";
 
 @Component
