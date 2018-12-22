@@ -12,12 +12,13 @@
         </div>
         <div class="column is-9">
           <StockEdit
+            v-show="stocks.length"
             :isCategorizing="isCategorizing"
             :categories="categories"
             @clickSetIsCategorizing="onSetIsCategorizing"
           />
           <StockList :stocks="stocks" :isCategorizing="isCategorizing" />
-          <Pagination />
+          <Pagination v-show="stocks.length" />
         </div>
       </div>
     </main>
