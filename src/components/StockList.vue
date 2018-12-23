@@ -6,6 +6,7 @@
         v-for="stock in stocks"
         :stock="stock"
         :key="stock.id"
+        :isCategorizing="isCategorizing"
       />
     </div>
     <div v-else><h1 class="subtitle">ストックされた記事はありません。</h1></div>
@@ -25,5 +26,8 @@ import { IStock } from "@/domain/qiita";
 export default class StockList extends Vue {
   @Prop()
   stocks!: IStock[];
+
+  @Prop()
+  isCategorizing!: boolean;
 }
 </script>

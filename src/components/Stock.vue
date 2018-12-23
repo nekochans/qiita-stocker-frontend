@@ -30,6 +30,9 @@
         </div>
       </div>
     </div>
+    <label v-show="isCategorizing" class="checkbox checkbox-size">
+      <input type="checkbox" />
+    </label>
   </article>
 </template>
 
@@ -41,10 +44,17 @@ import { IStock } from "@/domain/qiita";
 export default class Stock extends Vue {
   @Prop()
   stock!: IStock[];
+
+  @Prop()
+  isCategorizing!: boolean;
 }
 </script>
 
 <style scoped>
+.checkbox-size {
+  zoom: 3;
+}
+
 a {
   color: #337ab7;
 }

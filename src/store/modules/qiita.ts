@@ -89,7 +89,8 @@ const state: IQiitaState = {
   sessionId: localStorage.load(STORAGE_KEY_SESSION_ID) || "",
   categories: [],
   stocks: [],
-  paging: []
+  paging: [],
+  isCategorizing: false
 };
 
 const getters: GetterTree<IQiitaState, RootState> = {
@@ -110,6 +111,9 @@ const getters: GetterTree<IQiitaState, RootState> = {
   },
   stocks: (state): IQiitaState["stocks"] => {
     return state.stocks;
+  },
+  isCategorizing: (state): IQiitaState["isCategorizing"] => {
+    return state.isCategorizing;
   }
 };
 
@@ -146,6 +150,9 @@ const mutations: MutationTree<IQiitaState> = {
   },
   savePaging: (state, paging: IPage[]) => {
     state.paging = paging;
+  },
+  setIsCategorizing: state => {
+    state.isCategorizing = !state.isCategorizing;
   }
 };
 
@@ -463,6 +470,9 @@ const actions: ActionTree<IQiitaState, RootState> = {
       });
       return;
     }
+  },
+  setIsCategorizing: async ({ commit }) => {
+    commit("setIsCategorizing");
   }
 };
 

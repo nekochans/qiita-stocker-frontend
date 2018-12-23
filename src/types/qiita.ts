@@ -9,4 +9,5 @@ export interface IQiitaState {
   categories: ICategory[];
   stocks: IStock[];
   paging: IPage[];
+  isCategorizing: boolean;
 }

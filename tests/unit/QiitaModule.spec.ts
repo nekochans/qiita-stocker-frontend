@@ -53,7 +53,8 @@ describe("QiitaModule", () => {
         sessionId: "",
         categories: [],
         stocks: stocks,
-        paging: []
+        paging: [],
+        isCategorizing: false
       };
     });
 
@@ -106,6 +107,15 @@ describe("QiitaModule", () => {
 
       expect(stocks).toEqual(state.stocks);
     });
+
+    it("should be able to get isCategorizing", () => {
+      const wrapper = (getters: any) => getters.isCategorizing(state);
+      const isCategorizing: IQiitaState["isCategorizing"] = wrapper(
+        QiitaModule.getters
+      );
+
+      expect(isCategorizing).toEqual(state.isCategorizing);
+    });
   });
 
   describe("mutations", () => {
@@ -120,7 +130,8 @@ describe("QiitaModule", () => {
         sessionId: "",
         categories: [],
         stocks: [],
-        paging: []
+        paging: [],
+        isCategorizing: false
       };
     });
 
@@ -280,6 +291,12 @@ describe("QiitaModule", () => {
       wrapper(QiitaModule.mutations);
 
       expect(state.paging).toEqual(paging);
+    });
+
+    it("should be able to save isCategorizing", () => {
+      const wrapper = (mutations: any) => mutations.setIsCategorizing(state);
+      wrapper(QiitaModule.mutations);
+      expect(state.isCategorizing).toEqual(true);
     });
   });
 
@@ -617,6 +634,14 @@ describe("QiitaModule", () => {
         ["saveStocks", stocks],
         ["savePaging", paging]
       ]);
+    });
+
+    it("should be able to set isCategorizing", async () => {
+      const commit = jest.fn();
+      const wrapper = (actions: any) => actions.setIsCategorizing({ commit });
+      await wrapper(QiitaModule.actions);
+
+      expect(commit.mock.calls).toEqual([["setIsCategorizing"]]);
     });
   });
 });

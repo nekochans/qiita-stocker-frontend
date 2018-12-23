@@ -3,6 +3,7 @@ import Vuex from "vuex";
 import { IUpdateCategoryPayload, QiitaModule } from "@/store/modules/qiita";
 import Account from "@/pages/Account.vue";
 import SideMenu from "@/components/SideMenu.vue";
+import StockEdit from "@/components/StockEdit.vue";
 import CategoryList from "@/components/CategoryList.vue";
 import { IQiitaState } from "@/types/qiita";
 import VueRouter from "vue-router";
@@ -30,14 +31,17 @@ describe("Account.vue", () => {
       sessionId: "d690e4de-0a4e-4f14-a5c5-f4303fbd8a08",
       categories: [],
       stocks: [],
-      paging: []
+      paging: [],
+      isCategorizing: false
     };
 
     actions = {
       saveCategory: jest.fn(),
       updateCategory: jest.fn(),
       fetchCategory: jest.fn(),
-      synchronizeStock: jest.fn()
+      synchronizeStock: jest.fn(),
+      fetchStock: jest.fn(),
+      setIsCategorizing: jest.fn()
     };
 
     store = new Vuex.Store({
@@ -104,6 +108,16 @@ describe("Account.vue", () => {
       wrapper.vm.initializeStock();
 
       expect(actions.synchronizeStock).toHaveBeenCalled();
+      expect(actions.fetchStock).toHaveBeenCalled();
+    });
+
+    it('calls store action "synchronizeStock" on onSetIsCategorizing()', () => {
+      const wrapper = shallowMount(Account, { store, localVue, router });
+
+      // @ts-ignore
+      wrapper.vm.onSetIsCategorizing();
+
+      expect(actions.setIsCategorizing).toHaveBeenCalled();
     });
   });
 
@@ -125,29 +139,45 @@ describe("Account.vue", () => {
 
       expect(mock).toHaveBeenCalledWith(inputtedCategory);
     });
-  });
 
-  it("should call onClickUpdateCategory when button is clicked", () => {
-    state.categories = [{ categoryId: 1, name: "テストカテゴリ" }];
+    it("should call onClickUpdateCategory when button is clicked", () => {
+      state.categories = [{ categoryId: 1, name: "テストカテゴリ" }];
 
-    const mock = jest.fn();
-    const wrapper = mount(Account, { store, localVue, router });
+      const mock = jest.fn();
+      const wrapper = mount(Account, { store, localVue, router });
 
-    wrapper.setMethods({
-      onClickUpdateCategory: mock
+      wrapper.setMethods({
+        onClickUpdateCategory: mock
+      });
+
+      const categoryList = wrapper.find(CategoryList);
+      const editedCategory = "編集されたカテゴリ名";
+
+      const updateCategoryPayload: IUpdateCategoryPayload = {
+        stateCategory: state.categories[0],
+        categoryName: editedCategory
+      };
+
+      // @ts-ignore
+      categoryList.vm.onClickUpdateCategory(updateCategoryPayload);
+
+      expect(mock).toHaveBeenCalledWith(updateCategoryPayload);
     });
 
-    const categoryList = wrapper.find(CategoryList);
-    const editedCategory = "編集されたカテゴリ名";
+    it("should call onSetIsCategorizing when button is clicked", () => {
+      const mock = jest.fn();
+      const wrapper = mount(Account, { store, localVue, router });
 
-    const updateCategoryPayload: IUpdateCategoryPayload = {
-      stateCategory: state.categories[0],
-      categoryName: editedCategory
-    };
+      wrapper.setMethods({
+        onSetIsCategorizing: mock
+      });
 
-    // @ts-ignore
-    categoryList.vm.onClickUpdateCategory(updateCategoryPayload);
+      const sideMenu = wrapper.find(StockEdit);
 
-    expect(mock).toHaveBeenCalledWith(updateCategoryPayload);
+      // @ts-ignore
+      sideMenu.vm.changeCategory();
+
+      expect(mock).toHaveBeenCalled();
+    });
   });
 });
