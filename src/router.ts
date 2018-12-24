@@ -44,8 +44,8 @@ export default new Router({
       component: SignUp
     },
     {
-      path: "/account",
-      name: "account",
+      path: "/stocks/all",
+      name: "stocks",
       component: Account
     },
     {

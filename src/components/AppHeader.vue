@@ -25,7 +25,7 @@
             <div class="navbar-item has-dropdown is-hoverable">
               <a class="navbar-link">アカウント</a>
               <div class="navbar-dropdown is-right">
-                <a class="navbar-item" href="/cancel">設定</a>
+                <a class="navbar-item" href="/stocks/all">ストック一覧</a>
                 <a class="navbar-item" @click="logout">ログアウト</a>
               </div>
             </div>
