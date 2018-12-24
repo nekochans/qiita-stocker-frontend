@@ -69,9 +69,6 @@ export default class Stocks extends Vue {
   updateCategory!: (updateCategoryPayload: IUpdateCategoryPayload) => void;
 
   @QiitaAction
-  synchronizeStock!: () => void;
-
-  @QiitaAction
   fetchStock!: () => void;
 
   @QiitaAction
@@ -97,7 +94,6 @@ export default class Stocks extends Vue {
   }
 
   async initializeStock() {
-    await this.synchronizeStock();
     await this.fetchStock();
   }
 
