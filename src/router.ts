@@ -4,7 +4,7 @@ import Counter from "./pages/Counter.vue";
 import Weather from "./pages/Weather.vue";
 import SignUp from "./pages/SignUp.vue";
 import Login from "./pages/Login.vue";
-import Account from "./pages/Account.vue";
+import Account from "./pages/Stocks.vue";
 import OAuthCallback from "./pages/oAuth/callback/OAuthCallback.vue";
 import Cancel from "./pages/cencel/Cancel.vue";
 import CancelComplete from "./pages/cencel/complete/CancelComplete.vue";

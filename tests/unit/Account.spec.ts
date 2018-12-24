@@ -1,7 +1,7 @@
 import { shallowMount, mount, createLocalVue, config } from "@vue/test-utils";
 import Vuex from "vuex";
 import { IUpdateCategoryPayload, QiitaModule } from "@/store/modules/qiita";
-import Account from "@/pages/Account.vue";
+import Stocks from "@/pages/Stocks.vue";
 import SideMenu from "@/components/SideMenu.vue";
 import StockEdit from "@/components/StockEdit.vue";
 import CategoryList from "@/components/CategoryList.vue";
@@ -17,7 +17,7 @@ localVue.use(VueRouter);
 
 const router = new VueRouter();
 
-describe("Account.vue", () => {
+describe("Stocks.vue", () => {
   let store: any;
   let state: IQiitaState;
   let actions: any;
@@ -58,7 +58,7 @@ describe("Account.vue", () => {
 
   describe("methods", () => {
     it('calls store action "saveCategory" on onClickSaveCategory()', () => {
-      const wrapper = shallowMount(Account, { store, localVue, router });
+      const wrapper = shallowMount(Stocks, { store, localVue, router });
       const inputtedCategory = "inputtedCategory";
 
       // @ts-ignore
@@ -74,7 +74,7 @@ describe("Account.vue", () => {
     it('calls store action "updateCategory" on onClickUpdateCategory()', () => {
       state.categories = [{ categoryId: 1, name: "テストカテゴリ" }];
 
-      const wrapper = shallowMount(Account, { store, localVue, router });
+      const wrapper = shallowMount(Stocks, { store, localVue, router });
       const editedCategory = "編集されたカテゴリ名";
 
       const updateCategoryPayload: IUpdateCategoryPayload = {
@@ -93,7 +93,7 @@ describe("Account.vue", () => {
     });
 
     it('calls store action "fetchCategory" on initializeCategory()', () => {
-      const wrapper = shallowMount(Account, { store, localVue, router });
+      const wrapper = shallowMount(Stocks, { store, localVue, router });
 
       // @ts-ignore
       wrapper.vm.initializeCategory();
@@ -102,7 +102,7 @@ describe("Account.vue", () => {
     });
 
     it('calls store action "synchronizeStock" on initializeStock()', () => {
-      const wrapper = shallowMount(Account, { store, localVue, router });
+      const wrapper = shallowMount(Stocks, { store, localVue, router });
 
       // @ts-ignore
       wrapper.vm.initializeStock();
@@ -112,7 +112,7 @@ describe("Account.vue", () => {
     });
 
     it('calls store action "synchronizeStock" on onSetIsCategorizing()', () => {
-      const wrapper = shallowMount(Account, { store, localVue, router });
+      const wrapper = shallowMount(Stocks, { store, localVue, router });
 
       // @ts-ignore
       wrapper.vm.onSetIsCategorizing();
@@ -125,7 +125,7 @@ describe("Account.vue", () => {
   describe("template", () => {
     it("should call onClickSaveCategory when button is clicked", () => {
       const mock = jest.fn();
-      const wrapper = mount(Account, { store, localVue, router });
+      const wrapper = mount(Stocks, { store, localVue, router });
 
       wrapper.setMethods({
         onClickSaveCategory: mock
@@ -144,7 +144,7 @@ describe("Account.vue", () => {
       state.categories = [{ categoryId: 1, name: "テストカテゴリ" }];
 
       const mock = jest.fn();
-      const wrapper = mount(Account, { store, localVue, router });
+      const wrapper = mount(Stocks, { store, localVue, router });
 
       wrapper.setMethods({
         onClickUpdateCategory: mock
@@ -166,7 +166,7 @@ describe("Account.vue", () => {
 
     it("should call onSetIsCategorizing when button is clicked", () => {
       const mock = jest.fn();
-      const wrapper = mount(Account, { store, localVue, router });
+      const wrapper = mount(Stocks, { store, localVue, router });
 
       wrapper.setMethods({
         onSetIsCategorizing: mock

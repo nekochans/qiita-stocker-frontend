@@ -49,7 +49,7 @@ const QiitaGetter = namespace("QiitaModule", Getter);
     Pagination
   }
 })
-export default class Account extends Vue {
+export default class Stocks extends Vue {
   @QiitaGetter
   categories!: ICategory[];
 
