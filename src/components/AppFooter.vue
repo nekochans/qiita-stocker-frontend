@@ -7,6 +7,7 @@
             <ul>
               <li><a href="#">利用規約</a></li>
               <li><a href="#">プライバシーポリシー</a></li>
+              <li><a href="/cancel">退会</a></li>
             </ul>
           </div>
         </div>

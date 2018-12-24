@@ -256,7 +256,7 @@ const actions: ActionTree<IQiitaState, RootState> = {
       );
 
       router.push({
-        name: "account"
+        name: "stocks"
       });
     } catch (error) {
       router.push({
@@ -287,7 +287,7 @@ const actions: ActionTree<IQiitaState, RootState> = {
       );
 
       router.push({
-        name: "account"
+        name: "stocks"
       });
     } catch (error) {
       router.push({
