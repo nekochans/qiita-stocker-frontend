@@ -31,7 +31,6 @@ export interface IQiitaStockerApi {
   updateCategory(
     request: IUpdateCategoryRequest
   ): Promise<IUpdateCategoryResponse>;
-  synchronizeStock(request: ISynchronizeStockRequest): Promise<void>;
   fetchStocks(request: IFetchStockRequest): Promise<IFetchStockResponse>;
 }
 
@@ -138,11 +137,6 @@ interface IQiitaStockerErrorData {
   message: string;
 }
 
-export interface ISynchronizeStockRequest {
-  apiUrlBase: string;
-  sessionId: string;
-}
-
 export interface IFetchStockRequest {
   apiUrlBase: string;
   sessionId: string;
@@ -238,12 +232,6 @@ export const updateCategory = async (
   request: IUpdateCategoryRequest
 ): Promise<IUpdateCategoryResponse> => {
   return await qiitaStockerApi.updateCategory(request);
-};
-
-export const synchronizeStock = async (
-  request: ISynchronizeStockRequest
-): Promise<void> => {
-  return await qiitaStockerApi.synchronizeStock(request);
 };
 
 export const fetchStocks = async (

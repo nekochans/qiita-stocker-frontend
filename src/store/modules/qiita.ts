@@ -36,8 +36,6 @@ import {
   updateCategory,
   IUpdateCategoryRequest,
   IUpdateCategoryResponse,
-  ISynchronizeStockRequest,
-  synchronizeStock,
   IFetchStockRequest,
   IFetchStockResponse,
   fetchStocks,
@@ -414,23 +412,6 @@ const actions: ActionTree<IQiitaState, RootState> = {
         stateCategory: updateCategoryItem.stateCategory,
         categoryName: updateCategoryResponse.name
       });
-    } catch (error) {
-      router.push({
-        name: "error",
-        params: { errorMessage: error.response.data.message }
-      });
-      return;
-    }
-  },
-  synchronizeStock: async ({ commit }) => {
-    try {
-      const sessionId = localStorage.load(STORAGE_KEY_SESSION_ID);
-      const synchronizeStockRequest: ISynchronizeStockRequest = {
-        apiUrlBase: apiUrlBase(),
-        sessionId: sessionId
-      };
-
-      await synchronizeStock(synchronizeStockRequest);
     } catch (error) {
       router.push({
         name: "error",
