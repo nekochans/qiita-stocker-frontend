@@ -39,7 +39,6 @@ describe("Stocks.vue", () => {
       saveCategory: jest.fn(),
       updateCategory: jest.fn(),
       fetchCategory: jest.fn(),
-      synchronizeStock: jest.fn(),
       fetchStock: jest.fn(),
       setIsCategorizing: jest.fn()
     };
@@ -101,17 +100,16 @@ describe("Stocks.vue", () => {
       expect(actions.fetchCategory).toHaveBeenCalled();
     });
 
-    it('calls store action "synchronizeStock" on initializeStock()', () => {
+    it('calls store action "fetchStock" on initializeStock()', () => {
       const wrapper = shallowMount(Stocks, { store, localVue, router });
 
       // @ts-ignore
       wrapper.vm.initializeStock();
 
-      expect(actions.synchronizeStock).toHaveBeenCalled();
       expect(actions.fetchStock).toHaveBeenCalled();
     });
 
-    it('calls store action "synchronizeStock" on onSetIsCategorizing()', () => {
+    it('calls store action "setIsCategorizing" on onSetIsCategorizing()', () => {
       const wrapper = shallowMount(Stocks, { store, localVue, router });
 
       // @ts-ignore
