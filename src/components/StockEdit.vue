@@ -53,7 +53,8 @@ export default class StockEdit extends Vue {
   }
 
   changeCategory() {
-    // TODO ストックをカテゴライズするAPIを呼び出す
+    // TODO カテゴリが選択されていなかった場合エラーを表示する
+    this.$emit("clickCategorize", this.selectedCategoryId);
     this.doneEdit();
   }
 }

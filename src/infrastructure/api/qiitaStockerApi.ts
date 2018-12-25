@@ -16,7 +16,8 @@ import {
   IFetchStockRequest,
   IFetchStockResponse,
   IPage,
-  ILogoutRequest
+  ILogoutRequest,
+  ICategorizeRequest
 } from "@/domain/qiita";
 
 export default class QiitaStockerApi implements IQiitaStockerApi {
@@ -104,7 +105,7 @@ export default class QiitaStockerApi implements IQiitaStockerApi {
     request: IFetchCategoriesRequest
   ): Promise<IFetchCategoriesResponse[]> {
     return await axios
-      .get<IFetchCategoriesRequest>(`${request.apiUrlBase}/api/categories`, {
+      .get<IFetchCategoriesResponse[]>(`${request.apiUrlBase}/api/categories`, {
         headers: {
           Authorization: `Bearer ${request.sessionId}`
         }
@@ -163,7 +164,7 @@ export default class QiitaStockerApi implements IQiitaStockerApi {
 
   async fetchStocks(request: IFetchStockRequest): Promise<IFetchStockResponse> {
     return await axios
-      .get<IFetchStockRequest>(
+      .get<IFetchStockResponse>(
         `${request.apiUrlBase}/api/stocks?page=${request.page}&per_page=${
           request.parPage
         }`,
@@ -183,6 +184,29 @@ export default class QiitaStockerApi implements IQiitaStockerApi {
         };
 
         return Promise.resolve(response);
+      })
+      .catch((axiosError: IQiitaStockerError) => {
+        return Promise.reject(axiosError);
+      });
+  }
+
+  async categorize(request: ICategorizeRequest): Promise<void> {
+    return await axios
+      .post(
+        `${request.apiUrlBase}/api/categories/stocks`,
+        {
+          id: request.categoryId,
+          articleIds: request.articleIds
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${request.sessionId}`,
+            "Content-Type": "application/json"
+          }
+        }
+      )
+      .then((axiosResponse: AxiosResponse) => {
+        return Promise.resolve();
       })
       .catch((axiosError: IQiitaStockerError) => {
         return Promise.reject(axiosError);

@@ -42,7 +42,9 @@ import {
   IStock,
   IPage,
   ILogoutRequest,
-  logout
+  logout,
+  ICategorizeRequest,
+  categorize
 } from "@/domain/qiita";
 import uuid from "uuid";
 import { router } from "@/router";
@@ -454,6 +456,21 @@ const actions: ActionTree<IQiitaState, RootState> = {
   },
   setIsCategorizing: async ({ commit }) => {
     commit("setIsCategorizing");
+  },
+  categorize: async ({ commit }, categoryId: number) => {
+    const sessionId = localStorage.load(STORAGE_KEY_SESSION_ID);
+    const categorizeRequest: ICategorizeRequest = {
+      apiUrlBase: apiUrlBase(),
+      sessionId: sessionId,
+      categoryId: categoryId,
+      articleIds: [
+        "aaaaaaaaaaaaaaaaaaaa",
+        "bbbbbbbbbbbbbbbbbbbb",
+        "cccccccccccccccccccc"
+      ]
+    };
+
+    await categorize(categorizeRequest);
   }
 };
 

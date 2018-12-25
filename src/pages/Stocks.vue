@@ -16,6 +16,7 @@
             :isCategorizing="isCategorizing"
             :categories="categories"
             @clickSetIsCategorizing="onSetIsCategorizing"
+            @clickCategorize="onClickCategorize"
           />
           <StockList :stocks="stocks" :isCategorizing="isCategorizing" />
           <Pagination v-show="stocks.length" />
@@ -74,12 +75,19 @@ export default class Stocks extends Vue {
   @QiitaAction
   setIsCategorizing!: () => void;
 
+  @QiitaAction
+  categorize!: (categoryId: number) => void;
+
   onClickSaveCategory(categoryName: string) {
     this.saveCategory(categoryName);
   }
 
   onClickUpdateCategory(updateCategoryPayload: IUpdateCategoryPayload) {
     this.updateCategory(updateCategoryPayload);
+  }
+
+  onClickCategorize(categoryId: number) {
+    this.categorize(categoryId);
   }
 
   created() {
