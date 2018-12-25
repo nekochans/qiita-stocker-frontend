@@ -40,7 +40,8 @@ describe("Stocks.vue", () => {
       updateCategory: jest.fn(),
       fetchCategory: jest.fn(),
       fetchStock: jest.fn(),
-      setIsCategorizing: jest.fn()
+      setIsCategorizing: jest.fn(),
+      categorize: jest.fn()
     };
 
     store = new Vuex.Store({
@@ -117,6 +118,15 @@ describe("Stocks.vue", () => {
 
       expect(actions.setIsCategorizing).toHaveBeenCalled();
     });
+
+    it('calls store action "categorize" on onClickCategorize()', () => {
+      const wrapper = shallowMount(Stocks, { store, localVue, router });
+
+      // @ts-ignore
+      wrapper.vm.onClickCategorize();
+
+      expect(actions.categorize).toHaveBeenCalled();
+    });
   });
 
   // mountによる結合テスト
@@ -176,6 +186,25 @@ describe("Stocks.vue", () => {
       sideMenu.vm.changeCategory();
 
       expect(mock).toHaveBeenCalled();
+    });
+
+    it("should call onClickCategorize when button is clicked", () => {
+      const mock = jest.fn();
+      const wrapper = mount(Stocks, { store, localVue, router });
+
+      wrapper.setMethods({
+        onClickCategorize: mock
+      });
+
+      const stockEdit = wrapper.find(StockEdit);
+      const selectedCategoryId = 1;
+
+      // @ts-ignore
+      stockEdit.vm.selectedCategoryId = selectedCategoryId;
+      // @ts-ignore
+      stockEdit.vm.changeCategory();
+
+      expect(mock).toHaveBeenCalledWith(selectedCategoryId);
     });
   });
 });
