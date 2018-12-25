@@ -45,7 +45,7 @@ import {
   logout
 } from "@/domain/qiita";
 import uuid from "uuid";
-import router from "@/router";
+import { router } from "@/router";
 import LocalStorageFactory from "@/factory/repository/LocalStorageFactory";
 
 Vue.use(Vuex);

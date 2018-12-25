@@ -11,10 +11,14 @@ import CancelComplete from "./pages/cencel/complete/CancelComplete.vue";
 import Error from "./pages/Error.vue";
 import NotFound from "./pages/NotFound.vue";
 import Home from "./pages/Home.vue";
+import { STORAGE_KEY_SESSION_ID } from "@/domain/qiita";
+import LocalStorageFactory from "@/factory/repository/LocalStorageFactory";
+
+const localStorage = LocalStorageFactory.create();
 
 Vue.use(Router);
 
-export default new Router({
+export const router = new Router({
   mode: "history",
   base: process.env.BASE_URL,
   routes: [
@@ -46,7 +50,8 @@ export default new Router({
     {
       path: "/stocks/all",
       name: "stocks",
-      component: Account
+      component: Account,
+      meta: { requiresAuth: true }
     },
     {
       path: "/oauth/callback",
@@ -56,12 +61,14 @@ export default new Router({
     {
       path: "/cancel",
       name: "cancel",
-      component: Cancel
+      component: Cancel,
+      meta: { requiresAuth: true }
     },
     {
       path: "/cancel/complete",
       name: "cancelComplete",
-      component: CancelComplete
+      component: CancelComplete,
+      meta: { requiresAuth: true }
     },
     {
       path: "/error",
@@ -75,4 +82,17 @@ export default new Router({
       component: NotFound
     }
   ]
+});
+
+router.beforeEach((to, from, next) => {
+  const isLoggedIn = localStorage.load(STORAGE_KEY_SESSION_ID) || "";
+
+  if (
+    to.matched.some(record => record.meta.requiresAuth) &&
+    isLoggedIn === ""
+  ) {
+    next({ path: "/", query: { redirect: to.fullPath } });
+  } else {
+    next();
+  }
 });
