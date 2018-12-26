@@ -219,10 +219,12 @@ describe("Stocks.vue", () => {
         onSetIsCategorizing: mock
       });
 
-      const sideMenu = wrapper.find(StockEdit);
+      const stockEdit = wrapper.find(StockEdit);
 
       // @ts-ignore
-      sideMenu.vm.changeCategory();
+      stockEdit.vm.selectedCategoryId = 1;
+      // @ts-ignore
+      stockEdit.vm.changeCategory();
 
       expect(mock).toHaveBeenCalled();
     });
