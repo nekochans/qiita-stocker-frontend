@@ -2,7 +2,7 @@ import { IQiitaState } from "@/types/qiita";
 import {
   ICategory,
   ICreateAccountResponse,
-  IIssueLoginSessionResponse
+  IIssueLoginSessionResponse, IUncategorizedStock
 } from "@/domain/qiita";
 import { QiitaModule } from "@/store/modules/qiita";
 import axios from "axios";
@@ -23,24 +23,24 @@ jest.mock("axios");
 describe("QiitaModule", () => {
   describe("getters", () => {
     let state: IQiitaState;
-    const stocks: IStock[] = [
+    const stocks: IUncategorizedStock[] = [
       {
-        id: "1",
         article_id: "c0a2609ae61a72dcc60f",
         title: "title1",
         user_id: "test-user1",
         profile_image_url: "https://test.com/test/image",
         article_created_at: "2018/09/30",
-        tags: ["laravel", "php"]
+        tags: ["laravel", "php"],
+        isChecked: false
       },
       {
-        id: "2",
         article_id: "c0a2609ae61a72dcc60f",
         title: "title2",
         user_id: "test-user12",
         profile_image_url: "https://test.com/test/image",
         article_created_at: "2018/09/30",
-        tags: ["Vue.js", "Vuex", "TypeScript"]
+        tags: ["Vue.js", "Vuex", "TypeScript"],
+        isChecked: false
       }
     ];
 
@@ -237,24 +237,24 @@ describe("QiitaModule", () => {
     });
 
     it("should be able to save stocks", () => {
-      const stocks: IStock[] = [
+      const stocks: IUncategorizedStock[] = [
         {
-          id: "1",
           article_id: "c0a2609ae61a72dcc60f",
           title: "title1",
           user_id: "test-user1",
           profile_image_url: "https://test.com/test/image",
           article_created_at: "2018/09/30",
-          tags: ["laravel", "php"]
+          tags: ["laravel", "php"],
+          isChecked: false
         },
         {
-          id: "2",
           article_id: "c0a2609ae61a72dcc60f",
           title: "title2",
           user_id: "test-user12",
           profile_image_url: "https://test.com/test/image",
           article_created_at: "2018/09/30",
-          tags: ["Vue.js", "Vuex", "TypeScript"]
+          tags: ["Vue.js", "Vuex", "TypeScript"],
+          isChecked: false
         }
       ];
       const wrapper = (mutations: any) => mutations.saveStocks(state, stocks);
@@ -567,7 +567,6 @@ describe("QiitaModule", () => {
     it("should be able to fetch stocks", async () => {
       const stocks: IStock[] = [
         {
-          id: "1",
           article_id: "c0a2609ae61a72dcc60f",
           title: "title1",
           user_id: "test-user1",
@@ -576,7 +575,6 @@ describe("QiitaModule", () => {
           tags: ["laravel", "php"]
         },
         {
-          id: "2",
           article_id: "c0a2609ae61a72dcc60f",
           title: "title2",
           user_id: "test-user12",

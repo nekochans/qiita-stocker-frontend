@@ -5,8 +5,9 @@
         v-if="stocks.length"
         v-for="stock in stocks"
         :stock="stock"
-        :key="stock.id"
+        :key="stock.article_id"
         :isCategorizing="isCategorizing"
+        @clickCheckStock="onClickCheckStock"
       />
     </div>
     <div v-else><h1 class="subtitle">ストックされた記事はありません。</h1></div>
@@ -16,7 +17,7 @@
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
 import Stock from "@/components/Stock.vue";
-import { IStock } from "@/domain/qiita";
+import { IUncategorizedStock } from "@/domain/qiita";
 
 @Component({
   components: {
@@ -25,9 +26,13 @@ import { IStock } from "@/domain/qiita";
 })
 export default class StockList extends Vue {
   @Prop()
-  stocks!: IStock[];
+  stocks!: IUncategorizedStock[];
 
   @Prop()
   isCategorizing!: boolean;
+
+  onClickCheckStock(stock: IUncategorizedStock) {
+    this.$emit("clickCheckStock", stock);
+  }
 }
 </script>

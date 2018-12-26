@@ -18,7 +18,11 @@
             @clickSetIsCategorizing="onSetIsCategorizing"
             @clickCategorize="onClickCategorize"
           />
-          <StockList :stocks="stocks" :isCategorizing="isCategorizing" />
+          <StockList
+            :stocks="stocks"
+            :isCategorizing="isCategorizing"
+            @clickCheckStock="onClickCheckStock"
+          />
           <Pagination v-show="stocks.length" />
         </div>
       </div>
@@ -35,8 +39,11 @@ import SideMenu from "@/components/SideMenu.vue";
 import StockEdit from "@/components/StockEdit.vue";
 import StockList from "@/components/StockList.vue";
 import Pagination from "@/components/Pagination.vue";
-import { IStock, ICategory } from "@/domain/qiita";
-import { IUpdateCategoryPayload } from "@/store/modules/qiita";
+import { ICategory, IUncategorizedStock } from "@/domain/qiita";
+import {
+  IUpdateCategoryPayload,
+  ICategorizePayload
+} from "@/store/modules/qiita";
 
 const QiitaAction = namespace("QiitaModule", Action);
 const QiitaGetter = namespace("QiitaModule", Getter);
@@ -55,10 +62,13 @@ export default class Stocks extends Vue {
   categories!: ICategory[];
 
   @QiitaGetter
-  stocks!: IStock[];
+  stocks!: IUncategorizedStock[];
 
   @QiitaGetter
   isCategorizing!: boolean;
+
+  @QiitaGetter
+  checkedStockArticleIds!: string[];
 
   @QiitaAction
   saveCategory!: (category: string) => void;
@@ -76,7 +86,10 @@ export default class Stocks extends Vue {
   setIsCategorizing!: () => void;
 
   @QiitaAction
-  categorize!: (categoryId: number) => void;
+  categorize!: (categorizePayload: ICategorizePayload) => void;
+
+  @QiitaAction
+  checkStock!: (stock: IUncategorizedStock) => void;
 
   onClickSaveCategory(categoryName: string) {
     this.saveCategory(categoryName);
@@ -87,7 +100,15 @@ export default class Stocks extends Vue {
   }
 
   onClickCategorize(categoryId: number) {
-    this.categorize(categoryId);
+    const categorizePayload: ICategorizePayload = {
+      categoryId: categoryId,
+      stockArticleIds: this.checkedStockArticleIds
+    };
+    this.categorize(categorizePayload);
+  }
+
+  onClickCheckStock(stock: IUncategorizedStock) {
+    this.checkStock(stock);
   }
 
   created() {

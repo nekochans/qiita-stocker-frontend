@@ -173,13 +173,16 @@ export interface ICategory {
 }
 
 export interface IStock {
-  id: string;
   article_id: string;
   title: string;
   user_id: string;
   profile_image_url: string;
   article_created_at: string;
   tags: string[];
+}
+
+export interface IUncategorizedStock extends IStock {
+  isChecked: boolean;
 }
 
 export const requestToAuthorizationServer = (

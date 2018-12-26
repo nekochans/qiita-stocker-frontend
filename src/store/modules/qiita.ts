@@ -1,50 +1,50 @@
 import Vue from "vue";
-import Vuex, { GetterTree, MutationTree, ActionTree, Module } from "vuex";
+import Vuex, { ActionTree, GetterTree, Module, MutationTree } from "vuex";
 import { IQiitaState } from "@/types/qiita";
 import { RootState } from "@/store";
 import {
-  requestToAuthorizationServer,
-  issueAccessToken,
-  IIssueAccessTokensResponse,
-  IIssueAccessTokensRequest,
-  fetchAuthenticatedUser,
-  IFetchAuthenticatedUserResponse,
-  IFetchAuthenticatedUserRequest,
-  IAuthorizationResponse,
-  IAuthorizationRequest,
-  stateNotMatchedMessage,
-  matchState,
-  STORAGE_KEY_AUTH_STATE,
-  STORAGE_KEY_ACCOUNT_ACTION,
-  STORAGE_KEY_SESSION_ID,
+  cancelAccount,
+  categorize,
   createAccount,
+  fetchAuthenticatedUser,
+  fetchCategories,
+  fetchStocks,
+  IAuthorizationRequest,
+  IAuthorizationResponse,
+  ICancelAccountRequest,
+  ICategorizeRequest,
+  ICategory,
   ICreateAccountRequest,
   ICreateAccountResponse,
-  IIssueLoginSessionRequest,
-  IIssueLoginSessionResponse,
-  issueLoginSession,
-  ICancelAccountRequest,
-  cancelAccount,
-  saveCategory,
-  ISaveCategoryRequest,
-  ISaveCategoryResponse,
-  fetchCategories,
+  IFetchAuthenticatedUserRequest,
+  IFetchAuthenticatedUserResponse,
   IFetchCategoriesRequest,
   IFetchCategoriesResponse,
-  unauthorizedMessage,
-  ICategory,
-  updateCategory,
-  IUpdateCategoryRequest,
-  IUpdateCategoryResponse,
   IFetchStockRequest,
   IFetchStockResponse,
-  fetchStocks,
-  IStock,
-  IPage,
+  IIssueAccessTokensRequest,
+  IIssueAccessTokensResponse,
+  IIssueLoginSessionRequest,
+  IIssueLoginSessionResponse,
   ILogoutRequest,
+  IPage,
+  ISaveCategoryRequest,
+  ISaveCategoryResponse,
+  issueAccessToken,
+  issueLoginSession,
+  IUpdateCategoryRequest,
+  IUpdateCategoryResponse,
   logout,
-  ICategorizeRequest,
-  categorize
+  matchState,
+  requestToAuthorizationServer,
+  saveCategory,
+  stateNotMatchedMessage,
+  STORAGE_KEY_ACCOUNT_ACTION,
+  STORAGE_KEY_AUTH_STATE,
+  STORAGE_KEY_SESSION_ID,
+  unauthorizedMessage,
+  updateCategory,
+  IUncategorizedStock
 } from "@/domain/qiita";
 import uuid from "uuid";
 import { router } from "@/router";
@@ -81,6 +81,11 @@ export interface IUpdateCategoryPayload {
   categoryName: string;
 }
 
+export interface ICategorizePayload {
+  categoryId: number;
+  stockArticleIds: string[];
+}
+
 const state: IQiitaState = {
   authorizationCode: "",
   qiitaAccountId: "",
@@ -114,6 +119,11 @@ const getters: GetterTree<IQiitaState, RootState> = {
   },
   isCategorizing: (state): IQiitaState["isCategorizing"] => {
     return state.isCategorizing;
+  },
+  checkedStockArticleIds: (state): string[] => {
+    return state.stocks
+      .filter(stock => stock.isChecked)
+      .map(stock => stock.article_id);
   }
 };
 
@@ -145,7 +155,7 @@ const mutations: MutationTree<IQiitaState> = {
   ) => {
     updateCategory.stateCategory.name = updateCategory.categoryName;
   },
-  saveStocks: (state, stocks: IStock[]) => {
+  saveStocks: (state, stocks: IUncategorizedStock[]) => {
     state.stocks = stocks;
   },
   savePaging: (state, paging: IPage[]) => {
@@ -153,6 +163,9 @@ const mutations: MutationTree<IQiitaState> = {
   },
   setIsCategorizing: state => {
     state.isCategorizing = !state.isCategorizing;
+  },
+  checkStock: (state, { stock, isChecked }) => {
+    stock.isChecked = isChecked;
   }
 };
 
@@ -439,12 +452,17 @@ const actions: ActionTree<IQiitaState, RootState> = {
         fetchStockRequest
       );
 
+      let uncategorizedStocks: IUncategorizedStock[] = [];
       for (const stock of fetchStockResponse.stocks) {
         const date: string[] = stock.article_created_at.split(" ");
         stock.article_created_at = date[0];
+        const uncategorizedStock: IUncategorizedStock = Object.assign(stock, {
+          isChecked: false
+        });
+        uncategorizedStocks.push(uncategorizedStock);
       }
 
-      commit("saveStocks", fetchStockResponse.stocks);
+      commit("saveStocks", uncategorizedStocks);
       commit("savePaging", fetchStockResponse.paging);
     } catch (error) {
       router.push({
@@ -457,20 +475,28 @@ const actions: ActionTree<IQiitaState, RootState> = {
   setIsCategorizing: async ({ commit }) => {
     commit("setIsCategorizing");
   },
-  categorize: async ({ commit }, categoryId: number) => {
-    const sessionId = localStorage.load(STORAGE_KEY_SESSION_ID);
-    const categorizeRequest: ICategorizeRequest = {
-      apiUrlBase: apiUrlBase(),
-      sessionId: sessionId,
-      categoryId: categoryId,
-      articleIds: [
-        "aaaaaaaaaaaaaaaaaaaa",
-        "bbbbbbbbbbbbbbbbbbbb",
-        "cccccccccccccccccccc"
-      ]
-    };
+  categorize: async ({ commit }, categorizePayload: ICategorizePayload) => {
+    try {
+      const sessionId = localStorage.load(STORAGE_KEY_SESSION_ID);
+      const categorizeRequest: ICategorizeRequest = {
+        apiUrlBase: apiUrlBase(),
+        sessionId: sessionId,
+        categoryId: categorizePayload.categoryId,
+        articleIds: categorizePayload.stockArticleIds
+      };
 
-    await categorize(categorizeRequest);
+      await categorize(categorizeRequest);
+      // TODO 選択されたストックを解除する
+    } catch (error) {
+      router.push({
+        name: "error",
+        params: { errorMessage: error.response.data.message }
+      });
+      return;
+    }
+  },
+  checkStock: ({ commit }, stock: IUncategorizedStock): void => {
+    commit("checkStock", { stock, isChecked: !stock.isChecked });
   }
 };
 

@@ -31,22 +31,30 @@
       </div>
     </div>
     <label v-show="isCategorizing" class="checkbox checkbox-size">
-      <input type="checkbox" />
+      <input
+        type="checkbox"
+        :checked="stock.isChecked"
+        @change="onClickCheckStock(stock);"
+      />
     </label>
   </article>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
-import { IStock } from "@/domain/qiita";
+import { IUncategorizedStock } from "@/domain/qiita";
 
 @Component
 export default class Stock extends Vue {
   @Prop()
-  stock!: IStock[];
+  stock!: IUncategorizedStock[];
 
   @Prop()
   isCategorizing!: boolean;
+
+  onClickCheckStock(stock: IUncategorizedStock) {
+    this.$emit("clickCheckStock", stock);
+  }
 }
 </script>
 
