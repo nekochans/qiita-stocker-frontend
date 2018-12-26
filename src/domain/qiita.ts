@@ -32,6 +32,7 @@ export interface IQiitaStockerApi {
     request: IUpdateCategoryRequest
   ): Promise<IUpdateCategoryResponse>;
   fetchStocks(request: IFetchStockRequest): Promise<IFetchStockResponse>;
+  categorize(request: ICategorizeRequest): Promise<void>;
 }
 
 export interface IQiitaApi {
@@ -144,6 +145,13 @@ export interface IFetchStockRequest {
   parPage: string;
 }
 
+export interface ICategorizeRequest {
+  apiUrlBase: string;
+  sessionId: string;
+  categoryId: number;
+  articleIds: string[];
+}
+
 export interface IPage {
   page: string;
   perPage: string;
@@ -165,13 +173,16 @@ export interface ICategory {
 }
 
 export interface IStock {
-  id: string;
   article_id: string;
   title: string;
   user_id: string;
   profile_image_url: string;
   article_created_at: string;
   tags: string[];
+}
+
+export interface IUncategorizedStock extends IStock {
+  isChecked: boolean;
 }
 
 export const requestToAuthorizationServer = (
@@ -238,6 +249,12 @@ export const fetchStocks = async (
   request: IFetchStockRequest
 ): Promise<IFetchStockResponse> => {
   return await qiitaStockerApi.fetchStocks(request);
+};
+
+export const categorize = async (
+  request: ICategorizeRequest
+): Promise<void> => {
+  return await qiitaStockerApi.categorize(request);
 };
 
 export const matchState = (responseState: string, state: string): boolean => {

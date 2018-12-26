@@ -1,12 +1,18 @@
 import { shallowMount, mount, createLocalVue, config } from "@vue/test-utils";
 import Vuex from "vuex";
-import { IUpdateCategoryPayload, QiitaModule } from "@/store/modules/qiita";
+import {
+  IUpdateCategoryPayload,
+  ICategorizePayload,
+  QiitaModule
+} from "@/store/modules/qiita";
 import Stocks from "@/pages/Stocks.vue";
 import SideMenu from "@/components/SideMenu.vue";
 import StockEdit from "@/components/StockEdit.vue";
+import StockList from "@/components/StockList.vue";
 import CategoryList from "@/components/CategoryList.vue";
 import { IQiitaState } from "@/types/qiita";
 import VueRouter from "vue-router";
+import { IUncategorizedStock } from "@/domain/qiita";
 
 config.logModifiedComponents = false;
 
@@ -40,7 +46,9 @@ describe("Stocks.vue", () => {
       updateCategory: jest.fn(),
       fetchCategory: jest.fn(),
       fetchStock: jest.fn(),
-      setIsCategorizing: jest.fn()
+      setIsCategorizing: jest.fn(),
+      categorize: jest.fn(),
+      checkStock: jest.fn()
     };
 
     store = new Vuex.Store({
@@ -117,6 +125,47 @@ describe("Stocks.vue", () => {
 
       expect(actions.setIsCategorizing).toHaveBeenCalled();
     });
+
+    it('calls store action "categorize" on onClickCategorize()', () => {
+      const wrapper = shallowMount(Stocks, { store, localVue, router });
+
+      // @ts-ignore
+      wrapper.vm.onClickCategorize(1);
+
+      const categorizePayload: ICategorizePayload = {
+        categoryId: 1,
+        stockArticleIds: []
+      };
+
+      expect(actions.categorize).toHaveBeenCalledWith(
+        expect.anything(),
+        categorizePayload,
+        undefined
+      );
+    });
+
+    it('calls store action "checkStock" on onClickCheckStock()', () => {
+      const stock: IUncategorizedStock = {
+        article_id: "c0a2609ae61a72dcc60f",
+        title: "title1",
+        user_id: "test-user1",
+        profile_image_url: "https://test.com/test/image",
+        article_created_at: "2018/09/30",
+        tags: ["laravel", "php"],
+        isChecked: true
+      };
+
+      const wrapper = shallowMount(Stocks, { store, localVue, router });
+
+      // @ts-ignore
+      wrapper.vm.onClickCheckStock(stock);
+
+      expect(actions.checkStock).toHaveBeenCalledWith(
+        expect.anything(),
+        stock,
+        undefined
+      );
+    });
   });
 
   // mountによる結合テスト
@@ -176,6 +225,50 @@ describe("Stocks.vue", () => {
       sideMenu.vm.changeCategory();
 
       expect(mock).toHaveBeenCalled();
+    });
+
+    it("should call onClickCategorize when button is clicked", () => {
+      const mock = jest.fn();
+      const wrapper = mount(Stocks, { store, localVue, router });
+
+      wrapper.setMethods({
+        onClickCategorize: mock
+      });
+
+      const stockEdit = wrapper.find(StockEdit);
+      const selectedCategoryId = 1;
+
+      // @ts-ignore
+      stockEdit.vm.selectedCategoryId = selectedCategoryId;
+      // @ts-ignore
+      stockEdit.vm.changeCategory();
+
+      expect(mock).toHaveBeenCalledWith(selectedCategoryId);
+    });
+
+    it("should call onClickCheckStock when checkBox is clicked", () => {
+      const mock = jest.fn();
+      const wrapper = mount(Stocks, { store, localVue, router });
+
+      wrapper.setMethods({
+        onClickCheckStock: mock
+      });
+
+      const stockList = wrapper.find(StockList);
+      const stock: IUncategorizedStock = {
+        article_id: "c0a2609ae61a72dcc60f",
+        title: "title1",
+        user_id: "test-user1",
+        profile_image_url: "https://test.com/test/image",
+        article_created_at: "2018/09/30",
+        tags: ["laravel", "php"],
+        isChecked: true
+      };
+
+      // @ts-ignore
+      stockList.vm.onClickCheckStock(stock);
+
+      expect(mock).toHaveBeenCalledWith(stock);
     });
   });
 });
