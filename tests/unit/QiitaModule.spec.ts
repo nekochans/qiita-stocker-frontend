@@ -5,7 +5,7 @@ import {
   IIssueLoginSessionResponse,
   IUncategorizedStock
 } from "@/domain/qiita";
-import { QiitaModule } from "@/store/modules/qiita";
+import {ICategorizePayload, QiitaModule} from "@/store/modules/qiita";
 import axios from "axios";
 import {
   IIssueAccessTokensResponse,
@@ -665,6 +665,38 @@ describe("QiitaModule", () => {
       await wrapper(QiitaModule.actions);
 
       expect(commit.mock.calls).toEqual([["setIsCategorizing"]]);
+    });
+
+    it("should be able to uncheck Stock", async () => {
+      const categorizePayload: ICategorizePayload = {
+        categoryId: 1,
+        stockArticleIds: ["c0a2609ae61a72dcc60f","c0a2609ae61a72dcc60a"]
+      };
+
+      const commit = jest.fn();
+      const wrapper = (actions: any) => actions.categorize({ commit }, categorizePayload);
+      await wrapper(QiitaModule.actions);
+
+      expect(commit.mock.calls).toEqual([["uncheckStock"]]);
+    });
+
+    it("should be able to check Stock", async () => {
+      const stock: IUncategorizedStock =
+        {
+          article_id: "c0a2609ae61a72dcc60f",
+          title: "title1",
+          user_id: "test-user1",
+          profile_image_url: "https://test.com/test/image",
+          article_created_at: "2018/09/30",
+          tags: ["laravel", "php"],
+          isChecked: true
+        };
+
+      const commit = jest.fn();
+      const wrapper = (actions: any) => actions.checkStock({ commit }, stock);
+      await wrapper(QiitaModule.actions);
+
+      expect(commit.mock.calls).toEqual([["checkStock", {stock, isChecked: !stock.isChecked}]]);
     });
   });
 });
