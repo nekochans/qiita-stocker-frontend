@@ -2,7 +2,8 @@ import { IQiitaState } from "@/types/qiita";
 import {
   ICategory,
   ICreateAccountResponse,
-  IIssueLoginSessionResponse, IUncategorizedStock
+  IIssueLoginSessionResponse,
+  IUncategorizedStock
 } from "@/domain/qiita";
 import { QiitaModule } from "@/store/modules/qiita";
 import axios from "axios";
@@ -31,7 +32,7 @@ describe("QiitaModule", () => {
         profile_image_url: "https://test.com/test/image",
         article_created_at: "2018/09/30",
         tags: ["laravel", "php"],
-        isChecked: false
+        isChecked: true
       },
       {
         article_id: "c0a2609ae61a72dcc60f",
@@ -115,6 +116,13 @@ describe("QiitaModule", () => {
       );
 
       expect(isCategorizing).toEqual(state.isCategorizing);
+    });
+
+    it("should be able to get checkedStockArticleIds", () => {
+      const wrapper = (getters: any) => getters.checkedStockArticleIds(state);
+      const checkedStockArticleIds: string[] = wrapper(QiitaModule.getters);
+
+      expect(checkedStockArticleIds).toEqual([state.stocks[0].article_id]);
     });
   });
 
@@ -297,6 +305,23 @@ describe("QiitaModule", () => {
       const wrapper = (mutations: any) => mutations.setIsCategorizing(state);
       wrapper(QiitaModule.mutations);
       expect(state.isCategorizing).toEqual(true);
+    });
+
+    it("should be able to check Stock", () => {
+      const stock: IUncategorizedStock = {
+        article_id: "c0a2609ae61a72dcc60f",
+        title: "title1",
+        user_id: "test-user1",
+        profile_image_url: "https://test.com/test/image",
+        article_created_at: "2018/09/30",
+        tags: ["laravel", "php"],
+        isChecked: false
+      };
+
+      const wrapper = (mutations: any) =>
+        mutations.checkStock(state, { stock, isChecked: true });
+      wrapper(QiitaModule.mutations);
+      expect(stock.isChecked).toEqual(true);
     });
   });
 
