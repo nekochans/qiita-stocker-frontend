@@ -34,7 +34,7 @@
       <input
         type="checkbox"
         :checked="stock.isChecked"
-        @change="onClickCheckStock(stock);"
+        @change="onClickCheckStock"
       />
     </label>
   </article>
@@ -52,8 +52,8 @@ export default class Stock extends Vue {
   @Prop()
   isCategorizing!: boolean;
 
-  onClickCheckStock(stock: IUncategorizedStock) {
-    this.$emit("clickCheckStock", stock);
+  onClickCheckStock() {
+    this.$emit("clickCheckStock", this.stock);
   }
 }
 </script>
