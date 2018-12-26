@@ -166,6 +166,11 @@ const mutations: MutationTree<IQiitaState> = {
   },
   checkStock: (state, { stock, isChecked }) => {
     stock.isChecked = isChecked;
+  },
+  uncheckStock: state => {
+    state.stocks
+      .filter(stock => stock.isChecked)
+      .map(stock => (stock.isChecked = !stock.isChecked));
   }
 };
 
@@ -486,7 +491,7 @@ const actions: ActionTree<IQiitaState, RootState> = {
       };
 
       await categorize(categorizeRequest);
-      // TODO 選択されたストックを解除する
+      commit("uncheckStock");
     } catch (error) {
       router.push({
         name: "error",

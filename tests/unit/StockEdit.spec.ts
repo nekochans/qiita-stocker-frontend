@@ -25,7 +25,7 @@ describe("StockEdit.vue", () => {
       expect(wrapper.emitted("clickSetIsCategorizing")).toBeTruthy();
     });
 
-    it("should emit clickSetIsCategorizing on startEdit()", () => {
+    it("should call doneEdit on startEdit()", () => {
       const mock = jest.fn();
       const wrapper = shallowMount(StockEdit, { propsData });
 
@@ -36,7 +36,7 @@ describe("StockEdit.vue", () => {
       expect(mock).toBeTruthy();
     });
 
-    it("should emit clickSetIsCategorizing on cancel()", () => {
+    it("should call doneEdit on cancel()", () => {
       const mock = jest.fn();
       const wrapper = shallowMount(StockEdit, { propsData });
 
@@ -47,7 +47,7 @@ describe("StockEdit.vue", () => {
       expect(mock).toBeTruthy();
     });
 
-    it("should emit clickSetIsCategorizing on changeCategory()", () => {
+    it("should emit clickCategorize on changeCategory()", () => {
       const mock = jest.fn();
       const wrapper = shallowMount(StockEdit, { propsData });
       const selectedCategoryId = 1;
@@ -64,6 +64,20 @@ describe("StockEdit.vue", () => {
       expect(wrapper.emitted("clickCategorize")[0][0]).toEqual(
         selectedCategoryId
       );
+    });
+
+    it("should not emit clickCategorize on changeCategory()", () => {
+      const mock = jest.fn();
+      const wrapper = shallowMount(StockEdit, { propsData });
+
+      wrapper.setMethods({ doneEdit: mock });
+
+      // @ts-ignore
+      wrapper.vm.selectedCategoryId = 0;
+
+      // @ts-ignore
+      wrapper.vm.changeCategory();
+      expect(wrapper.emitted("clickCategorize")).toBeFalsy();
     });
   });
 
