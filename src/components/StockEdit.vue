@@ -2,7 +2,7 @@
   <div class="navbar-menu">
     <div class="navbar-end">
       <div v-if="isCategorizing">
-        <div class="select edit-header">
+        <div :class="`select edit-header ${isValidationError && 'is-danger'}`">
           <select v-model="selectedCategoryId">
             <option
               v-for="category in categories"
@@ -39,8 +39,10 @@ export default class StockEdit extends Vue {
   categories!: ICategory[];
 
   selectedCategoryId: number = 0;
+  isValidationError: boolean = false;
 
   doneEdit() {
+    this.isValidationError = false;
     this.$emit("clickSetIsCategorizing");
   }
 
@@ -53,7 +55,11 @@ export default class StockEdit extends Vue {
   }
 
   changeCategory() {
-    // TODO カテゴリが選択されていなかった場合エラーを表示する
+    if (this.selectedCategoryId === 0) {
+      this.isValidationError = true;
+      return;
+    }
+
     this.$emit("clickCategorize", this.selectedCategoryId);
     this.doneEdit();
   }
