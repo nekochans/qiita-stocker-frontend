@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-show="!isLoading">
     <div v-if="stocks.length">
       <Stock
         v-if="stocks.length"
@@ -30,6 +30,9 @@ export default class StockList extends Vue {
 
   @Prop()
   isCategorizing!: boolean;
+
+  @Prop()
+  isLoading!: boolean;
 
   onClickCheckStock(stock: IUncategorizedStock) {
     this.$emit("clickCheckStock", stock);

@@ -55,7 +55,8 @@ describe("QiitaModule", () => {
         categories: [],
         stocks: stocks,
         paging: [],
-        isCategorizing: false
+        isCategorizing: false,
+        isLoading: false
       };
     });
 
@@ -139,7 +140,8 @@ describe("QiitaModule", () => {
         categories: [],
         stocks: [],
         paging: [],
-        isCategorizing: false
+        isCategorizing: false,
+        isLoading: false
       };
     });
 

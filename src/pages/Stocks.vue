@@ -11,6 +11,7 @@
           />
         </div>
         <div class="column is-9">
+          <Loading :isLoading="isLoading" />
           <StockEdit
             v-show="stocks.length"
             :isCategorizing="isCategorizing"
@@ -21,6 +22,7 @@
           <StockList
             :stocks="stocks"
             :isCategorizing="isCategorizing"
+            :isLoading="isLoading"
             @clickCheckStock="onClickCheckStock"
           />
           <Pagination v-show="stocks.length" />
@@ -39,6 +41,7 @@ import SideMenu from "@/components/SideMenu.vue";
 import StockEdit from "@/components/StockEdit.vue";
 import StockList from "@/components/StockList.vue";
 import Pagination from "@/components/Pagination.vue";
+import Loading from "@/components/Loading.vue";
 import { ICategory, IUncategorizedStock } from "@/domain/qiita";
 import {
   IUpdateCategoryPayload,
@@ -54,7 +57,8 @@ const QiitaGetter = namespace("QiitaModule", Getter);
     SideMenu,
     StockEdit,
     StockList,
-    Pagination
+    Pagination,
+    Loading
   }
 })
 export default class Stocks extends Vue {
@@ -66,6 +70,9 @@ export default class Stocks extends Vue {
 
   @QiitaGetter
   isCategorizing!: boolean;
+
+  @QiitaGetter
+  isLoading!: boolean;
 
   @QiitaGetter
   checkedStockArticleIds!: string[];
