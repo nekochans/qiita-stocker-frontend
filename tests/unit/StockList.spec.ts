@@ -30,9 +30,11 @@ describe("StockList.vue", () => {
   const propsData: {
     stocks: IUncategorizedStock[];
     isCategorizing: boolean;
+    isLoading: boolean;
   } = {
     stocks,
-    isCategorizing: false
+    isCategorizing: false,
+    isLoading: false
   };
 
   it("props", () => {
@@ -67,6 +69,21 @@ describe("StockList.vue", () => {
       stock.vm.onClickCheckStock();
 
       expect(mock).toHaveBeenCalledWith(stocks[0]);
+    });
+
+    it("renders list", () => {
+      const wrapper = shallowMount(StockList, { propsData });
+
+      const loadingMessage = wrapper.find("div");
+      expect(loadingMessage.isVisible()).toBe(true);
+    });
+
+    it("do not renders list", () => {
+      propsData.isLoading = true;
+      const wrapper = shallowMount(StockList, { propsData });
+
+      const loadingMessage = wrapper.find("div");
+      expect(loadingMessage.isVisible()).toBe(false);
     });
   });
 });

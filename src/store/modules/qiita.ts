@@ -95,7 +95,8 @@ const state: IQiitaState = {
   categories: [],
   stocks: [],
   paging: [],
-  isCategorizing: false
+  isCategorizing: false,
+  isLoading: true
 };
 
 const getters: GetterTree<IQiitaState, RootState> = {
@@ -119,6 +120,9 @@ const getters: GetterTree<IQiitaState, RootState> = {
   },
   isCategorizing: (state): IQiitaState["isCategorizing"] => {
     return state.isCategorizing;
+  },
+  isLoading: (state): IQiitaState["isLoading"] => {
+    return state.isLoading;
   },
   checkedStockArticleIds: (state): string[] => {
     return state.stocks
@@ -163,6 +167,9 @@ const mutations: MutationTree<IQiitaState> = {
   },
   setIsCategorizing: state => {
     state.isCategorizing = !state.isCategorizing;
+  },
+  setIsLoading: (state, isLoading: boolean) => {
+    state.isLoading = isLoading;
   },
   checkStock: (state, { stock, isChecked }) => {
     stock.isChecked = isChecked;
@@ -445,6 +452,8 @@ const actions: ActionTree<IQiitaState, RootState> = {
     page: IPage = { page: "1", perPage: "20", relation: "" }
   ) => {
     try {
+      commit("setIsLoading", true);
+
       const sessionId = localStorage.load(STORAGE_KEY_SESSION_ID);
       const fetchStockRequest: IFetchStockRequest = {
         apiUrlBase: apiUrlBase(),
@@ -469,7 +478,9 @@ const actions: ActionTree<IQiitaState, RootState> = {
 
       commit("saveStocks", uncategorizedStocks);
       commit("savePaging", fetchStockResponse.paging);
+      commit("setIsLoading", false);
     } catch (error) {
+      commit("setIsLoading", false);
       router.push({
         name: "error",
         params: { errorMessage: error.response.data.message }

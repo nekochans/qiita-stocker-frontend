@@ -55,7 +55,8 @@ describe("QiitaModule", () => {
         categories: [],
         stocks: stocks,
         paging: [],
-        isCategorizing: false
+        isCategorizing: false,
+        isLoading: false
       };
     });
 
@@ -118,6 +119,13 @@ describe("QiitaModule", () => {
       expect(isCategorizing).toEqual(state.isCategorizing);
     });
 
+    it("should be able to get isLoading", () => {
+      const wrapper = (getters: any) => getters.isLoading(state);
+      const isLoading: IQiitaState["isLoading"] = wrapper(QiitaModule.getters);
+
+      expect(isLoading).toEqual(state.isLoading);
+    });
+
     it("should be able to get checkedStockArticleIds", () => {
       const wrapper = (getters: any) => getters.checkedStockArticleIds(state);
       const checkedStockArticleIds: string[] = wrapper(QiitaModule.getters);
@@ -139,7 +147,8 @@ describe("QiitaModule", () => {
         categories: [],
         stocks: [],
         paging: [],
-        isCategorizing: false
+        isCategorizing: false,
+        isLoading: false
       };
     });
 
@@ -305,6 +314,12 @@ describe("QiitaModule", () => {
       const wrapper = (mutations: any) => mutations.setIsCategorizing(state);
       wrapper(QiitaModule.mutations);
       expect(state.isCategorizing).toEqual(true);
+    });
+
+    it("should be able to save isLoading", () => {
+      const wrapper = (mutations: any) => mutations.setIsLoading(state, true);
+      wrapper(QiitaModule.mutations);
+      expect(state.isLoading).toEqual(true);
     });
 
     it("should be able to check Stock", () => {
@@ -654,8 +669,10 @@ describe("QiitaModule", () => {
       await wrapper(QiitaModule.actions);
 
       expect(commit.mock.calls).toEqual([
+        ["setIsLoading", true],
         ["saveStocks", stocks],
-        ["savePaging", paging]
+        ["savePaging", paging],
+        ["setIsLoading", false]
       ]);
     });
 

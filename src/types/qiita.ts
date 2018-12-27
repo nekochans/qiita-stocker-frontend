@@ -10,4 +10,5 @@ export interface IQiitaState {
   stocks: IUncategorizedStock[];
   paging: IPage[];
   isCategorizing: boolean;
+  isLoading: boolean;
 }

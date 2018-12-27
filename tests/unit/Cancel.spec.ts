@@ -28,7 +28,8 @@ describe("Cancel.vue", () => {
       categories: [],
       stocks: [],
       paging: [],
-      isCategorizing: false
+      isCategorizing: false,
+      isLoading: false
     };
 
     actions = {
