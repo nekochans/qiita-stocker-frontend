@@ -3,7 +3,14 @@ import StockEdit from "@/components/StockEdit.vue";
 import { ICategory } from "@/domain/qiita";
 
 describe("StockEdit.vue", () => {
-  const propsData: { isCategorizing: boolean; categories: ICategory[] } = {
+  const propsData: {
+    isLoading: boolean;
+    stocksLength: number;
+    isCategorizing: boolean;
+    categories: ICategory[];
+  } = {
+    isLoading: false,
+    stocksLength: 10,
     isCategorizing: false,
     categories: [
       { categoryId: 1, name: "テストカテゴリ1" },
@@ -95,14 +102,11 @@ describe("StockEdit.vue", () => {
     });
 
     it("should call changeCategory when button is clicked", () => {
-      const propsData: { isCategorizing: boolean; categories: ICategory[] } = {
-        isCategorizing: true,
-        categories: [
-          { categoryId: 1, name: "テストカテゴリ1" },
-          { categoryId: 2, name: "テストカテゴリ2" }
-        ]
-      };
-
+      propsData.isCategorizing = true;
+      propsData.categories = [
+        { categoryId: 1, name: "テストカテゴリ1" },
+        { categoryId: 2, name: "テストカテゴリ2" }
+      ];
       const mock = jest.fn();
       const wrapper = shallowMount(StockEdit, { propsData });
 
@@ -118,13 +122,11 @@ describe("StockEdit.vue", () => {
     });
 
     it("should call cancel when button is clicked", () => {
-      const propsData: { isCategorizing: boolean; categories: ICategory[] } = {
-        isCategorizing: true,
-        categories: [
-          { categoryId: 1, name: "テストカテゴリ1" },
-          { categoryId: 2, name: "テストカテゴリ2" }
-        ]
-      };
+      propsData.isCategorizing = true;
+      propsData.categories = [
+        { categoryId: 1, name: "テストカテゴリ1" },
+        { categoryId: 2, name: "テストカテゴリ2" }
+      ];
 
       const mock = jest.fn();
       const wrapper = shallowMount(StockEdit, { propsData });
@@ -138,6 +140,31 @@ describe("StockEdit.vue", () => {
         .at(1)
         .trigger("click");
       expect(mock).toHaveBeenCalled();
+    });
+
+    it("renders navbar", () => {
+      const wrapper = shallowMount(StockEdit, { propsData });
+
+      const loadingMessage = wrapper.find("div");
+      expect(loadingMessage.isVisible()).toBe(true);
+    });
+
+    it("do not renders navbar when loading", () => {
+      propsData.isLoading = true;
+      propsData.stocksLength = 20;
+      const wrapper = shallowMount(StockEdit, { propsData });
+
+      const loadingMessage = wrapper.find("div");
+      expect(loadingMessage.isVisible()).toBe(false);
+    });
+
+    it("do not renders navbar when stocks length is 0", () => {
+      propsData.isLoading = false;
+      propsData.stocksLength = 0;
+      const wrapper = shallowMount(StockEdit, { propsData });
+
+      const loadingMessage = wrapper.find("div");
+      expect(loadingMessage.isVisible()).toBe(false);
     });
   });
 });

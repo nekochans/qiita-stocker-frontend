@@ -70,7 +70,7 @@ import { IPage } from "@/domain/qiita";
 @Component
 export default class Pagination extends Vue {
   @Prop()
-  isLoading!: number;
+  isLoading!: boolean;
 
   @Prop()
   stocksLength!: number;

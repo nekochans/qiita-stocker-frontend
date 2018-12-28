@@ -33,7 +33,7 @@ import { ICategory } from "@/domain/qiita";
 @Component
 export default class StockEdit extends Vue {
   @Prop()
-  isLoading!: number;
+  isLoading!: boolean;
 
   @Prop()
   stocksLength!: number;
