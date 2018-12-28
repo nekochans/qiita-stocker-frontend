@@ -32,6 +32,7 @@ import {
   ISaveCategoryResponse,
   issueAccessToken,
   issueLoginSession,
+  IUncategorizedStock,
   IUpdateCategoryRequest,
   IUpdateCategoryResponse,
   logout,
@@ -43,8 +44,7 @@ import {
   STORAGE_KEY_AUTH_STATE,
   STORAGE_KEY_SESSION_ID,
   unauthorizedMessage,
-  updateCategory,
-  IUncategorizedStock
+  updateCategory
 } from "@/domain/qiita";
 import uuid from "uuid";
 import { router } from "@/router";
@@ -94,6 +94,7 @@ const state: IQiitaState = {
   sessionId: localStorage.load(STORAGE_KEY_SESSION_ID) || "",
   categories: [],
   stocks: [],
+  currentPage: 1,
   paging: [],
   isCategorizing: false,
   isLoading: true
@@ -128,6 +129,53 @@ const getters: GetterTree<IQiitaState, RootState> = {
     return state.stocks
       .filter(stock => stock.isChecked)
       .map(stock => stock.article_id);
+  },
+  currentPage: (state): IQiitaState["currentPage"] => {
+    return state.currentPage;
+  },
+  firstPage: (state): IPage => {
+    const page: IPage | undefined = state.paging.find(page => {
+      return page.relation === "first";
+    });
+
+    if (page !== undefined) {
+      return page;
+    } else {
+      return { page: 0, perPage: 0, relation: "" };
+    }
+  },
+  prevPage: (state): IPage => {
+    const page: IPage | undefined = state.paging.find(page => {
+      return page.relation === "prev";
+    });
+
+    if (page !== undefined) {
+      return page;
+    } else {
+      return { page: 0, perPage: 0, relation: "" };
+    }
+  },
+  nextPage: (state): IPage => {
+    const page: IPage | undefined = state.paging.find(page => {
+      return page.relation === "next";
+    });
+
+    if (page !== undefined) {
+      return page;
+    } else {
+      return { page: 0, perPage: 0, relation: "" };
+    }
+  },
+  lastPage: (state): IPage => {
+    const page: IPage | undefined = state.paging.find(page => {
+      return page.relation === "last";
+    });
+
+    if (page !== undefined) {
+      return page;
+    } else {
+      return { page: 0, perPage: 0, relation: "" };
+    }
   }
 };
 
@@ -164,6 +212,9 @@ const mutations: MutationTree<IQiitaState> = {
   },
   savePaging: (state, paging: IPage[]) => {
     state.paging = paging;
+  },
+  saveCurrentPage: (state, currentPage: number) => {
+    state.currentPage = currentPage;
   },
   setIsCategorizing: state => {
     state.isCategorizing = !state.isCategorizing;
@@ -449,7 +500,7 @@ const actions: ActionTree<IQiitaState, RootState> = {
   },
   fetchStock: async (
     { commit },
-    page: IPage = { page: "1", perPage: "20", relation: "" }
+    page: IPage = { page: state.currentPage, perPage: 20, relation: "" }
   ) => {
     try {
       commit("setIsLoading", true);
@@ -478,6 +529,7 @@ const actions: ActionTree<IQiitaState, RootState> = {
 
       commit("saveStocks", uncategorizedStocks);
       commit("savePaging", fetchStockResponse.paging);
+      commit("saveCurrentPage", page.page);
       commit("setIsLoading", false);
     } catch (error) {
       commit("setIsLoading", false);

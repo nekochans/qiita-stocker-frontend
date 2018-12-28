@@ -13,7 +13,8 @@
         <div class="column is-9">
           <Loading :isLoading="isLoading" />
           <StockEdit
-            v-show="stocks.length"
+            :isLoading="isLoading"
+            :stocksLength="stocks.length"
             :isCategorizing="isCategorizing"
             :categories="categories"
             @clickSetIsCategorizing="onSetIsCategorizing"
@@ -25,7 +26,16 @@
             :isLoading="isLoading"
             @clickCheckStock="onClickCheckStock"
           />
-          <Pagination v-show="stocks.length" />
+          <Pagination
+            :isLoading="isLoading"
+            :stocksLength="stocks.length"
+            :currentPage="currentPage"
+            :firstPage="firstPage"
+            :prevPage="prevPage"
+            :nextPage="nextPage"
+            :lastPage="lastPage"
+            @clickGoToPage="fetchOtherPageStock"
+          />
         </div>
       </div>
     </main>
@@ -42,7 +52,7 @@ import StockEdit from "@/components/StockEdit.vue";
 import StockList from "@/components/StockList.vue";
 import Pagination from "@/components/Pagination.vue";
 import Loading from "@/components/Loading.vue";
-import { ICategory, IUncategorizedStock } from "@/domain/qiita";
+import { ICategory, IUncategorizedStock, IPage } from "@/domain/qiita";
 import {
   IUpdateCategoryPayload,
   ICategorizePayload
@@ -77,6 +87,21 @@ export default class Stocks extends Vue {
   @QiitaGetter
   checkedStockArticleIds!: string[];
 
+  @QiitaGetter
+  currentPage!: number;
+
+  @QiitaGetter
+  firstPage!: IPage;
+
+  @QiitaGetter
+  prevPage!: IPage;
+
+  @QiitaGetter
+  nextPage!: IPage;
+
+  @QiitaGetter
+  lastPage!: IPage;
+
   @QiitaAction
   saveCategory!: (category: string) => void;
 
@@ -87,7 +112,7 @@ export default class Stocks extends Vue {
   updateCategory!: (updateCategoryPayload: IUpdateCategoryPayload) => void;
 
   @QiitaAction
-  fetchStock!: () => void;
+  fetchStock!: (page?: IPage) => void;
 
   @QiitaAction
   setIsCategorizing!: () => void;
@@ -116,6 +141,10 @@ export default class Stocks extends Vue {
 
   onClickCheckStock(stock: IUncategorizedStock) {
     this.checkStock(stock);
+  }
+
+  fetchOtherPageStock(page: IPage) {
+    this.fetchStock(page);
   }
 
   created() {

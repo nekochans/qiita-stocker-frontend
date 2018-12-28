@@ -222,9 +222,12 @@ export default class QiitaStockerApi implements IQiitaStockerApi {
           /page=(.*?)&per_page=(.*?)>; rel="(\w+)"/
         );
 
+        const castPage: number = parseInt(page);
+        const castPerPage: number = parseInt(perPage);
+
         return {
-          page,
-          perPage,
+          page: castPage,
+          perPage: castPerPage,
           relation
         };
       });

@@ -10,9 +10,10 @@ import SideMenu from "@/components/SideMenu.vue";
 import StockEdit from "@/components/StockEdit.vue";
 import StockList from "@/components/StockList.vue";
 import CategoryList from "@/components/CategoryList.vue";
+import Pagination from "@/components/Pagination.vue";
 import { IQiitaState } from "@/types/qiita";
 import VueRouter from "vue-router";
-import { IUncategorizedStock } from "@/domain/qiita";
+import { IPage, IUncategorizedStock } from "@/domain/qiita";
 
 config.logModifiedComponents = false;
 
@@ -37,6 +38,7 @@ describe("Stocks.vue", () => {
       sessionId: "d690e4de-0a4e-4f14-a5c5-f4303fbd8a08",
       categories: [],
       stocks: [],
+      currentPage: 1,
       paging: [],
       isCategorizing: false,
       isLoading: false
@@ -167,6 +169,25 @@ describe("Stocks.vue", () => {
         undefined
       );
     });
+
+    it('calls store action "fetchStock" on fetchOtherPageStock()', () => {
+      const page: IPage = {
+        page: 4,
+        perPage: 20,
+        relation: "next"
+      };
+
+      const wrapper = shallowMount(Stocks, { store, localVue, router });
+
+      // @ts-ignore
+      wrapper.vm.fetchOtherPageStock(page);
+
+      expect(actions.fetchStock).toHaveBeenCalledWith(
+        expect.anything(),
+        page,
+        undefined
+      );
+    });
   });
 
   // mountによる結合テスト
@@ -272,6 +293,27 @@ describe("Stocks.vue", () => {
       stockList.vm.onClickCheckStock(stock);
 
       expect(mock).toHaveBeenCalledWith(stock);
+    });
+
+    it("should call fetchOtherPageStock when pagination is clicked", () => {
+      const mock = jest.fn();
+      const wrapper = mount(Stocks, { store, localVue, router });
+
+      wrapper.setMethods({
+        fetchOtherPageStock: mock
+      });
+
+      const pagination = wrapper.find(Pagination);
+      const page: IPage = {
+        page: 4,
+        perPage: 20,
+        relation: "next"
+      };
+
+      // @ts-ignore
+      pagination.vm.goToPage(page);
+
+      expect(mock).toHaveBeenCalledWith(page);
     });
   });
 });

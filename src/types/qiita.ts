@@ -8,6 +8,7 @@ export interface IQiitaState {
   sessionId: string;
   categories: ICategory[];
   stocks: IUncategorizedStock[];
+  currentPage: number;
   paging: IPage[];
   isCategorizing: boolean;
   isLoading: boolean;
