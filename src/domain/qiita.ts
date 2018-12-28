@@ -141,8 +141,8 @@ interface IQiitaStockerErrorData {
 export interface IFetchStockRequest {
   apiUrlBase: string;
   sessionId: string;
-  page: string;
-  parPage: string;
+  page: number;
+  parPage: number;
 }
 
 export interface ICategorizeRequest {
@@ -153,8 +153,8 @@ export interface ICategorizeRequest {
 }
 
 export interface IPage {
-  page: string;
-  perPage: string;
+  page: number;
+  perPage: number;
   relation: string;
 }
 

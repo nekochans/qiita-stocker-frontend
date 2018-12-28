@@ -54,6 +54,7 @@ describe("QiitaModule", () => {
         sessionId: "",
         categories: [],
         stocks: stocks,
+        currentPage: 1,
         paging: [],
         isCategorizing: false,
         isLoading: false
@@ -146,6 +147,7 @@ describe("QiitaModule", () => {
         sessionId: "",
         categories: [],
         stocks: [],
+        currentPage: 1,
         paging: [],
         isCategorizing: false,
         isLoading: false
@@ -283,23 +285,23 @@ describe("QiitaModule", () => {
     it("should be able to save paging", () => {
       const paging: IPage[] = [
         {
-          page: "4",
-          perPage: "20",
+          page: 4,
+          perPage: 20,
           relation: "next"
         },
         {
-          page: "5",
-          perPage: "20",
+          page: 5,
+          perPage: 20,
           relation: "last"
         },
         {
-          page: "1",
-          perPage: "20",
+          page: 1,
+          perPage: 20,
           relation: "first"
         },
         {
-          page: "2",
-          perPage: "20",
+          page: 2,
+          perPage: 20,
           relation: "prev"
         }
       ];
@@ -626,23 +628,23 @@ describe("QiitaModule", () => {
 
       const paging: IPage[] = [
         {
-          page: "4",
-          perPage: "20",
+          page: 4,
+          perPage: 20,
           relation: "next"
         },
         {
-          page: "5",
-          perPage: "20",
+          page: 5,
+          perPage: 20,
           relation: "last"
         },
         {
-          page: "1",
-          perPage: "20",
+          page: 1,
+          perPage: 20,
           relation: "first"
         },
         {
-          page: "2",
-          perPage: "20",
+          page: 2,
+          perPage: 0,
           relation: "prev"
         }
       ];

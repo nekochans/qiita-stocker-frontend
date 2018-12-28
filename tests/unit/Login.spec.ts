@@ -27,6 +27,7 @@ describe("Login.vue", () => {
       sessionId: "",
       categories: [],
       stocks: [],
+      currentPage: 1,
       paging: [],
       isCategorizing: false,
       isLoading: false
