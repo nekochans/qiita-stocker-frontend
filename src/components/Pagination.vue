@@ -115,5 +115,6 @@ export default class Pagination extends Vue {
 <style scoped>
 .pagination {
   margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 </style>

@@ -13,7 +13,7 @@ import CategoryList from "@/components/CategoryList.vue";
 import Pagination from "@/components/Pagination.vue";
 import { IQiitaState } from "@/types/qiita";
 import VueRouter from "vue-router";
-import {IPage, IUncategorizedStock} from "@/domain/qiita";
+import { IPage, IUncategorizedStock } from "@/domain/qiita";
 
 config.logModifiedComponents = false;
 
