@@ -44,6 +44,26 @@ describe("QiitaModule", () => {
         isChecked: false
       }
     ];
+    const firstPage: IPage = {
+      page: 1,
+      perPage: 20,
+      relation: "first"
+    };
+    const prevPage: IPage = {
+      page: 2,
+      perPage: 20,
+      relation: "prev"
+    };
+    const nextPage: IPage = {
+      page: 3,
+      perPage: 20,
+      relation: "next"
+    };
+    const lastPage: IPage = {
+      page: 5,
+      perPage: 20,
+      relation: "last"
+    };
 
     beforeEach(() => {
       state = {
@@ -55,7 +75,7 @@ describe("QiitaModule", () => {
         categories: [],
         stocks: stocks,
         currentPage: 1,
-        paging: [],
+        paging: [firstPage, prevPage, nextPage, lastPage],
         isCategorizing: false,
         isLoading: false
       };
@@ -132,6 +152,43 @@ describe("QiitaModule", () => {
       const checkedStockArticleIds: string[] = wrapper(QiitaModule.getters);
 
       expect(checkedStockArticleIds).toEqual([state.stocks[0].article_id]);
+    });
+
+    it("should be able to get currentPage", () => {
+      const wrapper = (getters: any) => getters.currentPage(state);
+      const currentPage: IQiitaState["currentPage"] = wrapper(
+        QiitaModule.getters
+      );
+
+      expect(currentPage).toEqual(state.currentPage);
+    });
+
+    it("should be able to get firstPage", () => {
+      const wrapper = (getters: any) => getters.firstPage(state);
+      const expectedPage: IPage = wrapper(QiitaModule.getters);
+
+      expect(expectedPage).toEqual(firstPage);
+    });
+
+    it("should be able to get prevPage", () => {
+      const wrapper = (getters: any) => getters.prevPage(state);
+      const expectedPage: IPage = wrapper(QiitaModule.getters);
+
+      expect(expectedPage).toEqual(prevPage);
+    });
+
+    it("should be able to get nextPage", () => {
+      const wrapper = (getters: any) => getters.nextPage(state);
+      const expectedPage: IPage = wrapper(QiitaModule.getters);
+
+      expect(expectedPage).toEqual(nextPage);
+    });
+
+    it("should be able to get lastPage", () => {
+      const wrapper = (getters: any) => getters.lastPage(state);
+      const expectedPage: IPage = wrapper(QiitaModule.getters);
+
+      expect(expectedPage).toEqual(lastPage);
     });
   });
 
@@ -310,6 +367,12 @@ describe("QiitaModule", () => {
       wrapper(QiitaModule.mutations);
 
       expect(state.paging).toEqual(paging);
+    });
+
+    it("should be able to save currentPage", () => {
+      const wrapper = (mutations: any) => mutations.saveCurrentPage(state, 2);
+      wrapper(QiitaModule.mutations);
+      expect(state.currentPage).toEqual(2);
     });
 
     it("should be able to save isCategorizing", () => {
@@ -644,7 +707,7 @@ describe("QiitaModule", () => {
         },
         {
           page: 2,
-          perPage: 0,
+          perPage: 20,
           relation: "prev"
         }
       ];
@@ -674,6 +737,7 @@ describe("QiitaModule", () => {
         ["setIsLoading", true],
         ["saveStocks", stocks],
         ["savePaging", paging],
+        ["saveCurrentPage", 1],
         ["setIsLoading", false]
       ]);
     });
