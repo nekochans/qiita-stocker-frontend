@@ -13,7 +13,8 @@
         <div class="column is-9">
           <Loading :isLoading="isLoading" />
           <StockEdit
-            v-show="stocks.length"
+            :isLoading="isLoading"
+            :stocksLength="stocks.length"
             :isCategorizing="isCategorizing"
             :categories="categories"
             @clickSetIsCategorizing="onSetIsCategorizing"
@@ -26,7 +27,8 @@
             @clickCheckStock="onClickCheckStock"
           />
           <Pagination
-            v-show="stocks.length"
+            :isLoading="isLoading"
+            :stocksLength="stocks.length"
             :currentPage="currentPage"
             :firstPage="firstPage"
             :prevPage="prevPage"

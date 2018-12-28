@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar-menu">
+  <div v-show="stocksLength && !isLoading" class="navbar-menu">
     <div class="navbar-end">
       <div v-if="isCategorizing">
         <div :class="`select edit-header ${isValidationError && 'is-danger'}`">
@@ -32,6 +32,12 @@ import { ICategory } from "@/domain/qiita";
 
 @Component
 export default class StockEdit extends Vue {
+  @Prop()
+  isLoading!: number;
+
+  @Prop()
+  stocksLength!: number;
+
   @Prop()
   isCategorizing!: boolean;
 

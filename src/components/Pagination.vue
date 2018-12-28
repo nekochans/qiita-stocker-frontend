@@ -1,5 +1,5 @@
 <template>
-  <nav class="pagination" role="navigation" aria-label="pagination">
+  <nav v-show="stocksLength && !isLoading" class="pagination" role="navigation">
     <a
       class="pagination-previous"
       :disabled="!prevPage.page"
@@ -69,6 +69,12 @@ import { IPage } from "@/domain/qiita";
 
 @Component
 export default class Pagination extends Vue {
+  @Prop()
+  isLoading!: number;
+
+  @Prop()
+  stocksLength!: number;
+
   @Prop()
   currentPage!: number;
 
