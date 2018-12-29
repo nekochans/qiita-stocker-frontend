@@ -390,6 +390,11 @@ const actions: ActionTree<IQiitaState, RootState> = {
         name: "home"
       });
     } catch (error) {
+      if (isUnauthorized(error.response.status)) {
+        localStorage.remove(STORAGE_KEY_SESSION_ID);
+        commit("saveSessionId", "");
+      }
+
       router.push({
         name: "error",
         params: { errorMessage: error.response.data.message }
@@ -414,6 +419,11 @@ const actions: ActionTree<IQiitaState, RootState> = {
         name: "cancelComplete"
       });
     } catch (error) {
+      if (isUnauthorized(error.response.status)) {
+        localStorage.remove(STORAGE_KEY_SESSION_ID);
+        commit("saveSessionId", "");
+      }
+
       router.push({
         name: "error",
         params: { errorMessage: error.response.data.message }
@@ -441,6 +451,11 @@ const actions: ActionTree<IQiitaState, RootState> = {
 
       commit("addCategory", savedCategory);
     } catch (error) {
+      if (isUnauthorized(error.response.status)) {
+        localStorage.remove(STORAGE_KEY_SESSION_ID);
+        commit("saveSessionId", "");
+      }
+
       router.push({
         name: "error",
         params: { errorMessage: error.response.data.message }
@@ -462,6 +477,11 @@ const actions: ActionTree<IQiitaState, RootState> = {
 
       commit("saveCategory", categories);
     } catch (error) {
+      if (isUnauthorized(error.response.status)) {
+        localStorage.remove(STORAGE_KEY_SESSION_ID);
+        commit("saveSessionId", "");
+      }
+
       router.push({
         name: "error",
         params: { errorMessage: error.response.data.message }
@@ -491,6 +511,11 @@ const actions: ActionTree<IQiitaState, RootState> = {
         categoryName: updateCategoryResponse.name
       });
     } catch (error) {
+      if (isUnauthorized(error.response.status)) {
+        localStorage.remove(STORAGE_KEY_SESSION_ID);
+        commit("saveSessionId", "");
+      }
+
       router.push({
         name: "error",
         params: { errorMessage: error.response.data.message }
@@ -533,6 +558,11 @@ const actions: ActionTree<IQiitaState, RootState> = {
       commit("setIsLoading", false);
     } catch (error) {
       commit("setIsLoading", false);
+      if (isUnauthorized(error.response.status)) {
+        localStorage.remove(STORAGE_KEY_SESSION_ID);
+        commit("saveSessionId", "");
+      }
+
       router.push({
         name: "error",
         params: { errorMessage: error.response.data.message }
@@ -556,6 +586,11 @@ const actions: ActionTree<IQiitaState, RootState> = {
       await categorize(categorizeRequest);
       commit("uncheckStock");
     } catch (error) {
+      if (isUnauthorized(error.response.status)) {
+        localStorage.remove(STORAGE_KEY_SESSION_ID);
+        commit("saveSessionId", "");
+      }
+
       router.push({
         name: "error",
         params: { errorMessage: error.response.data.message }
@@ -566,6 +601,10 @@ const actions: ActionTree<IQiitaState, RootState> = {
   checkStock: ({ commit }, stock: IUncategorizedStock): void => {
     commit("checkStock", { stock, isChecked: !stock.isChecked });
   }
+};
+
+const isUnauthorized = (statusCode: number): boolean => {
+  return statusCode === 401;
 };
 
 const createAuthRequestParam = (): IAuthorizationRequest => {
