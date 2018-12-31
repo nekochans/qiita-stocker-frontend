@@ -29,13 +29,33 @@ describe("CategoryList.vue", () => {
         updateCategoryPayload
       );
     });
+
+    it("should emit clickCategory on onClickCategory()", () => {
+      const wrapper = shallowMount(CategoryList, { propsData });
+
+      // @ts-ignore
+      wrapper.vm.onClickCategory();
+
+      expect(wrapper.emitted("clickCategory")).toBeTruthy();
+    });
   });
 
   // mountによる結合テスト
   describe("template", () => {
+    const $route = {
+      path: "/stocks/categories",
+      params: { id: 1 }
+    };
+    const $router = {
+      push: () => {}
+    };
+
     it("should call clickUpdateCategory when button is clicked", () => {
       const mock = jest.fn();
-      const wrapper = mount(CategoryList, { propsData });
+      const wrapper = mount(CategoryList, {
+        propsData,
+        mocks: { $route, $router }
+      });
 
       wrapper.setMethods({
         onClickUpdateCategory: mock
@@ -56,6 +76,25 @@ describe("CategoryList.vue", () => {
       };
 
       expect(mock).toHaveBeenCalledWith(updateCategoryPayload);
+    });
+
+    it("should call clickUpdateCategory when button is clicked", () => {
+      const mock = jest.fn();
+      const wrapper = mount(CategoryList, {
+        propsData,
+        mocks: { $route, $router }
+      });
+
+      wrapper.setMethods({
+        onClickCategory: mock
+      });
+
+      const category = wrapper.find(Category);
+
+      // @ts-ignore
+      category.vm.onClickCategory();
+
+      expect(mock).toHaveBeenCalledWith();
     });
   });
 });

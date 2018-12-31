@@ -43,13 +43,33 @@ describe("SideMenu.vue", () => {
         updateCategoryPayload
       );
     });
+
+    it("should emit clickCategory on onClickCategory()", () => {
+      const wrapper = shallowMount(CategoryList, { propsData });
+
+      // @ts-ignore
+      wrapper.vm.onClickCategory();
+
+      expect(wrapper.emitted("clickCategory")).toBeTruthy();
+    });
   });
 
   // mountによる結合テスト
   describe("template", () => {
+    const $route = {
+      path: "/stocks/categories",
+      params: { id: 1 }
+    };
+    const $router = {
+      push: () => {}
+    };
+
     it("should call onClickSaveCategory when button is clicked", () => {
       const mock = jest.fn();
-      const wrapper = mount(SideMenu, { propsData });
+      const wrapper = mount(SideMenu, {
+        propsData,
+        mocks: { $route, $router }
+      });
 
       wrapper.setMethods({
         onClickSaveCategory: mock
@@ -66,27 +86,49 @@ describe("SideMenu.vue", () => {
 
       expect(mock).toHaveBeenCalledWith(inputtedCategory);
     });
-  });
 
-  it("should call onClickUpdateCategory when button is clicked", () => {
-    const mock = jest.fn();
-    const wrapper = mount(SideMenu, { propsData });
+    it("should call onClickUpdateCategory when button is clicked", () => {
+      const mock = jest.fn();
+      const wrapper = mount(SideMenu, {
+        propsData,
+        mocks: { $route, $router }
+      });
 
-    wrapper.setMethods({
-      onClickUpdateCategory: mock
+      wrapper.setMethods({
+        onClickUpdateCategory: mock
+      });
+
+      const categoryList = wrapper.find(CategoryList);
+      const editedCategory = "編集されたカテゴリ名";
+
+      const updateCategoryPayload: IUpdateCategoryPayload = {
+        stateCategory: propsData.categories[0],
+        categoryName: editedCategory
+      };
+
+      // @ts-ignore
+      categoryList.vm.onClickUpdateCategory(updateCategoryPayload);
+
+      expect(mock).toHaveBeenCalledWith(updateCategoryPayload);
     });
 
-    const categoryList = wrapper.find(CategoryList);
-    const editedCategory = "編集されたカテゴリ名";
+    it("should call clickUpdateCategory when button is clicked", () => {
+      const mock = jest.fn();
+      const wrapper = mount(CategoryList, {
+        propsData,
+        mocks: { $route, $router }
+      });
 
-    const updateCategoryPayload: IUpdateCategoryPayload = {
-      stateCategory: propsData.categories[0],
-      categoryName: editedCategory
-    };
+      wrapper.setMethods({
+        onClickCategory: mock
+      });
 
-    // @ts-ignore
-    categoryList.vm.onClickUpdateCategory(updateCategoryPayload);
+      const categoryList = wrapper.find(CategoryList);
 
-    expect(mock).toHaveBeenCalledWith(updateCategoryPayload);
+      // @ts-ignore
+      categoryList.vm.onClickCategory();
+
+      expect(mock).toHaveBeenCalledWith();
+    });
   });
 });

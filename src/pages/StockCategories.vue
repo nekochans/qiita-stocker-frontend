@@ -180,7 +180,6 @@ export default class StockCategories extends Vue {
 
   async initializeStock() {
     const query: any = this.$route.params;
-    console.log(this.$route);
     const fetchCategorizedStockPayload: IfetchCategorizedStockPayload = {
       categoryId: query.id,
       page: { page: 0, perPage: 0, relation: "" }
