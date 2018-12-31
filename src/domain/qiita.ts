@@ -32,6 +32,9 @@ export interface IQiitaStockerApi {
     request: IUpdateCategoryRequest
   ): Promise<IUpdateCategoryResponse>;
   fetchStocks(request: IFetchStockRequest): Promise<IFetchStockResponse>;
+  fetchCategorizedStocks(
+    request: IFetchCategorizedStockRequest
+  ): Promise<IFetchCategorizedStockResponse>;
   categorize(request: ICategorizeRequest): Promise<void>;
 }
 
@@ -138,6 +141,12 @@ interface IQiitaStockerErrorData {
   message: string;
 }
 
+export interface IPage {
+  page: number;
+  perPage: number;
+  relation: string;
+}
+
 export interface IFetchStockRequest {
   apiUrlBase: string;
   sessionId: string;
@@ -145,22 +154,29 @@ export interface IFetchStockRequest {
   parPage: number;
 }
 
+export interface IFetchStockResponse {
+  paging: IPage[];
+  stocks: IStock[];
+}
+
+export interface IFetchCategorizedStockRequest {
+  apiUrlBase: string;
+  sessionId: string;
+  categoryId: number;
+  page: number;
+  parPage: number;
+}
+
+export interface IFetchCategorizedStockResponse {
+  paging: IPage[];
+  stocks: ICategorizedStock[];
+}
+
 export interface ICategorizeRequest {
   apiUrlBase: string;
   sessionId: string;
   categoryId: number;
   articleIds: string[];
-}
-
-export interface IPage {
-  page: number;
-  perPage: number;
-  relation: string;
-}
-
-export interface IFetchStockResponse {
-  paging: IPage[];
-  stocks: IStock[];
 }
 
 export interface IQiitaStockerError extends AxiosError {
@@ -183,6 +199,10 @@ export interface IStock {
 
 export interface IUncategorizedStock extends IStock {
   isChecked: boolean;
+}
+
+export interface ICategorizedStock extends IStock {
+  id: number;
 }
 
 export const requestToAuthorizationServer = (
@@ -249,6 +269,12 @@ export const fetchStocks = async (
   request: IFetchStockRequest
 ): Promise<IFetchStockResponse> => {
   return await qiitaStockerApi.fetchStocks(request);
+};
+
+export const fetchCategorizedStocks = async (
+  request: IFetchCategorizedStockRequest
+): Promise<IFetchCategorizedStockResponse> => {
+  return await qiitaStockerApi.fetchCategorizedStocks(request);
 };
 
 export const categorize = async (

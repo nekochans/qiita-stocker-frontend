@@ -44,7 +44,10 @@ import {
   STORAGE_KEY_AUTH_STATE,
   STORAGE_KEY_SESSION_ID,
   unauthorizedMessage,
-  updateCategory
+  updateCategory,
+  IFetchCategorizedStockRequest,
+  fetchCategorizedStocks,
+  IFetchCategorizedStockResponse
 } from "@/domain/qiita";
 import uuid from "uuid";
 import { router } from "@/router";
@@ -84,6 +87,11 @@ export interface IUpdateCategoryPayload {
 export interface ICategorizePayload {
   categoryId: number;
   stockArticleIds: string[];
+}
+
+export interface IfetchCategorizedStockPayload {
+  page: IPage;
+  categoryId: number;
 }
 
 const state: IQiitaState = {
@@ -555,6 +563,58 @@ const actions: ActionTree<IQiitaState, RootState> = {
       commit("saveStocks", uncategorizedStocks);
       commit("savePaging", fetchStockResponse.paging);
       commit("saveCurrentPage", page.page);
+      commit("setIsLoading", false);
+    } catch (error) {
+      commit("setIsLoading", false);
+      if (isUnauthorized(error.response.status)) {
+        localStorage.remove(STORAGE_KEY_SESSION_ID);
+        commit("saveSessionId", "");
+      }
+
+      router.push({
+        name: "error",
+        params: { errorMessage: error.response.data.message }
+      });
+      return;
+    }
+  },
+  fetchCategorizedStock: async (
+    { commit },
+    payload: IfetchCategorizedStockPayload
+  ) => {
+    try {
+      commit("setIsLoading", true);
+
+      if (payload.page === undefined) {
+        payload.page = {
+          page: 1,
+          perPage: 20,
+          relation: ""
+        };
+      }
+
+      const sessionId = localStorage.load(STORAGE_KEY_SESSION_ID);
+      const fetchCategorizedStockRequest: IFetchCategorizedStockRequest = {
+        apiUrlBase: apiUrlBase(),
+        sessionId: sessionId,
+        categoryId: payload.categoryId,
+        page: payload.page.page,
+        parPage: payload.page.perPage
+      };
+
+      const fetchCategorizedStockResponse: IFetchCategorizedStockResponse = await fetchCategorizedStocks(
+        fetchCategorizedStockRequest
+      );
+
+      for (const stock of fetchCategorizedStockResponse.stocks) {
+        const date: string[] = stock.article_created_at.split(" ");
+        stock.article_created_at = date[0];
+      }
+
+      // TODO IFが違うので修正する
+      commit("saveStocks", fetchCategorizedStockResponse.stocks);
+      commit("savePaging", fetchCategorizedStockResponse.paging);
+      commit("saveCurrentPage", payload.page.page);
       commit("setIsLoading", false);
     } catch (error) {
       commit("setIsLoading", false);

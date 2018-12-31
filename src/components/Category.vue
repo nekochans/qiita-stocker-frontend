@@ -3,7 +3,7 @@
     <div v-if="!editing">
       <a
         :data-category="category.categoryId"
-        @click="clickHandle"
+        @click="onClickCategory"
         :class="`${isActive(category.categoryId) && 'is-active'}`"
       >
         {{ category.name }}
@@ -62,9 +62,11 @@ export default class Category extends Vue {
   editCategoryName = this.category.name;
   isValidationError: boolean = false;
 
-  clickHandle(event: any) {
-    // TODO 選択されたカテゴリの記事を表示する
-    console.log(`${event.target.dataset.category} clicked!!`);
+  onClickCategory() {
+    if (this.editing) {
+      return;
+    }
+    console.log(`${this.category.categoryId} clicked!!`);
   }
 
   isActive(id: ICategory["categoryId"]) {
