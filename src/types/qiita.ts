@@ -1,4 +1,9 @@
-import { ICategory, IPage, IUncategorizedStock } from "@/domain/qiita";
+import {
+  ICategory,
+  IPage,
+  IUncategorizedStock,
+  ICategorizedStock
+} from "@/domain/qiita";
 
 export interface IQiitaState {
   authorizationCode: string;
@@ -8,6 +13,7 @@ export interface IQiitaState {
   sessionId: string;
   categories: ICategory[];
   stocks: IUncategorizedStock[];
+  categorizedStocks: ICategorizedStock[];
   currentPage: number;
   paging: IPage[];
   isCategorizing: boolean;

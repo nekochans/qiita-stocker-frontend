@@ -47,7 +47,8 @@ import {
   updateCategory,
   IFetchCategorizedStockRequest,
   fetchCategorizedStocks,
-  IFetchCategorizedStockResponse
+  IFetchCategorizedStockResponse,
+  ICategorizedStock
 } from "@/domain/qiita";
 import uuid from "uuid";
 import { router } from "@/router";
@@ -102,6 +103,7 @@ const state: IQiitaState = {
   sessionId: localStorage.load(STORAGE_KEY_SESSION_ID) || "",
   categories: [],
   stocks: [],
+  categorizedStocks: [],
   currentPage: 1,
   paging: [],
   isCategorizing: false,
@@ -127,6 +129,9 @@ const getters: GetterTree<IQiitaState, RootState> = {
   stocks: (state): IQiitaState["stocks"] => {
     return state.stocks;
   },
+  categorizedStocks: (state): IQiitaState["categorizedStocks"] => {
+    return state.categorizedStocks;
+  },
   isCategorizing: (state): IQiitaState["isCategorizing"] => {
     return state.isCategorizing;
   },
@@ -137,6 +142,11 @@ const getters: GetterTree<IQiitaState, RootState> = {
     return state.stocks
       .filter(stock => stock.isChecked)
       .map(stock => stock.article_id);
+  },
+  checkedCategorizedStockArticleIds: (state): string[] => {
+    return state.categorizedStocks
+      .filter(categorizedStock => categorizedStock.isChecked)
+      .map(categorizedStock => categorizedStock.article_id);
   },
   currentPage: (state): IQiitaState["currentPage"] => {
     return state.currentPage;
@@ -217,6 +227,9 @@ const mutations: MutationTree<IQiitaState> = {
   },
   saveStocks: (state, stocks: IUncategorizedStock[]) => {
     state.stocks = stocks;
+  },
+  saveCategorizedStocks: (state, stocks: ICategorizedStock[]) => {
+    state.categorizedStocks = stocks;
   },
   savePaging: (state, paging: IPage[]) => {
     state.paging = paging;
@@ -585,7 +598,7 @@ const actions: ActionTree<IQiitaState, RootState> = {
     try {
       commit("setIsLoading", true);
 
-      if (payload.page === undefined) {
+      if (payload.page.page === 0) {
         payload.page = {
           page: 1,
           perPage: 20,
@@ -606,13 +619,17 @@ const actions: ActionTree<IQiitaState, RootState> = {
         fetchCategorizedStockRequest
       );
 
+      let categorizedStocks: ICategorizedStock[] = [];
       for (const stock of fetchCategorizedStockResponse.stocks) {
         const date: string[] = stock.article_created_at.split(" ");
         stock.article_created_at = date[0];
+        const categorizedStock: ICategorizedStock = Object.assign(stock, {
+          isChecked: false
+        });
+        categorizedStocks.push(categorizedStock);
       }
 
-      // TODO IFが違うので修正する
-      commit("saveStocks", fetchCategorizedStockResponse.stocks);
+      commit("saveCategorizedStocks", categorizedStocks);
       commit("savePaging", fetchCategorizedStockResponse.paging);
       commit("saveCurrentPage", payload.page.page);
       commit("setIsLoading", false);
@@ -660,6 +677,11 @@ const actions: ActionTree<IQiitaState, RootState> = {
   },
   checkStock: ({ commit }, stock: IUncategorizedStock): void => {
     commit("checkStock", { stock, isChecked: !stock.isChecked });
+  },
+  resetData: ({ commit }): void => {
+    commit("saveCurrentPage", 1);
+    commit("saveStocks", []);
+    commit("saveCategorizedStocks", []);
   }
 };
 

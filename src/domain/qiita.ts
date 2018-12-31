@@ -169,7 +169,7 @@ export interface IFetchCategorizedStockRequest {
 
 export interface IFetchCategorizedStockResponse {
   paging: IPage[];
-  stocks: ICategorizedStock[];
+  stocks: IFetchedCategorizedStock[];
 }
 
 export interface ICategorizeRequest {
@@ -201,8 +201,13 @@ export interface IUncategorizedStock extends IStock {
   isChecked: boolean;
 }
 
+export interface IFetchedCategorizedStock extends IStock {
+  id: number;
+}
+
 export interface ICategorizedStock extends IStock {
   id: number;
+  isChecked: boolean;
 }
 
 export const requestToAuthorizationServer = (

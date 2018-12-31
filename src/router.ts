@@ -4,7 +4,8 @@ import Counter from "./pages/Counter.vue";
 import Weather from "./pages/Weather.vue";
 import SignUp from "./pages/SignUp.vue";
 import Login from "./pages/Login.vue";
-import Account from "./pages/Stocks.vue";
+import Stocks from "./pages/Stocks.vue";
+import StockCategories from "./pages/StockCategories.vue";
 import OAuthCallback from "./pages/oAuth/callback/OAuthCallback.vue";
 import Cancel from "./pages/cencel/Cancel.vue";
 import CancelComplete from "./pages/cencel/complete/CancelComplete.vue";
@@ -50,7 +51,13 @@ export const router = new Router({
     {
       path: "/stocks/all",
       name: "stocks",
-      component: Account,
+      component: Stocks,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: "/stocks/categories/:id",
+      name: "stockCategories",
+      component: StockCategories,
       meta: { requiresAuth: true }
     },
     {

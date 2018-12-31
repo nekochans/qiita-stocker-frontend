@@ -4,6 +4,7 @@
     <CategoryList
       :categories="categories"
       @clickUpdateCategory="onClickUpdateCategory"
+      @clickCategory="onClickCategory"
     />
     <CreateCategory @clickSaveCategory="onClickSaveCategory" />
   </aside>
@@ -27,6 +28,10 @@ import { IUpdateCategoryPayload } from "@/store/modules/qiita";
 export default class SideMenu extends Vue {
   @Prop()
   categories!: ICategory[];
+
+  onClickCategory() {
+    this.$emit("clickCategory");
+  }
 
   onClickSaveCategory(category: string) {
     this.$emit("clickSaveCategory", category);
