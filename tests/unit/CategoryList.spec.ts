@@ -12,6 +12,15 @@ describe("CategoryList.vue", () => {
   };
 
   describe("methods", () => {
+    it("should emit clickCategory on onClickCategory()", () => {
+      const wrapper = shallowMount(CategoryList, { propsData });
+
+      // @ts-ignore
+      wrapper.vm.onClickCategory();
+
+      expect(wrapper.emitted("clickCategory")).toBeTruthy();
+    });
+
     it("should emit clickUpdateCategory on onClickUpdateCategory()", () => {
       const wrapper = shallowMount(CategoryList, { propsData });
       const editedCategory = "編集されたカテゴリ名";
@@ -30,13 +39,15 @@ describe("CategoryList.vue", () => {
       );
     });
 
-    it("should emit clickCategory on onClickCategory()", () => {
+    it("should emit clickDestroyCategory on onClickDestroyCategory()", () => {
       const wrapper = shallowMount(CategoryList, { propsData });
+      const categoryId = 1;
 
       // @ts-ignore
-      wrapper.vm.onClickCategory();
+      wrapper.vm.onClickDestroyCategory(categoryId);
 
-      expect(wrapper.emitted("clickCategory")).toBeTruthy();
+      expect(wrapper.emitted("clickDestroyCategory")).toBeTruthy();
+      expect(wrapper.emitted("clickDestroyCategory")[0][0]).toEqual(categoryId);
     });
   });
 
@@ -50,7 +61,26 @@ describe("CategoryList.vue", () => {
       push: () => {}
     };
 
-    it("should call clickUpdateCategory when button is clicked", () => {
+    it("should call onClickCategory when button is clicked", () => {
+      const mock = jest.fn();
+      const wrapper = mount(CategoryList, {
+        propsData,
+        mocks: { $route, $router }
+      });
+
+      wrapper.setMethods({
+        onClickCategory: mock
+      });
+
+      const category = wrapper.find(Category);
+
+      // @ts-ignore
+      category.vm.onClickCategory();
+
+      expect(mock).toHaveBeenCalledWith();
+    });
+
+    it("should call onClickUpdateCategory when button is clicked", () => {
       const mock = jest.fn();
       const wrapper = mount(CategoryList, {
         propsData,
@@ -78,7 +108,7 @@ describe("CategoryList.vue", () => {
       expect(mock).toHaveBeenCalledWith(updateCategoryPayload);
     });
 
-    it("should call clickUpdateCategory when button is clicked", () => {
+    it("should call onClickDestroyCategory when button is clicked", () => {
       const mock = jest.fn();
       const wrapper = mount(CategoryList, {
         propsData,
@@ -86,15 +116,14 @@ describe("CategoryList.vue", () => {
       });
 
       wrapper.setMethods({
-        onClickCategory: mock
+        onClickDestroyCategory: mock
       });
 
       const category = wrapper.find(Category);
-
       // @ts-ignore
-      category.vm.onClickCategory();
+      category.vm.onClickDestroyCategory();
 
-      expect(mock).toHaveBeenCalledWith();
+      expect(mock).toHaveBeenCalledWith(propsData.categories[0].categoryId);
     });
   });
 });

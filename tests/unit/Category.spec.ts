@@ -26,7 +26,7 @@ describe("Category.vue", () => {
   });
 
   describe("methods", () => {
-    it("should emit clickSaveCategory on onClickUpdateCategory()", () => {
+    it("should emit clickUpdateCategory on onClickUpdateCategory()", () => {
       const wrapper = shallowMount(Category, {
         propsData,
         mocks: { $route, $router }
@@ -50,7 +50,7 @@ describe("Category.vue", () => {
       );
     });
 
-    it("should not emit clickSaveCategory on onClickUpdateCategory()", () => {
+    it("should not emit clickUpdateCategory on onClickUpdateCategory()", () => {
       const wrapper = shallowMount(Category, {
         propsData,
         mocks: { $route, $router }
@@ -64,6 +64,21 @@ describe("Category.vue", () => {
       wrapper.vm.onClickUpdateCategory();
 
       expect(wrapper.emitted("clickUpdateCategory")).toBeFalsy();
+    });
+
+    it("should emit clickDestroyCategory on onClickDestroyCategory()", () => {
+      const wrapper = shallowMount(Category, {
+        propsData,
+        mocks: { $route, $router }
+      });
+
+      // @ts-ignore
+      wrapper.vm.onClickDestroyCategory();
+
+      expect(wrapper.emitted("clickDestroyCategory")).toBeTruthy();
+      expect(wrapper.emitted("clickDestroyCategory")[0][0]).toEqual(
+        propsData.category.categoryId
+      );
     });
 
     it("should emit clickCategory on onClickCategory()", () => {
@@ -110,10 +125,8 @@ describe("Category.vue", () => {
 
       expect(mock).toHaveBeenCalled();
     });
-  });
 
-  describe("template", () => {
-    it("should call onClickUpdateCategory when button is clicked", () => {
+    it("should call onClickDestroyCategory when button is clicked", () => {
       const mock = jest.fn();
       const wrapper = shallowMount(Category, {
         propsData,
@@ -121,16 +134,17 @@ describe("Category.vue", () => {
       });
 
       wrapper.setMethods({
-        onClickUpdateCategory: mock
+        onClickDestroyCategory: mock
       });
 
-      wrapper.find("button").trigger("click");
+      wrapper
+        .findAll("a")
+        .at(1)
+        .trigger("click");
 
       expect(mock).toHaveBeenCalled();
     });
-  });
 
-  describe("template", () => {
     it("should call onClickCategory when button is clicked", () => {
       const mock = jest.fn();
       const wrapper = shallowMount(Category, {

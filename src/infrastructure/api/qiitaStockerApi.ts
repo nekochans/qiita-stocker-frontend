@@ -19,7 +19,8 @@ import {
   ILogoutRequest,
   ICategorizeRequest,
   IFetchCategorizedStockRequest,
-  IFetchCategorizedStockResponse
+  IFetchCategorizedStockResponse,
+  IDestroyCategoryRequest
 } from "@/domain/qiita";
 
 export default class QiitaStockerApi implements IQiitaStockerApi {
@@ -158,6 +159,22 @@ export default class QiitaStockerApi implements IQiitaStockerApi {
       )
       .then((axiosResponse: AxiosResponse) => {
         return Promise.resolve(axiosResponse.data);
+      })
+      .catch((axiosError: IQiitaStockerError) => {
+        return Promise.reject(axiosError);
+      });
+  }
+
+  async destroyCategory(request: IDestroyCategoryRequest): Promise<void> {
+    return await axios
+      .delete(`${request.apiUrlBase}/api/categories/${request.categoryId}`, {
+        headers: {
+          Authorization: `Bearer ${request.sessionId}`,
+          "Content-Type": "application/json"
+        }
+      })
+      .then(() => {
+        return Promise.resolve();
       })
       .catch((axiosError: IQiitaStockerError) => {
         return Promise.reject(axiosError);

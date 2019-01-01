@@ -48,7 +48,9 @@ import {
   IFetchCategorizedStockRequest,
   fetchCategorizedStocks,
   IFetchCategorizedStockResponse,
-  ICategorizedStock
+  ICategorizedStock,
+  IDestroyCategoryRequest,
+  destroyCategory
 } from "@/domain/qiita";
 import uuid from "uuid";
 import { router } from "@/router";
@@ -224,6 +226,11 @@ const mutations: MutationTree<IQiitaState> = {
     updateCategory: { stateCategory: ICategory; categoryName: string }
   ) => {
     updateCategory.stateCategory.name = updateCategory.categoryName;
+  },
+  removeCategory: (state, categoryId: number) => {
+    state.categories = state.categories.filter(
+      category => category.categoryId !== categoryId
+    );
   },
   saveStocks: (state, stocks: IUncategorizedStock[]) => {
     state.stocks = stocks;
@@ -531,6 +538,30 @@ const actions: ActionTree<IQiitaState, RootState> = {
         stateCategory: updateCategoryItem.stateCategory,
         categoryName: updateCategoryResponse.name
       });
+    } catch (error) {
+      if (isUnauthorized(error.response.status)) {
+        localStorage.remove(STORAGE_KEY_SESSION_ID);
+        commit("saveSessionId", "");
+      }
+
+      router.push({
+        name: "error",
+        params: { errorMessage: error.response.data.message }
+      });
+      return;
+    }
+  },
+  destroyCategory: async ({ commit }, categoryId: number) => {
+    try {
+      const sessionId = localStorage.load(STORAGE_KEY_SESSION_ID);
+      const destroyCategoryRequest: IDestroyCategoryRequest = {
+        apiUrlBase: apiUrlBase(),
+        sessionId: sessionId,
+        categoryId: categoryId
+      };
+
+      await destroyCategory(destroyCategoryRequest);
+      commit("removeCategory", categoryId);
     } catch (error) {
       if (isUnauthorized(error.response.status)) {
         localStorage.remove(STORAGE_KEY_SESSION_ID);
