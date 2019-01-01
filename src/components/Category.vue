@@ -4,7 +4,7 @@
       <a
         :data-category="category.categoryId"
         @click="onClickCategory"
-        :class="`${isActive(category.categoryId) && 'is-active'}`"
+        :class="`${isSelecting && 'is-active'}`"
       >
         {{ category.name }}
         <p class="edit" @click="editing = true;">編集</p>
@@ -18,7 +18,11 @@
           v-focus="editing"
           v-model="editCategoryName"
         />
-        <a class="has-text-grey is-size-7 destroy">削除</a>
+        <a
+          class="has-text-grey is-size-7 destroy"
+          @click="onClickDestroyCategory"
+          >削除</a
+        >
         <p v-if="isValidationError" class="help is-danger">
           カテゴリを入力してください。
         </p>
@@ -101,14 +105,24 @@ export default class Category extends Vue {
     this.doneEdit();
   }
 
+  onClickDestroyCategory() {
+    this.$emit("clickDestroyCategory", this.category.categoryId);
+    this.doneEdit();
+
+    if (this.isSelecting) {
+      this.$router.push({
+        name: "stocks"
+      });
+    }
+  }
+
   initializeIsSelecting() {
     const query: any = this.$route.params;
     this.isSelecting = String(this.category.categoryId) === query.id;
   }
 
-  isActive(id: ICategory["categoryId"]) {
-    const query: any = this.$route.params;
-    return String(id) === query.id;
+  created() {
+    this.initializeIsSelecting();
   }
 }
 </script>

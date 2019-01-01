@@ -5,6 +5,7 @@
       :categories="categories"
       @clickUpdateCategory="onClickUpdateCategory"
       @clickCategory="onClickCategory"
+      @clickDestroyCategory="onClickDestroyCategory"
     />
     <CreateCategory @clickSaveCategory="onClickSaveCategory" />
   </aside>
@@ -39,6 +40,10 @@ export default class SideMenu extends Vue {
 
   onClickUpdateCategory(updateCategoryPayload: IUpdateCategoryPayload) {
     this.$emit("clickUpdateCategory", updateCategoryPayload);
+  }
+
+  onClickDestroyCategory(categoryId: number) {
+    this.$emit("clickDestroyCategory", categoryId);
   }
 }
 </script>

@@ -9,6 +9,7 @@
             @clickSaveCategory="onClickSaveCategory"
             @clickUpdateCategory="onClickUpdateCategory"
             @clickCategory="onClickCategory"
+            @clickDestroyCategory="onClickDestroyCategory"
           />
         </div>
         <div class="column is-9">
@@ -119,6 +120,9 @@ export default class StockCategories extends Vue {
   updateCategory!: (updateCategoryPayload: IUpdateCategoryPayload) => void;
 
   @QiitaAction
+  destroyCategory!: (categoryId: number) => void;
+
+  @QiitaAction
   fetchCategorizedStock!: (
     fetchCategorizedStockPayload: IfetchCategorizedStockPayload
   ) => void;
@@ -150,6 +154,10 @@ export default class StockCategories extends Vue {
 
   onClickUpdateCategory(updateCategoryPayload: IUpdateCategoryPayload) {
     this.updateCategory(updateCategoryPayload);
+  }
+
+  onClickDestroyCategory(categoryId: number) {
+    this.destroyCategory(categoryId);
   }
 
   onClickCategorize(categoryId: number) {

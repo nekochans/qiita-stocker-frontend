@@ -31,6 +31,7 @@ export interface IQiitaStockerApi {
   updateCategory(
     request: IUpdateCategoryRequest
   ): Promise<IUpdateCategoryResponse>;
+  destroyCategory(request: IDestroyCategoryRequest): Promise<void>;
   fetchStocks(request: IFetchStockRequest): Promise<IFetchStockResponse>;
   fetchCategorizedStocks(
     request: IFetchCategorizedStockRequest
@@ -135,6 +136,12 @@ export interface IUpdateCategoryRequest {
 }
 
 export interface IUpdateCategoryResponse extends ICategory {}
+
+export interface IDestroyCategoryRequest {
+  apiUrlBase: string;
+  sessionId: string;
+  categoryId: number;
+}
 
 interface IQiitaStockerErrorData {
   code: number;
@@ -268,6 +275,12 @@ export const updateCategory = async (
   request: IUpdateCategoryRequest
 ): Promise<IUpdateCategoryResponse> => {
   return await qiitaStockerApi.updateCategory(request);
+};
+
+export const destroyCategory = async (
+  request: IDestroyCategoryRequest
+): Promise<void> => {
+  return await qiitaStockerApi.destroyCategory(request);
 };
 
 export const fetchStocks = async (
