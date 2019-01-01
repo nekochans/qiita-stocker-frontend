@@ -362,6 +362,20 @@ describe("QiitaModule", () => {
       expect(state.categories[0].name).toEqual(updateCategory.categoryName);
     });
 
+    it("should be able to remove category", () => {
+      const categories = [
+        { categoryId: 1, name: "テストカテゴリ" },
+        { categoryId: 2, name: "テストカテゴリ2" },
+        { categoryId: 3, name: "テストカテゴリ3" }
+      ];
+      state.categories = categories;
+
+      const wrapper = (mutations: any) => mutations.removeCategory(state, 2);
+      wrapper(QiitaModule.mutations);
+
+      expect(state.categories).toEqual([categories[0], categories[2]]);
+    });
+
     it("should be able to save stocks", () => {
       const stocks: IUncategorizedStock[] = [
         {
@@ -747,6 +761,19 @@ describe("QiitaModule", () => {
       expect(commit.mock.calls).toEqual([
         ["updateCategory", updateCategoryItem]
       ]);
+    });
+
+    it("should be able to remove category", async () => {
+      const mockAxios: any = axios;
+      mockAxios.delete.mockResolvedValue({});
+      const commit = jest.fn();
+
+      const categoryId = 1;
+      const wrapper = (actions: any) =>
+        actions.destroyCategory({ commit }, categoryId);
+      await wrapper(QiitaModule.actions);
+
+      expect(commit.mock.calls).toEqual([["removeCategory", categoryId]]);
     });
 
     it("should be able to fetch stocks", async () => {
