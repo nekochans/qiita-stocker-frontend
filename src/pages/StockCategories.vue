@@ -167,8 +167,8 @@ export default class StockCategories extends Vue {
   fetchOtherPageStock(page: IPage) {
     const query: any = this.$route.params;
     const fetchCategorizedStockPayload = {
-      categoryId: query.id,
-      page: page
+      categoryId: parseInt(query.id),
+      page
     };
 
     this.fetchCategorizedStock(fetchCategorizedStockPayload);
@@ -181,7 +181,7 @@ export default class StockCategories extends Vue {
   async initializeStock() {
     const query: any = this.$route.params;
     const fetchCategorizedStockPayload: IfetchCategorizedStockPayload = {
-      categoryId: query.id,
+      categoryId: parseInt(query.id),
       page: { page: 0, perPage: 0, relation: "" }
     };
     this.fetchCategorizedStock(fetchCategorizedStockPayload);

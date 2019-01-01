@@ -17,22 +17,19 @@ import { IPage, IUncategorizedStock } from "@/domain/qiita";
 
 config.logModifiedComponents = false;
 
-const $route = {
-  path: "/stocks/categories",
-  params: { id: 1 }
-};
-
 const localVue = createLocalVue();
 localVue.use(Vuex);
 localVue.use(VueRouter);
 
 const routes = [
   {
-    path: "/stocks/categories",
-    params: { id: 1 }
+    path: "/stocks/categories/:id",
+    params: { id: "1" }
   }
 ];
-const router = new VueRouter();
+
+const router = new VueRouter({ routes });
+router.push({ path: "/stocks/categories/1" });
 
 describe("StockCategories.vue", () => {
   let store: any;
@@ -184,34 +181,33 @@ describe("StockCategories.vue", () => {
       );
     });
 
-    // it('calls store action "fetchCategorizedStock" on fetchOtherPageStock()', () => {
-    //   const page: IPage = {
-    //     page: 4,
-    //     perPage: 20,
-    //     relation: "next"
-    //   };
-    //
-    //   const wrapper = shallowMount(StockCategories, {
-    //     store,
-    //     localVue,
-    //     router,
-    //     mocks: { $route }
-    //   });
-    //
-    //   // @ts-ignore
-    //   wrapper.vm.fetchOtherPageStock(page);
-    //
-    //   const fetchCategorizedStockPayload = {
-    //     categoryId: 1,
-    //     page: page
-    //   };
-    //
-    //   expect(actions.fetchCategorizedStock).toHaveBeenCalledWith(
-    //     expect.anything(),
-    //     fetchCategorizedStockPayload,
-    //     undefined
-    //   );
-    // });
+    it('calls store action "fetchCategorizedStock" on fetchOtherPageStock()', () => {
+      const page: IPage = {
+        page: 4,
+        perPage: 20,
+        relation: "next"
+      };
+
+      const wrapper = shallowMount(StockCategories, {
+        store,
+        localVue,
+        router
+      });
+
+      // @ts-ignore
+      wrapper.vm.fetchOtherPageStock(page);
+
+      const fetchCategorizedStockPayload = {
+        categoryId: 1,
+        page: page
+      };
+
+      expect(actions.fetchCategorizedStock).toHaveBeenCalledWith(
+        expect.anything(),
+        fetchCategorizedStockPayload,
+        undefined
+      );
+    });
 
     it('calls store action "setIsCategorizing" on onSetIsCategorizing()', () => {
       const wrapper = shallowMount(StockCategories, {
@@ -226,28 +222,28 @@ describe("StockCategories.vue", () => {
       expect(actions.setIsCategorizing).toHaveBeenCalled();
     });
 
-    // it('calls store action "fetchCategorizedStock" on initializeStock()', () => {
-    //   const wrapper = shallowMount(StockCategories, {
-    //     store,
-    //     localVue,
-    //     mocks: { $route }
-    //   });
-    //
-    //   // @ts-ignore
-    //   wrapper.vm.initializeStock();
-    //
-    //   const fetchCategorizedStockPayload = {
-    //     categoryId: 1,
-    //     page: { page: 0, perPage: 0, relation: "" }
-    //   };
-    //
-    //   expect(actions.fetchCategorizedStock).toHaveBeenCalled();
-    //   expect(actions.fetchCategorizedStock).toHaveBeenCalledWith(
-    //     expect.anything(),
-    //     fetchCategorizedStockPayload,
-    //     undefined
-    //   );
-    // });
+    it('calls store action "fetchCategorizedStock" on initializeStock()', () => {
+      const wrapper = shallowMount(StockCategories, {
+        store,
+        localVue,
+        router
+      });
+
+      // @ts-ignore
+      wrapper.vm.initializeStock();
+
+      const fetchCategorizedStockPayload = {
+        categoryId: 1,
+        page: { page: 0, perPage: 0, relation: "" }
+      };
+
+      expect(actions.fetchCategorizedStock).toHaveBeenCalled();
+      expect(actions.fetchCategorizedStock).toHaveBeenCalledWith(
+        expect.anything(),
+        fetchCategorizedStockPayload,
+        undefined
+      );
+    });
 
     it('calls store action "fetchCategory" on initializeCategory()', () => {
       const wrapper = shallowMount(StockCategories, {
