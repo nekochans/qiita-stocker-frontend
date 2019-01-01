@@ -1,13 +1,11 @@
 import { IQiitaState } from "@/types/qiita";
 import {
+  ICategorizedStock,
   ICategory,
   ICreateAccountResponse,
   IIssueLoginSessionResponse,
-  IUncategorizedStock
-} from "@/domain/qiita";
-import { ICategorizePayload, QiitaModule } from "@/store/modules/qiita";
-import axios from "axios";
-import {
+  IUncategorizedStock,
+  IFetchedCategorizedStock,
   IIssueAccessTokensResponse,
   IFetchAuthenticatedUserResponse,
   IAuthorizationResponse,
@@ -17,6 +15,12 @@ import {
   IStock,
   IPage
 } from "@/domain/qiita";
+import {
+  ICategorizePayload,
+  QiitaModule,
+  IfetchCategorizedStockPayload
+} from "@/store/modules/qiita";
+import axios from "axios";
 
 jest.mock("@/domain/Qiita");
 jest.mock("axios");
@@ -35,6 +39,29 @@ describe("QiitaModule", () => {
         isChecked: true
       },
       {
+        article_id: "c0a2609ae61a72dcc60f",
+        title: "title2",
+        user_id: "test-user12",
+        profile_image_url: "https://test.com/test/image",
+        article_created_at: "2018/09/30",
+        tags: ["Vue.js", "Vuex", "TypeScript"],
+        isChecked: false
+      }
+    ];
+
+    const categorizedStocks: ICategorizedStock[] = [
+      {
+        id: 1,
+        article_id: "c0a2609ae61a72dcc60f",
+        title: "title1",
+        user_id: "test-user1",
+        profile_image_url: "https://test.com/test/image",
+        article_created_at: "2018/09/30",
+        tags: ["laravel", "php"],
+        isChecked: true
+      },
+      {
+        id: 2,
         article_id: "c0a2609ae61a72dcc60f",
         title: "title2",
         user_id: "test-user12",
@@ -74,6 +101,7 @@ describe("QiitaModule", () => {
         sessionId: "",
         categories: [],
         stocks: stocks,
+        categorizedStocks: categorizedStocks,
         currentPage: 1,
         paging: [firstPage, prevPage, nextPage, lastPage],
         isCategorizing: false,
@@ -131,6 +159,15 @@ describe("QiitaModule", () => {
       expect(stocks).toEqual(state.stocks);
     });
 
+    it("should be able to get categorized stocks", () => {
+      const wrapper = (getters: any) => getters.categorizedStocks(state);
+      const categorizedStocks: IQiitaState["categorizedStocks"] = wrapper(
+        QiitaModule.getters
+      );
+
+      expect(categorizedStocks).toEqual(state.categorizedStocks);
+    });
+
     it("should be able to get isCategorizing", () => {
       const wrapper = (getters: any) => getters.isCategorizing(state);
       const isCategorizing: IQiitaState["isCategorizing"] = wrapper(
@@ -152,6 +189,18 @@ describe("QiitaModule", () => {
       const checkedStockArticleIds: string[] = wrapper(QiitaModule.getters);
 
       expect(checkedStockArticleIds).toEqual([state.stocks[0].article_id]);
+    });
+
+    it("should be able to get checkedCategorizedStockArticleIds", () => {
+      const wrapper = (getters: any) =>
+        getters.checkedCategorizedStockArticleIds(state);
+      const checkedCategorizedStockArticleIds: string[] = wrapper(
+        QiitaModule.getters
+      );
+
+      expect(checkedCategorizedStockArticleIds).toEqual([
+        state.categorizedStocks[0].article_id
+      ]);
     });
 
     it("should be able to get currentPage", () => {
@@ -204,6 +253,7 @@ describe("QiitaModule", () => {
         sessionId: "",
         categories: [],
         stocks: [],
+        categorizedStocks: [],
         currentPage: 1,
         paging: [],
         isCategorizing: false,
@@ -337,6 +387,36 @@ describe("QiitaModule", () => {
       wrapper(QiitaModule.mutations);
 
       expect(state.stocks).toEqual(stocks);
+    });
+
+    it("should be able to save categorized stocks", () => {
+      const categorizedStocks: ICategorizedStock[] = [
+        {
+          id: 1,
+          article_id: "c0a2609ae61a72dcc60f",
+          title: "title1",
+          user_id: "test-user1",
+          profile_image_url: "https://test.com/test/image",
+          article_created_at: "2018/09/30",
+          tags: ["laravel", "php"],
+          isChecked: true
+        },
+        {
+          id: 2,
+          article_id: "c0a2609ae61a72dcc60f",
+          title: "title2",
+          user_id: "test-user12",
+          profile_image_url: "https://test.com/test/image",
+          article_created_at: "2018/09/30",
+          tags: ["Vue.js", "Vuex", "TypeScript"],
+          isChecked: false
+        }
+      ];
+      const wrapper = (mutations: any) =>
+        mutations.saveCategorizedStocks(state, categorizedStocks);
+      wrapper(QiitaModule.mutations);
+
+      expect(state.categorizedStocks).toEqual(categorizedStocks);
     });
 
     it("should be able to save paging", () => {
@@ -742,6 +822,110 @@ describe("QiitaModule", () => {
       ]);
     });
 
+    it("should be able to fetch categorized stock", async () => {
+      const stocks: IFetchedCategorizedStock[] = [
+        {
+          id: 1,
+          article_id: "c0a2609ae61a72dcc60f",
+          title: "title1",
+          user_id: "test-user1",
+          profile_image_url: "https://test.com/test/image",
+          article_created_at: "2018/09/30",
+          tags: ["laravel", "php"]
+        },
+        {
+          id: 2,
+          article_id: "c0a2609ae61a72dcc60f",
+          title: "title2",
+          user_id: "test-user12",
+          profile_image_url: "https://test.com/test/image",
+          article_created_at: "2018/09/30",
+          tags: ["Vue.js", "Vuex", "TypeScript"]
+        }
+      ];
+
+      const saveStocks: ICategorizedStock[] = [
+        {
+          id: 1,
+          article_id: "c0a2609ae61a72dcc60f",
+          title: "title1",
+          user_id: "test-user1",
+          profile_image_url: "https://test.com/test/image",
+          article_created_at: "2018/09/30",
+          tags: ["laravel", "php"],
+          isChecked: false
+        },
+        {
+          id: 2,
+          article_id: "c0a2609ae61a72dcc60f",
+          title: "title2",
+          user_id: "test-user12",
+          profile_image_url: "https://test.com/test/image",
+          article_created_at: "2018/09/30",
+          tags: ["Vue.js", "Vuex", "TypeScript"],
+          isChecked: false
+        }
+      ];
+
+      const paging: IPage[] = [
+        {
+          page: 4,
+          perPage: 20,
+          relation: "next"
+        },
+        {
+          page: 5,
+          perPage: 20,
+          relation: "last"
+        },
+        {
+          page: 1,
+          perPage: 20,
+          relation: "first"
+        },
+        {
+          page: 2,
+          perPage: 20,
+          relation: "prev"
+        }
+      ];
+
+      const link =
+        '<http://127.0.0.1/api/stocks?page=4&per_page=20>; rel="next",' +
+        '<http://127.0.0.1/api/stocks?page=5&per_page=20>; rel="last",' +
+        '<http://127.0.0.1/api/stocks?page=1&per_page=20>; rel="first",' +
+        '<http://127.0.0.1/api/stocks?page=2&per_page=20>; rel="prev"';
+
+      const mockResponse: { data: any; headers: any } = {
+        data: stocks,
+        headers: {
+          link: link
+        }
+      };
+
+      const payload: IfetchCategorizedStockPayload = {
+        page: { page: 3, perPage: 20, relation: "" },
+        categoryId: 1
+      };
+
+      const mockAxios: any = axios;
+      mockAxios.get.mockResolvedValue(mockResponse);
+
+      const commit = jest.fn();
+
+      const wrapper = (actions: any) =>
+        actions.fetchCategorizedStock({ commit }, payload);
+      await wrapper(QiitaModule.actions);
+
+      expect(commit.mock.calls).toEqual([
+        ["setIsLoading", true],
+        ["saveCategorizedStocks", saveStocks],
+        ["savePaging", paging],
+        ["saveCurrentPage", 3],
+        ["setIsLoading", false]
+      ]);
+    });
+
     it("should be able to set isCategorizing", async () => {
       const commit = jest.fn();
       const wrapper = (actions: any) => actions.setIsCategorizing({ commit });
@@ -781,6 +965,18 @@ describe("QiitaModule", () => {
 
       expect(commit.mock.calls).toEqual([
         ["checkStock", { stock, isChecked: !stock.isChecked }]
+      ]);
+    });
+
+    it("should be able to reset data", async () => {
+      const commit = jest.fn();
+      const wrapper = (actions: any) => actions.resetData({ commit });
+      await wrapper(QiitaModule.actions);
+
+      expect(commit.mock.calls).toEqual([
+        ["saveCurrentPage", 1],
+        ["saveStocks", []],
+        ["saveCategorizedStocks", []]
       ]);
     });
   });

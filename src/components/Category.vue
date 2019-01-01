@@ -3,7 +3,7 @@
     <div v-if="!editing">
       <a
         :data-category="category.categoryId"
-        @click="clickHandle"
+        @click="onClickCategory"
         :class="`${isActive(category.categoryId) && 'is-active'}`"
       >
         {{ category.name }}
@@ -41,7 +41,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from "vue-property-decorator";
+import { Component, Vue, Prop, Watch } from "vue-property-decorator";
 import { ICategory } from "@/domain/qiita";
 import { IUpdateCategoryPayload } from "@/store/modules/qiita";
 
@@ -58,17 +58,25 @@ export default class Category extends Vue {
   @Prop()
   category!: ICategory;
 
+  @Watch("$route")
+  onRouteChanged() {
+    this.initializeIsSelecting();
+  }
+
   editing: boolean = false;
   editCategoryName = this.category.name;
   isValidationError: boolean = false;
+  isSelecting: boolean = false;
 
-  clickHandle(event: any) {
-    // TODO 選択されたカテゴリの記事を表示する
-    console.log(`${event.target.dataset.category} clicked!!`);
-  }
+  onClickCategory() {
+    if (this.editing || this.isSelecting) return;
 
-  isActive(id: ICategory["categoryId"]) {
-    return id === 1;
+    const categoryId: string = String(this.category.categoryId);
+    this.$emit("clickCategory");
+    this.$router.push({
+      name: "stockCategories",
+      params: { id: categoryId }
+    });
   }
 
   doneEdit() {
@@ -91,6 +99,16 @@ export default class Category extends Vue {
 
     this.$emit("clickUpdateCategory", updateCategoryPayload);
     this.doneEdit();
+  }
+
+  initializeIsSelecting() {
+    const query: any = this.$route.params;
+    this.isSelecting = String(this.category.categoryId) === query.id;
+  }
+
+  isActive(id: ICategory["categoryId"]) {
+    const query: any = this.$route.params;
+    return String(id) === query.id;
   }
 }
 </script>

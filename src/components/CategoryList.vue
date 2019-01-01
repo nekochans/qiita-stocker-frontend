@@ -7,6 +7,7 @@
         :key="category.id"
         :category="category"
         @clickUpdateCategory="onClickUpdateCategory"
+        @clickCategory="onClickCategory"
       />
     </ul>
   </section>
@@ -26,6 +27,10 @@ import Category from "@/components/Category.vue";
 export default class CategoryList extends Vue {
   @Prop()
   categories!: ICategory[];
+
+  onClickCategory() {
+    this.$emit("clickCategory");
+  }
 
   onClickUpdateCategory(updateCategoryPayload: IUpdateCategoryPayload) {
     this.$emit("clickUpdateCategory", updateCategoryPayload);

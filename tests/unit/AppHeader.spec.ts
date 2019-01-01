@@ -26,6 +26,7 @@ describe("AppHeader.vue", () => {
     sessionId: "",
     categories: [],
     stocks: [],
+    categorizedStocks: [],
     currentPage: 1,
     paging: [],
     isCategorizing: false,

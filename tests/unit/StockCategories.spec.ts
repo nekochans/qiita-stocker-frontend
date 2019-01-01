@@ -5,7 +5,7 @@ import {
   ICategorizePayload,
   QiitaModule
 } from "@/store/modules/qiita";
-import Stocks from "@/pages/Stocks.vue";
+import StockCategories from "@/pages/StockCategories.vue";
 import SideMenu from "@/components/SideMenu.vue";
 import StockEdit from "@/components/StockEdit.vue";
 import StockList from "@/components/StockList.vue";
@@ -18,13 +18,20 @@ import { IPage, IUncategorizedStock } from "@/domain/qiita";
 config.logModifiedComponents = false;
 
 const localVue = createLocalVue();
-
 localVue.use(Vuex);
 localVue.use(VueRouter);
 
-const router = new VueRouter();
+const routes = [
+  {
+    path: "/stocks/categories/:id",
+    params: { id: "1" }
+  }
+];
 
-describe("Stocks.vue", () => {
+const router = new VueRouter({ routes });
+router.push({ path: "/stocks/categories/1" });
+
+describe("StockCategories.vue", () => {
   let store: any;
   let state: IQiitaState;
   let actions: any;
@@ -49,10 +56,11 @@ describe("Stocks.vue", () => {
       saveCategory: jest.fn(),
       updateCategory: jest.fn(),
       fetchCategory: jest.fn(),
-      fetchStock: jest.fn(),
+      fetchCategorizedStock: jest.fn(),
       setIsCategorizing: jest.fn(),
       categorize: jest.fn(),
-      checkStock: jest.fn()
+      checkStock: jest.fn(),
+      resetData: jest.fn()
     };
 
     store = new Vuex.Store({
@@ -68,8 +76,25 @@ describe("Stocks.vue", () => {
   });
 
   describe("methods", () => {
+    it('calls store action "resetData" on onClickCategory()', () => {
+      const wrapper = shallowMount(StockCategories, {
+        store,
+        localVue,
+        router
+      });
+
+      // @ts-ignore
+      wrapper.vm.onClickCategory();
+
+      expect(actions.resetData).toHaveBeenCalled();
+    });
+
     it('calls store action "saveCategory" on onClickSaveCategory()', () => {
-      const wrapper = shallowMount(Stocks, { store, localVue, router });
+      const wrapper = shallowMount(StockCategories, {
+        store,
+        localVue,
+        router
+      });
       const inputtedCategory = "inputtedCategory";
 
       // @ts-ignore
@@ -85,7 +110,11 @@ describe("Stocks.vue", () => {
     it('calls store action "updateCategory" on onClickUpdateCategory()', () => {
       state.categories = [{ categoryId: 1, name: "テストカテゴリ" }];
 
-      const wrapper = shallowMount(Stocks, { store, localVue, router });
+      const wrapper = shallowMount(StockCategories, {
+        store,
+        localVue,
+        router
+      });
       const editedCategory = "編集されたカテゴリ名";
 
       const updateCategoryPayload: IUpdateCategoryPayload = {
@@ -103,35 +132,12 @@ describe("Stocks.vue", () => {
       );
     });
 
-    it('calls store action "fetchCategory" on initializeCategory()', () => {
-      const wrapper = shallowMount(Stocks, { store, localVue, router });
-
-      // @ts-ignore
-      wrapper.vm.initializeCategory();
-
-      expect(actions.fetchCategory).toHaveBeenCalled();
-    });
-
-    it('calls store action "fetchStock" on initializeStock()', () => {
-      const wrapper = shallowMount(Stocks, { store, localVue, router });
-
-      // @ts-ignore
-      wrapper.vm.initializeStock();
-
-      expect(actions.fetchStock).toHaveBeenCalled();
-    });
-
-    it('calls store action "setIsCategorizing" on onSetIsCategorizing()', () => {
-      const wrapper = shallowMount(Stocks, { store, localVue, router });
-
-      // @ts-ignore
-      wrapper.vm.onSetIsCategorizing();
-
-      expect(actions.setIsCategorizing).toHaveBeenCalled();
-    });
-
     it('calls store action "categorize" on onClickCategorize()', () => {
-      const wrapper = shallowMount(Stocks, { store, localVue, router });
+      const wrapper = shallowMount(StockCategories, {
+        store,
+        localVue,
+        router
+      });
 
       // @ts-ignore
       wrapper.vm.onClickCategorize(1);
@@ -159,7 +165,11 @@ describe("Stocks.vue", () => {
         isChecked: true
       };
 
-      const wrapper = shallowMount(Stocks, { store, localVue, router });
+      const wrapper = shallowMount(StockCategories, {
+        store,
+        localVue,
+        router
+      });
 
       // @ts-ignore
       wrapper.vm.onClickCheckStock(stock);
@@ -171,31 +181,105 @@ describe("Stocks.vue", () => {
       );
     });
 
-    it('calls store action "fetchStock" on fetchOtherPageStock()', () => {
+    it('calls store action "fetchCategorizedStock" on fetchOtherPageStock()', () => {
       const page: IPage = {
         page: 4,
         perPage: 20,
         relation: "next"
       };
 
-      const wrapper = shallowMount(Stocks, { store, localVue, router });
+      const wrapper = shallowMount(StockCategories, {
+        store,
+        localVue,
+        router
+      });
 
       // @ts-ignore
       wrapper.vm.fetchOtherPageStock(page);
 
-      expect(actions.fetchStock).toHaveBeenCalledWith(
+      const fetchCategorizedStockPayload = {
+        categoryId: 1,
+        page: page
+      };
+
+      expect(actions.fetchCategorizedStock).toHaveBeenCalledWith(
         expect.anything(),
-        page,
+        fetchCategorizedStockPayload,
         undefined
       );
+    });
+
+    it('calls store action "setIsCategorizing" on onSetIsCategorizing()', () => {
+      const wrapper = shallowMount(StockCategories, {
+        store,
+        localVue,
+        router
+      });
+
+      // @ts-ignore
+      wrapper.vm.onSetIsCategorizing();
+
+      expect(actions.setIsCategorizing).toHaveBeenCalled();
+    });
+
+    it('calls store action "fetchCategorizedStock" on initializeStock()', () => {
+      const wrapper = shallowMount(StockCategories, {
+        store,
+        localVue,
+        router
+      });
+
+      // @ts-ignore
+      wrapper.vm.initializeStock();
+
+      const fetchCategorizedStockPayload = {
+        categoryId: 1,
+        page: { page: 0, perPage: 0, relation: "" }
+      };
+
+      expect(actions.fetchCategorizedStock).toHaveBeenCalled();
+      expect(actions.fetchCategorizedStock).toHaveBeenCalledWith(
+        expect.anything(),
+        fetchCategorizedStockPayload,
+        undefined
+      );
+    });
+
+    it('calls store action "fetchCategory" on initializeCategory()', () => {
+      const wrapper = shallowMount(StockCategories, {
+        store,
+        localVue,
+        router
+      });
+
+      // @ts-ignore
+      wrapper.vm.initializeCategory();
+
+      expect(actions.fetchCategory).toHaveBeenCalled();
     });
   });
 
   // mountによる結合テスト
   describe("template", () => {
+    it("should call onClickCategory when button is clicked", () => {
+      const mock = jest.fn();
+      const wrapper = mount(StockCategories, { store, localVue, router });
+
+      wrapper.setMethods({
+        onClickCategory: mock
+      });
+
+      const sideMenu = wrapper.find(SideMenu);
+
+      // @ts-ignore
+      sideMenu.vm.onClickCategory();
+
+      expect(mock).toHaveBeenCalledWith();
+    });
+
     it("should call onClickSaveCategory when button is clicked", () => {
       const mock = jest.fn();
-      const wrapper = mount(Stocks, { store, localVue, router });
+      const wrapper = mount(StockCategories, { store, localVue, router });
 
       wrapper.setMethods({
         onClickSaveCategory: mock
@@ -214,7 +298,7 @@ describe("Stocks.vue", () => {
       state.categories = [{ categoryId: 1, name: "テストカテゴリ" }];
 
       const mock = jest.fn();
-      const wrapper = mount(Stocks, { store, localVue, router });
+      const wrapper = mount(StockCategories, { store, localVue, router });
 
       wrapper.setMethods({
         onClickUpdateCategory: mock
@@ -234,27 +318,9 @@ describe("Stocks.vue", () => {
       expect(mock).toHaveBeenCalledWith(updateCategoryPayload);
     });
 
-    it("should call onSetIsCategorizing when button is clicked", () => {
-      const mock = jest.fn();
-      const wrapper = mount(Stocks, { store, localVue, router });
-
-      wrapper.setMethods({
-        onSetIsCategorizing: mock
-      });
-
-      const stockEdit = wrapper.find(StockEdit);
-
-      // @ts-ignore
-      stockEdit.vm.selectedCategoryId = 1;
-      // @ts-ignore
-      stockEdit.vm.changeCategory();
-
-      expect(mock).toHaveBeenCalled();
-    });
-
     it("should call onClickCategorize when button is clicked", () => {
       const mock = jest.fn();
-      const wrapper = mount(Stocks, { store, localVue, router });
+      const wrapper = mount(StockCategories, { store, localVue, router });
 
       wrapper.setMethods({
         onClickCategorize: mock
@@ -273,7 +339,7 @@ describe("Stocks.vue", () => {
 
     it("should call onClickCheckStock when checkBox is clicked", () => {
       const mock = jest.fn();
-      const wrapper = mount(Stocks, { store, localVue, router });
+      const wrapper = mount(StockCategories, { store, localVue, router });
 
       wrapper.setMethods({
         onClickCheckStock: mock
@@ -298,7 +364,7 @@ describe("Stocks.vue", () => {
 
     it("should call fetchOtherPageStock when pagination is clicked", () => {
       const mock = jest.fn();
-      const wrapper = mount(Stocks, { store, localVue, router });
+      const wrapper = mount(StockCategories, { store, localVue, router });
 
       wrapper.setMethods({
         fetchOtherPageStock: mock
@@ -315,6 +381,24 @@ describe("Stocks.vue", () => {
       pagination.vm.goToPage(page);
 
       expect(mock).toHaveBeenCalledWith(page);
+    });
+
+    it("should call onSetIsCategorizing when button is clicked", () => {
+      const mock = jest.fn();
+      const wrapper = mount(StockCategories, { store, localVue, router });
+
+      wrapper.setMethods({
+        onSetIsCategorizing: mock
+      });
+
+      const stockEdit = wrapper.find(StockEdit);
+
+      // @ts-ignore
+      stockEdit.vm.selectedCategoryId = 1;
+      // @ts-ignore
+      stockEdit.vm.changeCategory();
+
+      expect(mock).toHaveBeenCalled();
     });
   });
 });
