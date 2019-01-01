@@ -60,7 +60,8 @@ describe("StockCategories.vue", () => {
       setIsCategorizing: jest.fn(),
       categorize: jest.fn(),
       checkStock: jest.fn(),
-      resetData: jest.fn()
+      resetData: jest.fn(),
+      destroyCategory: jest.fn()
     };
 
     store = new Vuex.Store({
@@ -128,6 +129,24 @@ describe("StockCategories.vue", () => {
       expect(actions.updateCategory).toHaveBeenCalledWith(
         expect.anything(),
         updateCategoryPayload,
+        undefined
+      );
+    });
+
+    it('calls store action "destroyCategory" on onClickDestroyCategory()', () => {
+      const wrapper = shallowMount(StockCategories, {
+        store,
+        localVue,
+        router
+      });
+      const categoryId = 1;
+
+      // @ts-ignore
+      wrapper.vm.onClickDestroyCategory(categoryId);
+
+      expect(actions.destroyCategory).toHaveBeenCalledWith(
+        expect.anything(),
+        categoryId,
         undefined
       );
     });
@@ -318,6 +337,41 @@ describe("StockCategories.vue", () => {
       expect(mock).toHaveBeenCalledWith(updateCategoryPayload);
     });
 
+    it("should call onClickDestroyCategory when button is clicked", () => {
+      const mock = jest.fn();
+      const wrapper = mount(StockCategories, { store, localVue, router });
+
+      wrapper.setMethods({
+        onClickDestroyCategory: mock
+      });
+
+      const categoryList = wrapper.find(CategoryList);
+      const categoryId = 1;
+
+      // @ts-ignore
+      categoryList.vm.onClickDestroyCategory(categoryId);
+
+      expect(mock).toHaveBeenCalledWith(categoryId);
+    });
+
+    it("should call onSetIsCategorizing when button is clicked", () => {
+      const mock = jest.fn();
+      const wrapper = mount(StockCategories, { store, localVue, router });
+
+      wrapper.setMethods({
+        onSetIsCategorizing: mock
+      });
+
+      const stockEdit = wrapper.find(StockEdit);
+
+      // @ts-ignore
+      stockEdit.vm.selectedCategoryId = 1;
+      // @ts-ignore
+      stockEdit.vm.changeCategory();
+
+      expect(mock).toHaveBeenCalled();
+    });
+
     it("should call onClickCategorize when button is clicked", () => {
       const mock = jest.fn();
       const wrapper = mount(StockCategories, { store, localVue, router });
@@ -381,24 +435,6 @@ describe("StockCategories.vue", () => {
       pagination.vm.goToPage(page);
 
       expect(mock).toHaveBeenCalledWith(page);
-    });
-
-    it("should call onSetIsCategorizing when button is clicked", () => {
-      const mock = jest.fn();
-      const wrapper = mount(StockCategories, { store, localVue, router });
-
-      wrapper.setMethods({
-        onSetIsCategorizing: mock
-      });
-
-      const stockEdit = wrapper.find(StockEdit);
-
-      // @ts-ignore
-      stockEdit.vm.selectedCategoryId = 1;
-      // @ts-ignore
-      stockEdit.vm.changeCategory();
-
-      expect(mock).toHaveBeenCalled();
     });
   });
 });

@@ -52,7 +52,8 @@ describe("Stocks.vue", () => {
       fetchStock: jest.fn(),
       setIsCategorizing: jest.fn(),
       categorize: jest.fn(),
-      checkStock: jest.fn()
+      checkStock: jest.fn(),
+      destroyCategory: jest.fn()
     };
 
     store = new Vuex.Store({
@@ -99,6 +100,20 @@ describe("Stocks.vue", () => {
       expect(actions.updateCategory).toHaveBeenCalledWith(
         expect.anything(),
         updateCategoryPayload,
+        undefined
+      );
+    });
+
+    it('calls store action "destroyCategory" on onClickDestroyCategory()', () => {
+      const wrapper = shallowMount(Stocks, { store, localVue, router });
+      const categoryId = 1;
+
+      // @ts-ignore
+      wrapper.vm.onClickDestroyCategory(categoryId);
+
+      expect(actions.destroyCategory).toHaveBeenCalledWith(
+        expect.anything(),
+        categoryId,
         undefined
       );
     });
@@ -232,6 +247,23 @@ describe("Stocks.vue", () => {
       categoryList.vm.onClickUpdateCategory(updateCategoryPayload);
 
       expect(mock).toHaveBeenCalledWith(updateCategoryPayload);
+    });
+
+    it("should call onClickDestroyCategory when button is clicked", () => {
+      const mock = jest.fn();
+      const wrapper = mount(Stocks, { store, localVue, router });
+
+      wrapper.setMethods({
+        onClickDestroyCategory: mock
+      });
+
+      const categoryList = wrapper.find(CategoryList);
+      const categoryId = 1;
+
+      // @ts-ignore
+      categoryList.vm.onClickDestroyCategory(categoryId);
+
+      expect(mock).toHaveBeenCalledWith(categoryId);
     });
 
     it("should call onSetIsCategorizing when button is clicked", () => {
