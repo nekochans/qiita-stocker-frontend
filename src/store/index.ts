@@ -1,7 +1,5 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { CounterModule } from "./modules/counter";
-import { WeatherModule } from "./modules/weather";
 import { QiitaModule } from "./modules/qiita";
 
 Vue.use(Vuex);
@@ -15,8 +13,6 @@ export default new Vuex.Store({
     version: "1.0.0"
   },
   modules: {
-    CounterModule,
-    WeatherModule,
     QiitaModule
   }
 });
