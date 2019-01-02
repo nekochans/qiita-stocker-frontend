@@ -5,7 +5,7 @@
         <img :src="stock.profile_image_url" />
       </a>
     </figure>
-    <div class="media-content">
+    <div class="media-content content-no-scroll">
       <div class="content">
         <div class="item-info">
           <p>
@@ -81,5 +81,9 @@ a:hover {
 .item-title {
   margin-bottom: 0.3em;
   font-size: 1.4em;
+}
+
+.content-no-scroll {
+  overflow-x: visible;
 }
 </style>
