@@ -7,7 +7,10 @@
         :class="`${isSelecting && 'is-active'}`"
       >
         {{ category.name }}
-        <p class="edit" @click="editing = true;">編集</p>
+
+        <p class="edit" @click="editing = true;">
+          <span class="icon"> <i class="fas fa-pencil-alt fa-lg"></i> </span>
+        </p>
       </a>
     </div>
     <div v-show="editing">
@@ -21,8 +24,9 @@
         <a
           class="has-text-grey is-size-7 destroy"
           @click="onClickDestroyCategory"
-          >削除</a
         >
+          <span class="icon"> <i class="far fa-trash-alt fa-2x"></i> </span>
+        </a>
         <p v-if="isValidationError" class="help is-danger">
           カテゴリを入力してください。
         </p>
