@@ -14,9 +14,9 @@
       </a>
     </div>
     <div v-show="editing">
-      <div class="field">
+      <div class="edit-field">
         <input
-          :class="`input edit-field ${isValidationError && 'is-danger'}`"
+          :class="`input input-field ${isValidationError && 'is-danger'}`"
           type="text"
           v-focus="editing"
           v-model="editCategoryName"
@@ -31,7 +31,7 @@
           カテゴリを入力してください。
         </p>
       </div>
-      <div class="field">
+      <div class="edit-field">
         <p class="control">
           <button
             class="button is-small is-danger"
@@ -151,6 +151,10 @@ li:hover .edit {
 }
 
 .edit-field {
+  margin-bottom: 0.3rem;
+}
+
+.input-field {
   width: auto;
 }
 
