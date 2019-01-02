@@ -2,6 +2,13 @@
   <div id="app"><router-view /></div>
 </template>
 
+<script lang="ts">
+import "@fortawesome/fontawesome-free/js/all.js";
+import { Component, Vue } from "vue-property-decorator";
+@Component
+export default class App extends Vue {}
+</script>
+
 <style lang="scss">
 @import "../node_modules/bulma/bulma.sass";
 </style>

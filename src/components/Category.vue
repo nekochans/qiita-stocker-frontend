@@ -7,13 +7,16 @@
         :class="`${isSelecting && 'is-active'}`"
       >
         {{ category.name }}
-        <p class="edit" @click="editing = true;">編集</p>
+
+        <p class="edit" @click="editing = true;">
+          <span class="icon"> <i class="fas fa-pencil-alt fa-lg"></i> </span>
+        </p>
       </a>
     </div>
     <div v-show="editing">
-      <div class="field">
+      <div class="edit-field">
         <input
-          :class="`input edit-field ${isValidationError && 'is-danger'}`"
+          :class="`input input-field ${isValidationError && 'is-danger'}`"
           type="text"
           v-focus="editing"
           v-model="editCategoryName"
@@ -21,13 +24,14 @@
         <a
           class="has-text-grey is-size-7 destroy"
           @click="onClickDestroyCategory"
-          >削除</a
         >
+          <span class="icon"> <i class="far fa-trash-alt fa-2x"></i> </span>
+        </a>
         <p v-if="isValidationError" class="help is-danger">
           カテゴリを入力してください。
         </p>
       </div>
-      <div class="field">
+      <div class="edit-field">
         <p class="control">
           <button
             class="button is-small is-danger"
@@ -147,6 +151,10 @@ li:hover .edit {
 }
 
 .edit-field {
+  margin-bottom: 0.3rem;
+}
+
+.input-field {
   width: auto;
 }
 

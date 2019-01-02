@@ -46,5 +46,6 @@ export default class CategoryList extends Vue {
 <style scoped>
 .side-menu-list {
   margin-top: 1em;
+  margin-bottom: 0.5rem;
 }
 </style>
