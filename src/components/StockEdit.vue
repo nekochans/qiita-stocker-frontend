@@ -1,5 +1,5 @@
 <template>
-  <div v-show="stocksLength && !isLoading" class="navbar-menu">
+  <div v-show="stocksLength && !isLoading" class="navbar-menu edit-menu">
     <div class="navbar-end">
       <div v-if="isCategorizing">
         <div :class="`select edit-header ${isValidationError && 'is-danger'}`">
@@ -75,5 +75,10 @@ export default class StockEdit extends Vue {
 <style scoped>
 .edit-header {
   margin-right: 10px;
+}
+
+.edit-menu {
+  display: block;
+  box-shadow: none;
 }
 </style>
