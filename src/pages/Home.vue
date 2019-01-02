@@ -69,6 +69,6 @@ export default class Home extends Vue {}
 }
 
 .detail-title {
-  padding-top: 1.5rem;
+  padding-top: 0.75rem;
 }
 </style>
