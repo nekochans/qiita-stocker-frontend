@@ -1,7 +1,5 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Counter from "./pages/Counter.vue";
-import Weather from "./pages/Weather.vue";
 import SignUp from "./pages/SignUp.vue";
 import Login from "./pages/Login.vue";
 import Stocks from "./pages/Stocks.vue";
@@ -27,16 +25,6 @@ export const router = new Router({
       path: "/",
       name: "home",
       component: Home
-    },
-    {
-      path: "/counter",
-      name: "counter",
-      component: Counter
-    },
-    {
-      path: "/weather",
-      name: "weather",
-      component: Weather
     },
     {
       path: "/login",
