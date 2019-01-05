@@ -8,7 +8,7 @@ import {
 import StockCategories from "@/pages/StockCategories.vue";
 import SideMenu from "@/components/SideMenu.vue";
 import StockEdit from "@/components/StockEdit.vue";
-import StockList from "@/components/StockList.vue";
+import CategorizedStockList from "@/components/CategorizedStockList.vue";
 import CategoryList from "@/components/CategoryList.vue";
 import Pagination from "@/components/Pagination.vue";
 import { IQiitaState } from "@/types/qiita";
@@ -426,7 +426,7 @@ describe("StockCategories.vue", () => {
         onClickCheckStock: mock
       });
 
-      const stockList = wrapper.find(StockList);
+      const categorizedStockList = wrapper.find(CategorizedStockList);
       const stock: IUncategorizedStock = {
         article_id: "c0a2609ae61a72dcc60f",
         title: "title1",
@@ -438,7 +438,7 @@ describe("StockCategories.vue", () => {
       };
 
       // @ts-ignore
-      stockList.vm.onClickCheckStock(stock);
+      categorizedStockList.vm.onClickCheckStock(stock);
 
       expect(mock).toHaveBeenCalledWith(stock);
     });

@@ -24,7 +24,7 @@
             @clickSetIsCategorizing="onSetIsCategorizing"
             @clickCategorize="onClickCategorize"
           />
-          <StockList
+          <CategorizedStockList
             :stocks="categorizedStocks"
             :isCategorizing="isCategorizing"
             :isLoading="isLoading"
@@ -53,7 +53,7 @@ import { Getter, Action, namespace } from "vuex-class";
 import AppHeader from "@/components/AppHeader.vue";
 import SideMenu from "@/components/SideMenu.vue";
 import StockEdit from "@/components/StockEdit.vue";
-import StockList from "@/components/StockList.vue";
+import CategorizedStockList from "@/components/CategorizedStockList.vue";
 import Pagination from "@/components/Pagination.vue";
 import Loading from "@/components/Loading.vue";
 import {
@@ -76,7 +76,7 @@ const QiitaGetter = namespace("QiitaModule", Getter);
     AppHeader,
     SideMenu,
     StockEdit,
-    StockList,
+    CategorizedStockList,
     Pagination,
     Loading
   }
