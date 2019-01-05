@@ -238,6 +238,12 @@ const mutations: MutationTree<IQiitaState> = {
   saveCategorizedStocks: (state, stocks: ICategorizedStock[]) => {
     state.categorizedStocks = stocks;
   },
+  removeCategorizedStocks: (state, stockArticleIds: string[]) => {
+    state.categorizedStocks = state.categorizedStocks.filter(
+      categorizedStock =>
+        stockArticleIds.indexOf(categorizedStock.article_id) < 0
+    );
+  },
   savePaging: (state, paging: IPage[]) => {
     state.paging = paging;
   },
@@ -693,6 +699,7 @@ const actions: ActionTree<IQiitaState, RootState> = {
 
       await categorize(categorizeRequest);
       commit("uncheckStock");
+      commit("removeCategorizedStocks", categorizePayload.stockArticleIds);
     } catch (error) {
       if (isUnauthorized(error.response.status)) {
         localStorage.remove(STORAGE_KEY_SESSION_ID);

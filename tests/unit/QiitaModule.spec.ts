@@ -433,6 +433,39 @@ describe("QiitaModule", () => {
       expect(state.categorizedStocks).toEqual(categorizedStocks);
     });
 
+    it("should be able to remove categorized stocks", () => {
+      const categorizedStocks: ICategorizedStock[] = [
+        {
+          id: 1,
+          article_id: "removeid111111111111",
+          title: "title1",
+          user_id: "test-user1",
+          profile_image_url: "https://test.com/test/image",
+          article_created_at: "2018/09/30",
+          tags: ["laravel", "php"],
+          isChecked: true
+        },
+        {
+          id: 2,
+          article_id: "c0a2609ae61a72dcc60f",
+          title: "title2",
+          user_id: "test-user12",
+          profile_image_url: "https://test.com/test/image",
+          article_created_at: "2018/09/30",
+          tags: ["Vue.js", "Vuex", "TypeScript"],
+          isChecked: false
+        }
+      ];
+      const articleIds = ["removeid111111111111"];
+
+      state.categorizedStocks = categorizedStocks;
+      const wrapper = (mutations: any) =>
+        mutations.removeCategorizedStocks(state, articleIds);
+      wrapper(QiitaModule.mutations);
+
+      expect(state.categorizedStocks).toEqual([categorizedStocks[1]]);
+    });
+
     it("should be able to save paging", () => {
       const paging: IPage[] = [
         {
@@ -972,7 +1005,10 @@ describe("QiitaModule", () => {
         actions.categorize({ commit }, categorizePayload);
       await wrapper(QiitaModule.actions);
 
-      expect(commit.mock.calls).toEqual([["uncheckStock"]]);
+      expect(commit.mock.calls).toEqual([
+        ["uncheckStock"],
+        ["removeCategorizedStocks", categorizePayload.stockArticleIds]
+      ]);
     });
 
     it("should be able to check Stock", async () => {
