@@ -2,7 +2,7 @@
   <section>
     <ul class="menu-list">
       <li>
-        <a :class="`${isSelecting && 'is-active'}`" @click="handleClick">
+        <a :class="`${isSelecting() && 'is-active'}`" @click="handleClick">
           全てのストック
         </a>
       </li>
@@ -11,16 +11,22 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Prop } from "vue-property-decorator";
 
 @Component
 export default class DefaultMenuList extends Vue {
-  isSelecting: boolean = false;
+  @Prop()
+  displayCategoryId!: number;
 
   handleClick() {
+    this.$emit("clickStocksAll");
     this.$router.push({
       name: "stocks"
     });
+  }
+
+  isSelecting() {
+    return this.displayCategoryId === 0;
   }
 }
 </script>

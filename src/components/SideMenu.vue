@@ -1,6 +1,9 @@
 <template>
   <aside class="submenu menu">
-    <DefaultMenuList />
+    <DefaultMenuList
+      :displayCategoryId="displayCategoryId"
+      @clickStocksAll="onClickStocksAll"
+    />
     <CategoryList
       :categories="categories"
       @clickUpdateCategory="onClickUpdateCategory"
@@ -30,6 +33,9 @@ export default class SideMenu extends Vue {
   @Prop()
   categories!: ICategory[];
 
+  @Prop()
+  displayCategoryId!: number;
+
   onClickCategory() {
     this.$emit("clickCategory");
   }
@@ -44,6 +50,10 @@ export default class SideMenu extends Vue {
 
   onClickDestroyCategory(categoryId: number) {
     this.$emit("clickDestroyCategory", categoryId);
+  }
+
+  onClickStocksAll() {
+    this.$emit("clickStocksAll");
   }
 }
 </script>

@@ -108,6 +108,7 @@ const state: IQiitaState = {
   categorizedStocks: [],
   currentPage: 1,
   paging: [],
+  displayCategoryId: 0,
   isCategorizing: false,
   isLoading: true
 };
@@ -133,6 +134,9 @@ const getters: GetterTree<IQiitaState, RootState> = {
   },
   categorizedStocks: (state): IQiitaState["categorizedStocks"] => {
     return state.categorizedStocks;
+  },
+  displayCategoryId: (state): IQiitaState["displayCategoryId"] => {
+    return state.displayCategoryId;
   },
   isCategorizing: (state): IQiitaState["isCategorizing"] => {
     return state.isCategorizing;
@@ -250,8 +254,14 @@ const mutations: MutationTree<IQiitaState> = {
   saveCurrentPage: (state, currentPage: number) => {
     state.currentPage = currentPage;
   },
+  saveDisplayCategoryId: (state, categoryID: number) => {
+    state.displayCategoryId = categoryID;
+  },
   setIsCategorizing: state => {
     state.isCategorizing = !state.isCategorizing;
+  },
+  restIsCategorizing: state => {
+    state.isCategorizing = false;
   },
   setIsLoading: (state, isLoading: boolean) => {
     state.isLoading = isLoading;
@@ -717,9 +727,14 @@ const actions: ActionTree<IQiitaState, RootState> = {
     commit("checkStock", { stock, isChecked: !stock.isChecked });
   },
   resetData: ({ commit }): void => {
+    commit("saveDisplayCategoryId", 0);
+    commit("restIsCategorizing");
     commit("saveCurrentPage", 1);
     commit("saveStocks", []);
     commit("saveCategorizedStocks", []);
+  },
+  saveDisplayCategoryId: ({ commit }, categoryId: number): void => {
+    commit("saveDisplayCategoryId", categoryId);
   }
 };
 

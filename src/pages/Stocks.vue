@@ -6,6 +6,7 @@
         <div class="column is-3 column-padding">
           <SideMenu
             :categories="categories"
+            :displayCategoryId="displayCategoryId"
             @clickSaveCategory="onClickSaveCategory"
             @clickUpdateCategory="onClickUpdateCategory"
             @clickDestroyCategory="onClickDestroyCategory"
@@ -102,6 +103,9 @@ export default class Stocks extends Vue {
 
   @QiitaGetter
   lastPage!: IPage;
+
+  @QiitaGetter
+  displayCategoryId!: number;
 
   @QiitaAction
   saveCategory!: (category: string) => void;

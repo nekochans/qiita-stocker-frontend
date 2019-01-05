@@ -48,6 +48,7 @@ describe("StockCategories.vue", () => {
       categorizedStocks: [],
       currentPage: 1,
       paging: [],
+      displayCategoryId: 0,
       isCategorizing: false,
       isLoading: false
     };

@@ -16,6 +16,7 @@ export interface IQiitaState {
   categorizedStocks: ICategorizedStock[];
   currentPage: number;
   paging: IPage[];
+  displayCategoryId: number;
   isCategorizing: boolean;
   isLoading: boolean;
 }

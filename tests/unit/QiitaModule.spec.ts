@@ -104,6 +104,7 @@ describe("QiitaModule", () => {
         categorizedStocks: categorizedStocks,
         currentPage: 1,
         paging: [firstPage, prevPage, nextPage, lastPage],
+        displayCategoryId: 0,
         isCategorizing: false,
         isLoading: false
       };
@@ -256,6 +257,7 @@ describe("QiitaModule", () => {
         categorizedStocks: [],
         currentPage: 1,
         paging: [],
+        displayCategoryId: 0,
         isCategorizing: false,
         isLoading: false
       };
