@@ -129,6 +129,12 @@ const getters: GetterTree<IQiitaState, RootState> = {
   categories: (state): IQiitaState["categories"] => {
     return state.categories;
   },
+  displayCategories: (state): IQiitaState["categories"] => {
+    return state.categories.filter(
+      category => category.categoryId !== state.displayCategoryId
+    );
+  },
+
   stocks: (state): IQiitaState["stocks"] => {
     return state.stocks;
   },

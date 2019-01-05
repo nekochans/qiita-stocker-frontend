@@ -5,7 +5,7 @@
         <div :class="`select edit-header ${isValidationError && 'is-danger'}`">
           <select v-model="selectedCategoryId">
             <option
-              v-for="category in categories"
+              v-for="category in displayCategories"
               :value="category.categoryId"
               :key="category.categoryId"
               >{{ category.name }}</option
@@ -42,7 +42,7 @@ export default class StockEdit extends Vue {
   isCategorizing!: boolean;
 
   @Prop()
-  categories!: ICategory[];
+  displayCategories!: ICategory[];
 
   selectedCategoryId: number = 0;
   isValidationError: boolean = false;

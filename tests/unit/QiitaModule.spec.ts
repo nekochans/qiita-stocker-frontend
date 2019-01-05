@@ -92,6 +92,11 @@ describe("QiitaModule", () => {
       relation: "last"
     };
 
+    const categories = [
+      { categoryId: 1, name: "category1" },
+      { categoryId: 2, name: "category2" }
+    ];
+
     beforeEach(() => {
       state = {
         authorizationCode: "34d97d024861f098d2e45fb4d9ed7757f97f5b0f",
@@ -99,12 +104,12 @@ describe("QiitaModule", () => {
         qiitaAccountId: "test-user",
         permanentId: "1",
         sessionId: "",
-        categories: [],
+        categories: categories,
         stocks: stocks,
         categorizedStocks: categorizedStocks,
         currentPage: 1,
         paging: [firstPage, prevPage, nextPage, lastPage],
-        displayCategoryId: 0,
+        displayCategoryId: 2,
         isCategorizing: false,
         isLoading: false
       };
@@ -151,6 +156,15 @@ describe("QiitaModule", () => {
       );
 
       expect(categories).toEqual(state.categories);
+    });
+
+    it("should be able to get display categories", () => {
+      const wrapper = (getters: any) => getters.displayCategories(state);
+      const displayCategories: IQiitaState["categories"] = wrapper(
+        QiitaModule.getters
+      );
+
+      expect(displayCategories).toEqual([state.categories[0]]);
     });
 
     it("should be able to get stocks", () => {

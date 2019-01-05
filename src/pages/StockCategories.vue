@@ -21,6 +21,7 @@
             :stocksLength="categorizedStocks.length"
             :isCategorizing="isCategorizing"
             :categories="categories"
+            :displayCategories="displayCategories"
             @clickSetIsCategorizing="onSetIsCategorizing"
             @clickCategorize="onClickCategorize"
           />
@@ -79,6 +80,9 @@ const QiitaGetter = namespace("QiitaModule", Getter);
 export default class StockCategories extends Vue {
   @QiitaGetter
   categories!: ICategory[];
+
+  @QiitaGetter
+  displayCategories!: ICategory[];
 
   @QiitaGetter
   categorizedStocks!: ICategorizedStock[];
