@@ -13,7 +13,7 @@ import CategoryList from "@/components/CategoryList.vue";
 import Pagination from "@/components/Pagination.vue";
 import { IQiitaState } from "@/types/qiita";
 import VueRouter from "vue-router";
-import { IPage, IUncategorizedStock } from "@/domain/qiita";
+import { ICategorizedStock, IPage, IUncategorizedStock } from "@/domain/qiita";
 
 config.logModifiedComponents = false;
 
@@ -60,7 +60,7 @@ describe("StockCategories.vue", () => {
       fetchCategorizedStock: jest.fn(),
       setIsCategorizing: jest.fn(),
       categorize: jest.fn(),
-      checkStock: jest.fn(),
+      checkCategorizedStock: jest.fn(),
       resetData: jest.fn(),
       destroyCategory: jest.fn(),
       saveDisplayCategoryId: jest.fn()
@@ -176,7 +176,8 @@ describe("StockCategories.vue", () => {
     });
 
     it('calls store action "checkStock" on onClickCheckStock()', () => {
-      const stock: IUncategorizedStock = {
+      const stock: ICategorizedStock = {
+        id: 1,
         article_id: "c0a2609ae61a72dcc60f",
         title: "title1",
         user_id: "test-user1",
@@ -195,7 +196,7 @@ describe("StockCategories.vue", () => {
       // @ts-ignore
       wrapper.vm.onClickCheckStock(stock);
 
-      expect(actions.checkStock).toHaveBeenCalledWith(
+      expect(actions.checkCategorizedStock).toHaveBeenCalledWith(
         expect.anything(),
         stock,
         undefined

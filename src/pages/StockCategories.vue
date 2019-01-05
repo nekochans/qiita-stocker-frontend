@@ -56,12 +56,7 @@ import StockEdit from "@/components/StockEdit.vue";
 import CategorizedStockList from "@/components/CategorizedStockList.vue";
 import Pagination from "@/components/Pagination.vue";
 import Loading from "@/components/Loading.vue";
-import {
-  ICategory,
-  IUncategorizedStock,
-  IPage,
-  ICategorizedStock
-} from "@/domain/qiita";
+import { ICategory, IPage, ICategorizedStock } from "@/domain/qiita";
 import {
   IUpdateCategoryPayload,
   ICategorizePayload,
@@ -139,7 +134,7 @@ export default class StockCategories extends Vue {
   categorize!: (categorizePayload: ICategorizePayload) => void;
 
   @QiitaAction
-  checkStock!: (stock: IUncategorizedStock) => void;
+  checkCategorizedStock!: (stock: ICategorizedStock) => void;
 
   @QiitaAction
   resetData!: () => void;
@@ -176,8 +171,8 @@ export default class StockCategories extends Vue {
     this.categorize(categorizePayload);
   }
 
-  onClickCheckStock(stock: IUncategorizedStock) {
-    this.checkStock(stock);
+  onClickCheckStock(stock: ICategorizedStock) {
+    this.checkCategorizedStock(stock);
   }
 
   fetchOtherPageStock(page: IPage) {

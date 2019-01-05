@@ -554,6 +554,24 @@ describe("QiitaModule", () => {
       wrapper(QiitaModule.mutations);
       expect(stock.isChecked).toEqual(true);
     });
+
+    it("should be able to check Categorized Stock", () => {
+      const stock: ICategorizedStock = {
+        id: 1,
+        article_id: "c0a2609ae61a72dcc60f",
+        title: "title1",
+        user_id: "test-user1",
+        profile_image_url: "https://test.com/test/image",
+        article_created_at: "2018/09/30",
+        tags: ["laravel", "php"],
+        isChecked: false
+      };
+
+      const wrapper = (mutations: any) =>
+        mutations.checkStock(state, { stock, isChecked: true });
+      wrapper(QiitaModule.mutations);
+      expect(stock.isChecked).toEqual(true);
+    });
   });
 
   describe("actions", () => {
@@ -1052,6 +1070,28 @@ describe("QiitaModule", () => {
 
       expect(commit.mock.calls).toEqual([
         ["checkStock", { stock, isChecked: !stock.isChecked }]
+      ]);
+    });
+
+    it("should be able to check Categorized Stock", async () => {
+      const stock: ICategorizedStock = {
+        id: 1,
+        article_id: "c0a2609ae61a72dcc60f",
+        title: "title1",
+        user_id: "test-user1",
+        profile_image_url: "https://test.com/test/image",
+        article_created_at: "2018/09/30",
+        tags: ["laravel", "php"],
+        isChecked: true
+      };
+
+      const commit = jest.fn();
+      const wrapper = (actions: any) =>
+        actions.checkCategorizedStock({ commit }, stock);
+      await wrapper(QiitaModule.actions);
+
+      expect(commit.mock.calls).toEqual([
+        ["checkCategorizedStock", { stock, isChecked: !stock.isChecked }]
       ]);
     });
 
