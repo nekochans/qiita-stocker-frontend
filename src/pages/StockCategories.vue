@@ -6,10 +6,12 @@
         <div class="column is-3 column-padding">
           <SideMenu
             :categories="categories"
+            :displayCategoryId="displayCategoryId"
             @clickSaveCategory="onClickSaveCategory"
             @clickUpdateCategory="onClickUpdateCategory"
             @clickCategory="onClickCategory"
             @clickDestroyCategory="onClickDestroyCategory"
+            @clickStocksAll="onClickStocksAll"
           />
         </div>
         <div class="column is-9 column-padding">
@@ -110,6 +112,9 @@ export default class StockCategories extends Vue {
   @QiitaGetter
   lastPage!: IPage;
 
+  @QiitaGetter
+  displayCategoryId!: number;
+
   @QiitaAction
   saveCategory!: (category: string) => void;
 
@@ -138,6 +143,9 @@ export default class StockCategories extends Vue {
 
   @QiitaAction
   resetData!: () => void;
+
+  @QiitaAction
+  saveDisplayCategoryId!: (categoryId: number) => void;
 
   @Watch("$route")
   onRouteChanged() {
@@ -186,13 +194,19 @@ export default class StockCategories extends Vue {
     this.setIsCategorizing();
   }
 
+  onClickStocksAll() {
+    this.resetData();
+  }
+
   async initializeStock() {
     const query: any = this.$route.params;
+    const categoryId: number = parseInt(query.id);
     const fetchCategorizedStockPayload: IfetchCategorizedStockPayload = {
-      categoryId: parseInt(query.id),
+      categoryId: categoryId,
       page: { page: 0, perPage: 0, relation: "" }
     };
     this.fetchCategorizedStock(fetchCategorizedStockPayload);
+    this.saveDisplayCategoryId(categoryId);
   }
 
   initializeCategory() {

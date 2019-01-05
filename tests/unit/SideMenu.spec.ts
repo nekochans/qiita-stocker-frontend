@@ -2,14 +2,16 @@ import { shallowMount, mount, config } from "@vue/test-utils";
 import SideMenu from "@/components/SideMenu.vue";
 import CreateCategory from "@/components/CreateCategory.vue";
 import CategoryList from "@/components/CategoryList.vue";
+import DefaultMenuList from "@/components/DefaultMenuList.vue";
 import { IUpdateCategoryPayload } from "@/store/modules/qiita";
 import { ICategory } from "@/domain/qiita";
 
 config.logModifiedComponents = false;
 
 describe("SideMenu.vue", () => {
-  const propsData: { categories: ICategory[] } = {
-    categories: [{ categoryId: 1, name: "テストカテゴリ" }]
+  const propsData: { categories: ICategory[]; displayCategoryId: number } = {
+    categories: [{ categoryId: 1, name: "テストカテゴリ" }],
+    displayCategoryId: 2
   };
 
   describe("methods", () => {
@@ -62,6 +64,15 @@ describe("SideMenu.vue", () => {
 
       expect(wrapper.emitted("clickDestroyCategory")).toBeTruthy();
       expect(wrapper.emitted("clickDestroyCategory")[0][0]).toEqual(categoryId);
+    });
+
+    it("should emit clickStocksAll on onClickStocksAll()", () => {
+      const wrapper = shallowMount(SideMenu, { propsData });
+
+      // @ts-ignore
+      wrapper.vm.onClickStocksAll();
+
+      expect(wrapper.emitted("clickStocksAll")).toBeTruthy();
     });
   });
 
@@ -160,6 +171,25 @@ describe("SideMenu.vue", () => {
       categoryList.vm.onClickDestroyCategory(categoryId);
 
       expect(mock).toHaveBeenCalledWith(categoryId);
+    });
+
+    it("should call onClickStocksAll when link is clicked", () => {
+      const mock = jest.fn();
+      const wrapper = mount(SideMenu, {
+        propsData,
+        mocks: { $route, $router }
+      });
+
+      wrapper.setMethods({
+        onClickStocksAll: mock
+      });
+
+      const defaultMenuList = wrapper.find(DefaultMenuList);
+
+      // @ts-ignore
+      defaultMenuList.vm.handleClick();
+
+      expect(mock).toHaveBeenCalledWith();
     });
   });
 });

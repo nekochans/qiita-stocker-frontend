@@ -104,6 +104,7 @@ describe("QiitaModule", () => {
         categorizedStocks: categorizedStocks,
         currentPage: 1,
         paging: [firstPage, prevPage, nextPage, lastPage],
+        displayCategoryId: 0,
         isCategorizing: false,
         isLoading: false
       };
@@ -166,6 +167,15 @@ describe("QiitaModule", () => {
       );
 
       expect(categorizedStocks).toEqual(state.categorizedStocks);
+    });
+
+    it("should be able to get displayCategoryId", () => {
+      const wrapper = (getters: any) => getters.displayCategoryId(state);
+      const displayCategoryId: IQiitaState["displayCategoryId"] = wrapper(
+        QiitaModule.getters
+      );
+
+      expect(displayCategoryId).toEqual(state.displayCategoryId);
     });
 
     it("should be able to get isCategorizing", () => {
@@ -256,6 +266,7 @@ describe("QiitaModule", () => {
         categorizedStocks: [],
         currentPage: 1,
         paging: [],
+        displayCategoryId: 0,
         isCategorizing: false,
         isLoading: false
       };
@@ -502,10 +513,23 @@ describe("QiitaModule", () => {
       expect(state.currentPage).toEqual(2);
     });
 
+    it("should be able to save displayCategoryId", () => {
+      const wrapper = (mutations: any) =>
+        mutations.saveDisplayCategoryId(state, 3);
+      wrapper(QiitaModule.mutations);
+      expect(state.displayCategoryId).toEqual(3);
+    });
+
     it("should be able to save isCategorizing", () => {
       const wrapper = (mutations: any) => mutations.setIsCategorizing(state);
       wrapper(QiitaModule.mutations);
       expect(state.isCategorizing).toEqual(true);
+    });
+
+    it("should be able to reset isCategorizing", () => {
+      const wrapper = (mutations: any) => mutations.restIsCategorizing(state);
+      wrapper(QiitaModule.mutations);
+      expect(state.isCategorizing).toEqual(false);
     });
 
     it("should be able to save isLoading", () => {
@@ -1037,9 +1061,23 @@ describe("QiitaModule", () => {
       await wrapper(QiitaModule.actions);
 
       expect(commit.mock.calls).toEqual([
+        ["saveDisplayCategoryId", 0],
+        ["restIsCategorizing"],
         ["saveCurrentPage", 1],
         ["saveStocks", []],
         ["saveCategorizedStocks", []]
+      ]);
+    });
+
+    it("should be able to save displayCategoryId", async () => {
+      const categoryId = 4;
+      const commit = jest.fn();
+      const wrapper = (actions: any) =>
+        actions.saveDisplayCategoryId({ commit }, categoryId);
+      await wrapper(QiitaModule.actions);
+
+      expect(commit.mock.calls).toEqual([
+        ["saveDisplayCategoryId", categoryId]
       ]);
     });
   });
