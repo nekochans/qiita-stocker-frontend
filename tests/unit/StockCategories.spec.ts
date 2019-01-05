@@ -62,7 +62,8 @@ describe("StockCategories.vue", () => {
       categorize: jest.fn(),
       checkStock: jest.fn(),
       resetData: jest.fn(),
-      destroyCategory: jest.fn()
+      destroyCategory: jest.fn(),
+      saveDisplayCategoryId: jest.fn()
     };
 
     store = new Vuex.Store({
@@ -242,6 +243,23 @@ describe("StockCategories.vue", () => {
       expect(actions.setIsCategorizing).toHaveBeenCalled();
     });
 
+    it('calls store action "resetData" on onClickStocksAll()', () => {
+      const wrapper = shallowMount(StockCategories, {
+        store,
+        localVue,
+        router
+      });
+
+      // @ts-ignore
+      wrapper.vm.onClickStocksAll();
+
+      expect(actions.resetData).toHaveBeenCalledWith(
+        expect.anything(),
+        undefined,
+        undefined
+      );
+    });
+
     it('calls store action "fetchCategorizedStock" on initializeStock()', () => {
       const wrapper = shallowMount(StockCategories, {
         store,
@@ -252,8 +270,9 @@ describe("StockCategories.vue", () => {
       // @ts-ignore
       wrapper.vm.initializeStock();
 
+      const categoryId = 1;
       const fetchCategorizedStockPayload = {
-        categoryId: 1,
+        categoryId: categoryId,
         page: { page: 0, perPage: 0, relation: "" }
       };
 
@@ -261,6 +280,13 @@ describe("StockCategories.vue", () => {
       expect(actions.fetchCategorizedStock).toHaveBeenCalledWith(
         expect.anything(),
         fetchCategorizedStockPayload,
+        undefined
+      );
+
+      expect(actions.fetchCategorizedStock).toHaveBeenCalled();
+      expect(actions.saveDisplayCategoryId).toHaveBeenCalledWith(
+        expect.anything(),
+        categoryId,
         undefined
       );
     });
@@ -436,6 +462,22 @@ describe("StockCategories.vue", () => {
       pagination.vm.goToPage(page);
 
       expect(mock).toHaveBeenCalledWith(page);
+    });
+
+    it("should call onClickStocksAll when link is clicked", () => {
+      const mock = jest.fn();
+      const wrapper = mount(StockCategories, { store, localVue, router });
+
+      wrapper.setMethods({
+        onClickStocksAll: mock
+      });
+
+      const sideMenu = wrapper.find(SideMenu);
+
+      // @ts-ignore
+      sideMenu.vm.onClickStocksAll();
+
+      expect(mock).toHaveBeenCalledWith();
     });
   });
 });
