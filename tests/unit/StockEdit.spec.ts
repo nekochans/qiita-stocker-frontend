@@ -7,12 +7,12 @@ describe("StockEdit.vue", () => {
     isLoading: boolean;
     stocksLength: number;
     isCategorizing: boolean;
-    categories: ICategory[];
+    displayCategories: ICategory[];
   } = {
     isLoading: false,
     stocksLength: 10,
     isCategorizing: false,
-    categories: [
+    displayCategories: [
       { categoryId: 1, name: "テストカテゴリ1" },
       { categoryId: 2, name: "テストカテゴリ2" }
     ]
@@ -103,7 +103,7 @@ describe("StockEdit.vue", () => {
 
     it("should call changeCategory when button is clicked", () => {
       propsData.isCategorizing = true;
-      propsData.categories = [
+      propsData.displayCategories = [
         { categoryId: 1, name: "テストカテゴリ1" },
         { categoryId: 2, name: "テストカテゴリ2" }
       ];
@@ -123,7 +123,7 @@ describe("StockEdit.vue", () => {
 
     it("should call cancel when button is clicked", () => {
       propsData.isCategorizing = true;
-      propsData.categories = [
+      propsData.displayCategories = [
         { categoryId: 1, name: "テストカテゴリ1" },
         { categoryId: 2, name: "テストカテゴリ2" }
       ];

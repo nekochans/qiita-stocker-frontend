@@ -129,6 +129,12 @@ const getters: GetterTree<IQiitaState, RootState> = {
   categories: (state): IQiitaState["categories"] => {
     return state.categories;
   },
+  displayCategories: (state): IQiitaState["categories"] => {
+    return state.categories.filter(
+      category => category.categoryId !== state.displayCategoryId
+    );
+  },
+
   stocks: (state): IQiitaState["stocks"] => {
     return state.stocks;
   },
@@ -267,6 +273,9 @@ const mutations: MutationTree<IQiitaState> = {
     state.isLoading = isLoading;
   },
   checkStock: (state, { stock, isChecked }) => {
+    stock.isChecked = isChecked;
+  },
+  checkCategorizedStock: (state, { stock, isChecked }) => {
     stock.isChecked = isChecked;
   },
   uncheckStock: state => {
@@ -725,6 +734,9 @@ const actions: ActionTree<IQiitaState, RootState> = {
   },
   checkStock: ({ commit }, stock: IUncategorizedStock): void => {
     commit("checkStock", { stock, isChecked: !stock.isChecked });
+  },
+  checkCategorizedStock: ({ commit }, stock: ICategorizedStock): void => {
+    commit("checkCategorizedStock", { stock, isChecked: !stock.isChecked });
   },
   resetData: ({ commit }): void => {
     commit("saveDisplayCategoryId", 0);

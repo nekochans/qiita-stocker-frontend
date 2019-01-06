@@ -1,13 +1,14 @@
 import { shallowMount, mount, config } from "@vue/test-utils";
-import StockList from "@/components/StockList.vue";
-import Stock from "@/components/Stock.vue";
-import { IUncategorizedStock } from "@/domain/qiita";
+import CategorizedStockList from "@/components/CategorizedStockList.vue";
+import CategorizedStock from "@/components/CategorizedStock.vue";
+import { ICategorizedStock } from "@/domain/qiita";
 
 config.logModifiedComponents = false;
 
-describe("StockList.vue", () => {
-  const stocks: IUncategorizedStock[] = [
+describe("CategorizedStockList.vue", () => {
+  const stocks: ICategorizedStock[] = [
     {
+      id: 1,
       article_id: "c0a2609ae61a72dcc60f",
       title: "title1",
       user_id: "test-user1",
@@ -17,6 +18,7 @@ describe("StockList.vue", () => {
       isChecked: true
     },
     {
+      id: 2,
       article_id: "c0a2609ae61a72dcc60a",
       title: "title2",
       user_id: "test-user12",
@@ -28,7 +30,7 @@ describe("StockList.vue", () => {
   ];
 
   const propsData: {
-    stocks: IUncategorizedStock[];
+    stocks: ICategorizedStock[];
     isCategorizing: boolean;
     isLoading: boolean;
   } = {
@@ -38,13 +40,13 @@ describe("StockList.vue", () => {
   };
 
   it("props", () => {
-    const wrapper = shallowMount(StockList, { propsData });
+    const wrapper = shallowMount(CategorizedStockList, { propsData });
     expect(wrapper.props()).toEqual(propsData);
   });
 
   describe("methods", () => {
     it("should emit clickCheckStock on onClickCheckStock()", () => {
-      const wrapper = shallowMount(StockList, { propsData });
+      const wrapper = shallowMount(CategorizedStockList, { propsData });
 
       // @ts-ignore
       wrapper.vm.onClickCheckStock(stocks[0]);
@@ -57,22 +59,22 @@ describe("StockList.vue", () => {
   describe("template", () => {
     it("should call onClickCheckStock when button is clicked", () => {
       const mock = jest.fn();
-      const wrapper = mount(StockList, { propsData });
+      const wrapper = mount(CategorizedStockList, { propsData });
 
       wrapper.setMethods({
         onClickCheckStock: mock
       });
 
-      const stock = wrapper.find(Stock);
+      const categorizedStock = wrapper.find(CategorizedStock);
 
       // @ts-ignore
-      stock.vm.onClickCheckStock();
+      categorizedStock.vm.onClickCheckStock();
 
       expect(mock).toHaveBeenCalledWith(stocks[0]);
     });
 
     it("renders list", () => {
-      const wrapper = shallowMount(StockList, { propsData });
+      const wrapper = shallowMount(CategorizedStockList, { propsData });
 
       const loadingMessage = wrapper.find("div");
       expect(loadingMessage.isVisible()).toBe(true);
@@ -80,7 +82,7 @@ describe("StockList.vue", () => {
 
     it("do not renders list", () => {
       propsData.isLoading = true;
-      const wrapper = shallowMount(StockList, { propsData });
+      const wrapper = shallowMount(CategorizedStockList, { propsData });
 
       const loadingMessage = wrapper.find("div");
       expect(loadingMessage.isVisible()).toBe(false);

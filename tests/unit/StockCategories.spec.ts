@@ -8,12 +8,12 @@ import {
 import StockCategories from "@/pages/StockCategories.vue";
 import SideMenu from "@/components/SideMenu.vue";
 import StockEdit from "@/components/StockEdit.vue";
-import StockList from "@/components/StockList.vue";
+import CategorizedStockList from "@/components/CategorizedStockList.vue";
 import CategoryList from "@/components/CategoryList.vue";
 import Pagination from "@/components/Pagination.vue";
 import { IQiitaState } from "@/types/qiita";
 import VueRouter from "vue-router";
-import { IPage, IUncategorizedStock } from "@/domain/qiita";
+import { ICategorizedStock, IPage, IUncategorizedStock } from "@/domain/qiita";
 
 config.logModifiedComponents = false;
 
@@ -60,7 +60,7 @@ describe("StockCategories.vue", () => {
       fetchCategorizedStock: jest.fn(),
       setIsCategorizing: jest.fn(),
       categorize: jest.fn(),
-      checkStock: jest.fn(),
+      checkCategorizedStock: jest.fn(),
       resetData: jest.fn(),
       destroyCategory: jest.fn(),
       saveDisplayCategoryId: jest.fn()
@@ -176,7 +176,8 @@ describe("StockCategories.vue", () => {
     });
 
     it('calls store action "checkStock" on onClickCheckStock()', () => {
-      const stock: IUncategorizedStock = {
+      const stock: ICategorizedStock = {
+        id: 1,
         article_id: "c0a2609ae61a72dcc60f",
         title: "title1",
         user_id: "test-user1",
@@ -195,7 +196,7 @@ describe("StockCategories.vue", () => {
       // @ts-ignore
       wrapper.vm.onClickCheckStock(stock);
 
-      expect(actions.checkStock).toHaveBeenCalledWith(
+      expect(actions.checkCategorizedStock).toHaveBeenCalledWith(
         expect.anything(),
         stock,
         undefined
@@ -426,7 +427,7 @@ describe("StockCategories.vue", () => {
         onClickCheckStock: mock
       });
 
-      const stockList = wrapper.find(StockList);
+      const categorizedStockList = wrapper.find(CategorizedStockList);
       const stock: IUncategorizedStock = {
         article_id: "c0a2609ae61a72dcc60f",
         title: "title1",
@@ -438,7 +439,7 @@ describe("StockCategories.vue", () => {
       };
 
       // @ts-ignore
-      stockList.vm.onClickCheckStock(stock);
+      categorizedStockList.vm.onClickCheckStock(stock);
 
       expect(mock).toHaveBeenCalledWith(stock);
     });

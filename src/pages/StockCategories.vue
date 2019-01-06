@@ -21,10 +21,11 @@
             :stocksLength="categorizedStocks.length"
             :isCategorizing="isCategorizing"
             :categories="categories"
+            :displayCategories="displayCategories"
             @clickSetIsCategorizing="onSetIsCategorizing"
             @clickCategorize="onClickCategorize"
           />
-          <StockList
+          <CategorizedStockList
             :stocks="categorizedStocks"
             :isCategorizing="isCategorizing"
             :isLoading="isLoading"
@@ -53,15 +54,10 @@ import { Getter, Action, namespace } from "vuex-class";
 import AppHeader from "@/components/AppHeader.vue";
 import SideMenu from "@/components/SideMenu.vue";
 import StockEdit from "@/components/StockEdit.vue";
-import StockList from "@/components/StockList.vue";
+import CategorizedStockList from "@/components/CategorizedStockList.vue";
 import Pagination from "@/components/Pagination.vue";
 import Loading from "@/components/Loading.vue";
-import {
-  ICategory,
-  IUncategorizedStock,
-  IPage,
-  ICategorizedStock
-} from "@/domain/qiita";
+import { ICategory, IPage, ICategorizedStock } from "@/domain/qiita";
 import {
   IUpdateCategoryPayload,
   ICategorizePayload,
@@ -76,7 +72,7 @@ const QiitaGetter = namespace("QiitaModule", Getter);
     AppHeader,
     SideMenu,
     StockEdit,
-    StockList,
+    CategorizedStockList,
     Pagination,
     Loading
   }
@@ -84,6 +80,9 @@ const QiitaGetter = namespace("QiitaModule", Getter);
 export default class StockCategories extends Vue {
   @QiitaGetter
   categories!: ICategory[];
+
+  @QiitaGetter
+  displayCategories!: ICategory[];
 
   @QiitaGetter
   categorizedStocks!: ICategorizedStock[];
@@ -139,7 +138,7 @@ export default class StockCategories extends Vue {
   categorize!: (categorizePayload: ICategorizePayload) => void;
 
   @QiitaAction
-  checkStock!: (stock: IUncategorizedStock) => void;
+  checkCategorizedStock!: (stock: ICategorizedStock) => void;
 
   @QiitaAction
   resetData!: () => void;
@@ -176,8 +175,8 @@ export default class StockCategories extends Vue {
     this.categorize(categorizePayload);
   }
 
-  onClickCheckStock(stock: IUncategorizedStock) {
-    this.checkStock(stock);
+  onClickCheckStock(stock: ICategorizedStock) {
+    this.checkCategorizedStock(stock);
   }
 
   fetchOtherPageStock(page: IPage) {
