@@ -428,6 +428,64 @@ describe("QiitaModule", () => {
       expect(state.stocks).toEqual(stocks);
     });
 
+    it("should be able to add category to stocks", () => {
+      state.stocks = [
+        {
+          article_id: "c0a2609ae61a72dcc60f",
+          title: "title1",
+          user_id: "test-user1",
+          profile_image_url: "https://test.com/test/image",
+          article_created_at: "2018/09/30",
+          tags: ["laravel", "php"],
+          isChecked: false,
+          category: undefined
+        },
+        {
+          article_id: "c0a2609ae61a72dcc60q",
+          title: "title2",
+          user_id: "test-user12",
+          profile_image_url: "https://test.com/test/image",
+          article_created_at: "2018/09/30",
+          tags: ["Vue.js", "Vuex", "TypeScript"],
+          isChecked: false,
+          category: undefined
+        }
+      ];
+
+      const expectedStocks: IUncategorizedStock[] = [
+        {
+          article_id: "c0a2609ae61a72dcc60f",
+          title: "title1",
+          user_id: "test-user1",
+          profile_image_url: "https://test.com/test/image",
+          article_created_at: "2018/09/30",
+          tags: ["laravel", "php"],
+          isChecked: false,
+          category: { categoryId: 1, name: "categoryName" }
+        },
+        {
+          article_id: "c0a2609ae61a72dcc60q",
+          title: "title2",
+          user_id: "test-user12",
+          profile_image_url: "https://test.com/test/image",
+          article_created_at: "2018/09/30",
+          tags: ["Vue.js", "Vuex", "TypeScript"],
+          isChecked: false,
+          category: undefined
+        }
+      ];
+
+      const payload = {
+        stockArticleIds: ["c0a2609ae61a72dcc60f"],
+        category: { categoryId: 1, name: "categoryName" }
+      };
+      const wrapper = (mutations: any) =>
+        mutations.addCategoryToStocks(state, payload);
+      wrapper(QiitaModule.mutations);
+
+      expect(state.stocks).toEqual(expectedStocks);
+    });
+
     it("should be able to save categorized stocks", () => {
       const categorizedStocks: ICategorizedStock[] = [
         {
@@ -1097,7 +1155,14 @@ describe("QiitaModule", () => {
 
       expect(commit.mock.calls).toEqual([
         ["uncheckStock"],
-        ["removeCategorizedStocks", categorizePayload.stockArticleIds]
+        ["removeCategorizedStocks", categorizePayload.stockArticleIds],
+        [
+          "addCategoryToStocks",
+          {
+            stockArticleIds: categorizePayload.stockArticleIds,
+            category: categorizePayload.category
+          }
+        ]
       ]);
     });
 

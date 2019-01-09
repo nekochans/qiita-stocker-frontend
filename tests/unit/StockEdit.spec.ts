@@ -57,19 +57,19 @@ describe("StockEdit.vue", () => {
     it("should emit clickCategorize on changeCategory()", () => {
       const mock = jest.fn();
       const wrapper = shallowMount(StockEdit, { propsData });
-      const selectedCategoryId = 1;
+      const selectedCategory = propsData.displayCategories[0];
 
       wrapper.setMethods({ doneEdit: mock });
 
       // @ts-ignore
-      wrapper.vm.selectedCategoryId = selectedCategoryId;
+      wrapper.vm.selectedCategory = selectedCategory;
 
       // @ts-ignore
       wrapper.vm.changeCategory();
       expect(mock).toBeTruthy();
       expect(wrapper.emitted("clickCategorize")).toBeTruthy();
       expect(wrapper.emitted("clickCategorize")[0][0]).toEqual(
-        selectedCategoryId
+        selectedCategory
       );
     });
 
@@ -80,7 +80,7 @@ describe("StockEdit.vue", () => {
       wrapper.setMethods({ doneEdit: mock });
 
       // @ts-ignore
-      wrapper.vm.selectedCategoryId = 0;
+      wrapper.vm.selectedCategory = { categoryId: 0, name: "" };
 
       // @ts-ignore
       wrapper.vm.changeCategory();

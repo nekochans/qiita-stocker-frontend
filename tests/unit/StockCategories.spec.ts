@@ -159,12 +159,13 @@ describe("StockCategories.vue", () => {
         localVue,
         router
       });
+      const category = { categoryId: 1, name: "category" };
 
       // @ts-ignore
-      wrapper.vm.onClickCategorize(1);
+      wrapper.vm.onClickCategorize(category);
 
       const categorizePayload: ICategorizePayload = {
-        category: { categoryId: 1, name: "category" },
+        category,
         stockArticleIds: []
       };
 
@@ -393,7 +394,7 @@ describe("StockCategories.vue", () => {
       const stockEdit = wrapper.find(StockEdit);
 
       // @ts-ignore
-      stockEdit.vm.selectedCategoryId = 1;
+      stockEdit.vm.selectedCategory = { categoryId: 1, name: "category" };
       // @ts-ignore
       stockEdit.vm.changeCategory();
 
@@ -403,20 +404,20 @@ describe("StockCategories.vue", () => {
     it("should call onClickCategorize when button is clicked", () => {
       const mock = jest.fn();
       const wrapper = mount(StockCategories, { store, localVue, router });
+      const category = { categoryId: 1, name: "category" };
 
       wrapper.setMethods({
         onClickCategorize: mock
       });
 
       const stockEdit = wrapper.find(StockEdit);
-      const selectedCategoryId = 1;
 
       // @ts-ignore
-      stockEdit.vm.selectedCategoryId = selectedCategoryId;
+      stockEdit.vm.selectedCategory = category;
       // @ts-ignore
       stockEdit.vm.changeCategory();
 
-      expect(mock).toHaveBeenCalledWith(selectedCategoryId);
+      expect(mock).toHaveBeenCalledWith(category);
     });
 
     it("should call onClickCheckStock when checkBox is clicked", () => {
