@@ -22,7 +22,7 @@
     "vuex-class": "^0.3.1"
   },
   "devDependencies": {
-    "@nekonomokochan/aws-env-creator": "^1.0.1",
+    "@nekonomokochan/aws-env-creator": "^1.1.0",
     "@types/jest": "^23.3.9",
     "@types/uuid": "^3.4.4",
     "@vue/cli-plugin-babel": "^3.1.1",

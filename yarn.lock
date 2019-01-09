@@ -823,9 +823,9 @@
     glob-to-regexp "^0.3.0"
 
 "@nekonomokochan/aws-env-creator@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@nekonomokochan/aws-env-creator/-/aws-env-creator-1.0.1.tgz#c031e790b9a245e072914ce4491b04495a4c8687"
-  integrity sha512-uxaxnWqulhjIh/XfsKsEKDA6/6Jf9eyKvkQ527ukKn8zods7IiZU6Tk5rEo6J7xEXRsv2Fa79cl3RmM471+YNA==
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@nekonomokochan/aws-env-creator/-/aws-env-creator-1.1.0.tgz#daba554947fb74a41170b946a9ea8d3ff473e186"
+  integrity sha512-3H7Hrve0P/86G1C8lJ47se9W1SBHlZMEvWW0CTT0kfRuy5DBTiLqCt/gOLV1XYno0/kl1hemlVKh3yKfLZIk6Q==
   dependencies:
     aws-sdk "^2.382.0"
 
