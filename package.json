@@ -7,7 +7,14 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit",
-    "test:e2e": "vue-cli-service test:e2e"
+    "test:e2e": "vue-cli-service test:e2e",
+    "generateDotenv:local": "DEPLOY_STAGE=local node generateEnv.js",
+    "generateDotenv:dev": "DEPLOY_STAGE=dev node generateEnv.js",
+    "generateDotenv:stg": "DEPLOY_STAGE=stg node generateEnv.js",
+    "generateDotenv:prod": "DEPLOY_STAGE=prod node generateEnv.js",
+    "deploy:dev": "rm -rf dist && yarn run generateDotenv:dev && yarn run build && DEPLOY_STAGE=dev node deployToS3.js",
+    "deploy:stg": "rm -rf dist && yarn run generateDotenv:stg && yarn run build && DEPLOY_STAGE=stg node deployToS3.js",
+    "deploy:prod": "rm -rf dist && yarn run generateDotenv:prod && yarn run build && DEPLOY_STAGE=prod node deployToS3.js"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.6.3",
@@ -22,6 +29,7 @@
     "vuex-class": "^0.3.1"
   },
   "devDependencies": {
+    "@nekonomokochan/aws-env-creator": "^1.1.0",
     "@types/jest": "^23.3.9",
     "@types/uuid": "^3.4.4",
     "@vue/cli-plugin-babel": "^3.1.1",
@@ -36,6 +44,7 @@
     "babel-core": "7.0.0-bridge.0",
     "lint-staged": "^8.0.4",
     "node-sass": "^4.10.0",
+    "s3": "^4.4.0",
     "sass-loader": "^7.1.0",
     "ts-jest": "^23.10.4",
     "typescript": "^3.1.6",
