@@ -27,7 +27,7 @@ const params = {
   localDir: path.join(__dirname, "/dist"),
   deleteRemoved: true,
   s3Params: {
-    Bucket: `${deployStage}-qiita-stocker-frontend`
+    Bucket: deployUtils.findDeployS3Bucket(deployStage)
   }
 };
 

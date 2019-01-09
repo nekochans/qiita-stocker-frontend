@@ -36,3 +36,13 @@ exports.findAwsProfile = deployStage => {
 
   return "qiita-stocker-dev";
 };
+
+/**
+ * デプロイ先のS3Bucket名を取得する
+ *
+ * @param deployStage
+ * @return {string}
+ */
+exports.findDeployS3Bucket = deployStage => {
+  return `${deployStage}-qiita-stocker-frontend`;
+};
