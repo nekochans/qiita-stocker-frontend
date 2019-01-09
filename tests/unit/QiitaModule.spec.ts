@@ -428,7 +428,7 @@ describe("QiitaModule", () => {
       expect(state.stocks).toEqual(stocks);
     });
 
-    it("should be able to add category to stocks", () => {
+    it("should be able to update category to stocks", () => {
       state.stocks = [
         {
           article_id: "c0a2609ae61a72dcc60f",
@@ -480,7 +480,7 @@ describe("QiitaModule", () => {
         category: { categoryId: 1, name: "categoryName" }
       };
       const wrapper = (mutations: any) =>
-        mutations.addCategoryToStocks(state, payload);
+        mutations.updateStockCategory(state, payload);
       wrapper(QiitaModule.mutations);
 
       expect(state.stocks).toEqual(expectedStocks);
@@ -1134,7 +1134,7 @@ describe("QiitaModule", () => {
       ]);
     });
 
-    it("should be able to set isCategorizing", async () => {
+    it("should be able to categorize", async () => {
       const commit = jest.fn();
       const wrapper = (actions: any) => actions.setIsCategorizing({ commit });
       await wrapper(QiitaModule.actions);
@@ -1157,7 +1157,7 @@ describe("QiitaModule", () => {
         ["uncheckStock"],
         ["removeCategorizedStocks", categorizePayload.stockArticleIds],
         [
-          "addCategoryToStocks",
+          "updateStockCategory",
           {
             stockArticleIds: categorizePayload.stockArticleIds,
             category: categorizePayload.category

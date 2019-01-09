@@ -244,7 +244,7 @@ const mutations: MutationTree<IQiitaState> = {
   saveStocks: (state, stocks: IUncategorizedStock[]) => {
     state.stocks = stocks;
   },
-  addCategoryToStocks: (
+  updateStockCategory: (
     state,
     payload: { stockArticleIds: string[]; category: ICategory }
   ) => {
@@ -729,7 +729,7 @@ const actions: ActionTree<IQiitaState, RootState> = {
       await categorize(categorizeRequest);
       commit("uncheckStock");
       commit("removeCategorizedStocks", categorizePayload.stockArticleIds);
-      commit("addCategoryToStocks", {
+      commit("updateStockCategory", {
         stockArticleIds: categorizePayload.stockArticleIds,
         category: categorizePayload.category
       });
