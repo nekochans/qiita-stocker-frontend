@@ -134,7 +134,6 @@ const getters: GetterTree<IQiitaState, RootState> = {
       category => category.categoryId !== state.displayCategoryId
     );
   },
-
   stocks: (state): IQiitaState["stocks"] => {
     return state.stocks;
   },
@@ -620,12 +619,13 @@ const actions: ActionTree<IQiitaState, RootState> = {
       );
 
       let uncategorizedStocks: IUncategorizedStock[] = [];
-      for (const stock of fetchStockResponse.stocks) {
-        const date: string[] = stock.article_created_at.split(" ");
-        stock.article_created_at = date[0];
-        const uncategorizedStock: IUncategorizedStock = Object.assign(stock, {
-          isChecked: false
-        });
+      for (const fetchStock of fetchStockResponse.stocks) {
+        const date: string[] = fetchStock.stock.article_created_at.split(" ");
+        fetchStock.stock.article_created_at = date[0];
+        const uncategorizedStock: IUncategorizedStock = Object.assign(
+          fetchStock.stock,
+          { isChecked: false, category: fetchStock.category }
+        );
         uncategorizedStocks.push(uncategorizedStock);
       }
 

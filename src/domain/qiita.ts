@@ -163,7 +163,12 @@ export interface IFetchStockRequest {
 
 export interface IFetchStockResponse {
   paging: IPage[];
-  stocks: IStock[];
+  stocks: { stock: IStock; category?: ICategory }[];
+}
+
+export interface IUncategorizedStock extends IStock {
+  category?: ICategory;
+  isChecked: boolean;
 }
 
 export interface IFetchCategorizedStockRequest {
@@ -202,10 +207,6 @@ export interface IStock {
   profile_image_url: string;
   article_created_at: string;
   tags: string[];
-}
-
-export interface IUncategorizedStock extends IStock {
-  isChecked: boolean;
 }
 
 export interface IFetchedCategorizedStock extends IStock {
