@@ -3,10 +3,10 @@
     <div class="navbar-end">
       <div v-if="isCategorizing">
         <div :class="`select edit-header ${isValidationError && 'is-danger'}`">
-          <select v-model="selectedCategoryId">
+          <select v-model="selectedCategory">
             <option
               v-for="category in displayCategories"
-              :value="category.categoryId"
+              :value="category"
               :key="category.categoryId"
               >{{ category.name }}</option
             >
@@ -44,7 +44,7 @@ export default class StockEdit extends Vue {
   @Prop()
   displayCategories!: ICategory[];
 
-  selectedCategoryId: number = 0;
+  selectedCategory: ICategory = { categoryId: 0, name: "" };
   isValidationError: boolean = false;
 
   doneEdit() {
@@ -61,12 +61,12 @@ export default class StockEdit extends Vue {
   }
 
   changeCategory() {
-    if (this.selectedCategoryId === 0) {
+    if (this.selectedCategory.categoryId === 0) {
       this.isValidationError = true;
       return;
     }
 
-    this.$emit("clickCategorize", this.selectedCategoryId);
+    this.$emit("clickCategorize", this.selectedCategory);
     this.doneEdit();
   }
 }

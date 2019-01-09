@@ -1086,7 +1086,7 @@ describe("QiitaModule", () => {
 
     it("should be able to uncheck Stock", async () => {
       const categorizePayload: ICategorizePayload = {
-        categoryId: 1,
+        category: { categoryId: 1, name: "category" },
         stockArticleIds: ["c0a2609ae61a72dcc60f", "c0a2609ae61a72dcc60a"]
       };
 

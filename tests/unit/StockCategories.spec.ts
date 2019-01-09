@@ -164,7 +164,7 @@ describe("StockCategories.vue", () => {
       wrapper.vm.onClickCategorize(1);
 
       const categorizePayload: ICategorizePayload = {
-        categoryId: 1,
+        category: { categoryId: 1, name: "category" },
         stockArticleIds: []
       };
 
