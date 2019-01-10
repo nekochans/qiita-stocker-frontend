@@ -11,7 +11,10 @@
           <div
             :class="`select edit-header ${isValidationError && 'is-danger'}`"
           >
-            <select v-model="selectedCategory">
+            <select
+              v-model="selectedCategory"
+              @change="isValidationError = false;"
+            >
               <option
                 v-for="category in displayCategories"
                 :value="category"
