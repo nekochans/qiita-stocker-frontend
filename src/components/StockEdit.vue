@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <div v-show="stocksLength && !isLoading">
     <AlertModal
       :isShow="showAlert"
       :message="alertMessage"
       @closeModal="closeModal"
     />
-    <div v-show="stocksLength && !isLoading" class="navbar-menu edit-menu">
+    <div class="navbar-menu edit-menu">
       <div class="navbar-end">
         <div v-if="isCategorizing">
           <div
