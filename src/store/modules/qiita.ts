@@ -254,6 +254,14 @@ const mutations: MutationTree<IQiitaState> = {
       }
     });
   },
+  updateStockCategoryName: (state, category: ICategory) => {
+    state.stocks.map(stock => {
+      console.log(category.categoryId);
+      if (stock.category && stock.category.categoryId === category.categoryId) {
+        stock.category = category;
+      }
+    });
+  },
   removeCategoryFromStock: (state, categoryId: number) => {
     state.stocks.map(stock => {
       if (stock.category && stock.category.categoryId == categoryId) {
@@ -578,6 +586,10 @@ const actions: ActionTree<IQiitaState, RootState> = {
       commit("updateCategory", {
         stateCategory: updateCategoryItem.stateCategory,
         categoryName: updateCategoryResponse.name
+      });
+      commit("updateStockCategoryName", {
+        categoryId: updateCategoryItem.stateCategory.categoryId,
+        name: updateCategoryResponse.name
       });
     } catch (error) {
       if (isUnauthorized(error.response.status)) {
