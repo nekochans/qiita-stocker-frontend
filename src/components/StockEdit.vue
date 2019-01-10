@@ -1,26 +1,35 @@
 <template>
-  <div v-show="stocksLength && !isLoading" class="navbar-menu edit-menu">
-    <div class="navbar-end">
-      <div v-if="isCategorizing">
-        <div :class="`select edit-header ${isValidationError && 'is-danger'}`">
-          <select v-model="selectedCategory">
-            <option
-              v-for="category in displayCategories"
-              :value="category"
-              :key="category.categoryId"
-              >{{ category.name }}</option
-            >
-          </select>
+  <div>
+    <AlertModal
+      :isShow="showAlert"
+      :message="alertMessage"
+      @closeModal="closeModal"
+    />
+    <div v-show="stocksLength && !isLoading" class="navbar-menu edit-menu">
+      <div class="navbar-end">
+        <div v-if="isCategorizing">
+          <div
+            :class="`select edit-header ${isValidationError && 'is-danger'}`"
+          >
+            <select v-model="selectedCategory">
+              <option
+                v-for="category in displayCategories"
+                :value="category"
+                :key="category.categoryId"
+                >{{ category.name }}</option
+              >
+            </select>
+          </div>
+          <button class="button is-danger" @click="changeCategory">保存</button>
+          <button class="button is-white has-text-grey" @click="cancel">
+            キャンセル
+          </button>
         </div>
-        <button class="button is-danger" @click="changeCategory">保存</button>
-        <button class="button is-white has-text-grey" @click="cancel">
-          キャンセル
-        </button>
-      </div>
-      <div v-else>
-        <button class="button is-light" @click="startEdit">
-          カテゴリに分類する
-        </button>
+        <div v-else>
+          <button class="button is-light" @click="startEdit">
+            カテゴリに分類する
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -29,8 +38,13 @@
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
 import { ICategory } from "@/domain/qiita";
+import AlertModal from "@/components/AlertModal.vue";
 
-@Component
+@Component({
+  components: {
+    AlertModal
+  }
+})
 export default class StockEdit extends Vue {
   @Prop()
   isLoading!: boolean;
@@ -44,8 +58,13 @@ export default class StockEdit extends Vue {
   @Prop()
   displayCategories!: ICategory[];
 
+  @Prop()
+  checkedStockArticleIds!: string[];
+
   selectedCategory: ICategory = { categoryId: 0, name: "" };
   isValidationError: boolean = false;
+  showAlert: boolean = false;
+  alertMessage: string = "ストックを1つ以上選択してください。";
 
   doneEdit() {
     this.isValidationError = false;
@@ -61,13 +80,17 @@ export default class StockEdit extends Vue {
   }
 
   changeCategory() {
-    if (this.selectedCategory.categoryId === 0) {
-      this.isValidationError = true;
-      return;
-    }
+    if (!this.selectedCategory.categoryId)
+      return (this.isValidationError = true);
+
+    if (!this.checkedStockArticleIds.length) return (this.showAlert = true);
 
     this.$emit("clickCategorize", this.selectedCategory);
     this.doneEdit();
+  }
+
+  closeModal() {
+    this.showAlert = false;
   }
 }
 </script>

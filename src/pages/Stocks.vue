@@ -19,6 +19,7 @@
             :stocksLength="stocks.length"
             :isCategorizing="isCategorizing"
             :displayCategories="displayCategories"
+            :checkedStockArticleIds="checkedStockArticleIds"
             @clickSetIsCategorizing="onSetIsCategorizing"
             @clickCategorize="onClickCategorize"
           />

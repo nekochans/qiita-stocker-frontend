@@ -22,6 +22,7 @@
             :isCategorizing="isCategorizing"
             :categories="categories"
             :displayCategories="displayCategories"
+            :checkedStockArticleIds="checkedCategorizedStockArticleIds"
             @clickSetIsCategorizing="onSetIsCategorizing"
             @clickCategorize="onClickCategorize"
           />
