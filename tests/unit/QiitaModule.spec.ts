@@ -920,7 +920,10 @@ describe("QiitaModule", () => {
         actions.destroyCategory({ commit }, categoryId);
       await wrapper(QiitaModule.actions);
 
-      expect(commit.mock.calls).toEqual([["removeCategory", categoryId]]);
+      expect(commit.mock.calls).toEqual([
+        ["removeCategory", categoryId],
+        ["removeCategoryFromStock", categoryId]
+      ]);
     });
 
     it("should be able to fetch stocks", async () => {
