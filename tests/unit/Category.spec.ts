@@ -66,14 +66,14 @@ describe("Category.vue", () => {
       expect(wrapper.emitted("clickUpdateCategory")).toBeFalsy();
     });
 
-    it("should emit clickDestroyCategory on onClickDestroyCategory()", () => {
+    it("should emit clickDestroyCategory on confirmDestroy()", () => {
       const wrapper = shallowMount(Category, {
         propsData,
         mocks: { $route, $router }
       });
 
       // @ts-ignore
-      wrapper.vm.onClickDestroyCategory();
+      wrapper.vm.confirmDestroy();
 
       expect(wrapper.emitted("clickDestroyCategory")).toBeTruthy();
       expect(wrapper.emitted("clickDestroyCategory")[0][0]).toEqual(

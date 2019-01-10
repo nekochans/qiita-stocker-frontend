@@ -1,59 +1,73 @@
 <template>
-  <li>
-    <div v-if="!editing">
-      <a
-        :data-category="category.categoryId"
-        @click="onClickCategory"
-        :class="`${isSelecting && 'is-active'}`"
-      >
-        {{ category.name }}
-
-        <p class="edit" @click="editing = true;">
-          <span class="icon"> <i class="fas fa-pencil-alt fa-lg"></i> </span>
-        </p>
-      </a>
-    </div>
-    <div v-show="editing">
-      <div class="edit-field">
-        <input
-          :class="`input input-field ${isValidationError && 'is-danger'}`"
-          type="text"
-          v-focus="editing"
-          v-model="editCategoryName"
-        />
+  <div>
+    <ConfirmModal
+      :isShow="showConfirmation"
+      :message="confirmMessage"
+      :confirmButtonText="confirmButtonText"
+      :cancelButtonText="cancelButtonText"
+      @confirmModal="confirmDestroy"
+      @cancelModal="cancelDestroy"
+    />
+    <li>
+      <div v-if="!editing">
         <a
-          class="has-text-grey is-size-7 destroy"
-          @click="onClickDestroyCategory"
+          :data-category="category.categoryId"
+          @click="onClickCategory"
+          :class="`${isSelecting && 'is-active'}`"
         >
-          <span class="icon"> <i class="far fa-trash-alt fa-2x"></i> </span>
+          {{ category.name }}
+
+          <p class="edit" @click="editing = true;">
+            <span class="icon"> <i class="fas fa-pencil-alt fa-lg"></i> </span>
+          </p>
         </a>
-        <p v-if="isValidationError" class="help is-danger">
-          カテゴリを入力してください。
-        </p>
       </div>
-      <div class="edit-field">
-        <p class="control">
-          <button
-            class="button is-small is-danger"
-            @click="onClickUpdateCategory"
+      <div v-show="editing">
+        <div class="edit-field">
+          <input
+            :class="`input input-field ${isValidationError && 'is-danger'}`"
+            type="text"
+            v-focus="editing"
+            v-model="editCategoryName"
+          />
+          <a
+            class="has-text-grey is-size-7 destroy"
+            @click="onClickDestroyCategory"
           >
-            保存
-          </button>
-          <a class="has-text-grey is-size-7 cancel" @click="doneEdit"
-            >キャンセル</a
-          >
-        </p>
+            <span class="icon"> <i class="far fa-trash-alt fa-2x"></i> </span>
+          </a>
+          <p v-if="isValidationError" class="help is-danger">
+            カテゴリを入力してください。
+          </p>
+        </div>
+        <div class="edit-field">
+          <p class="control">
+            <button
+              class="button is-small is-danger"
+              @click="onClickUpdateCategory"
+            >
+              保存
+            </button>
+            <a class="has-text-grey is-size-7 cancel" @click="doneEdit"
+              >キャンセル</a
+            >
+          </p>
+        </div>
       </div>
-    </div>
-  </li>
+    </li>
+  </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from "vue-property-decorator";
 import { ICategory } from "@/domain/qiita";
 import { IUpdateCategoryPayload } from "@/store/modules/qiita";
+import ConfirmModal from "@/components/ConfirmModal.vue";
 
 @Component({
+  components: {
+    ConfirmModal
+  },
   directives: {
     focus: function(el, binding) {
       if (binding.value) {
@@ -75,6 +89,11 @@ export default class Category extends Vue {
   editCategoryName = this.category.name;
   isValidationError: boolean = false;
   isSelecting: boolean = false;
+
+  showConfirmation: boolean = false;
+  confirmMessage: string = `${this.category.name} を削除してもよろしいですか？`;
+  confirmButtonText: string = "削除";
+  cancelButtonText: string = "キャンセル";
 
   onClickCategory() {
     if (this.editing || this.isSelecting) return;
@@ -110,6 +129,11 @@ export default class Category extends Vue {
   }
 
   onClickDestroyCategory() {
+    this.showConfirmation = true;
+  }
+
+  confirmDestroy(): void {
+    this.showConfirmation = false;
     this.$emit("clickDestroyCategory", this.category.categoryId);
     this.doneEdit();
 
@@ -118,6 +142,10 @@ export default class Category extends Vue {
         name: "stocks"
       });
     }
+  }
+
+  cancelDestroy(): void {
+    this.showConfirmation = false;
   }
 
   initializeIsSelecting() {
