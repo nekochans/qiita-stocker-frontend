@@ -27,6 +27,7 @@ describe("Pagination.vue", () => {
   const propsData: {
     isLoading: boolean;
     isCategorizing: boolean;
+    checkedStockArticleIds: string[];
     stocksLength: number;
     currentPage: number;
     firstPage: IPage;
@@ -36,6 +37,7 @@ describe("Pagination.vue", () => {
   } = {
     isLoading: false,
     isCategorizing: false,
+    checkedStockArticleIds: ["aabbccddee0000000000"],
     stocksLength: 20,
     currentPage: 3,
     firstPage,

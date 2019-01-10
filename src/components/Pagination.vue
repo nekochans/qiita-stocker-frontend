@@ -92,6 +92,9 @@ export default class Pagination extends Vue {
   isCategorizing!: boolean;
 
   @Prop()
+  checkedStockArticleIds!: string[];
+
+  @Prop()
   stocksLength!: number;
 
   @Prop()
@@ -133,9 +136,9 @@ export default class Pagination extends Vue {
   goToPage(page: IPage) {
     this.targetPage = page;
 
-    if (this.isCategorizing) return (this.showConfirmation = true);
+    if (this.isCategorizing && this.checkedStockArticleIds.length)
+      return (this.showConfirmation = true);
 
-    this.showConfirmation = this.isCategorizing;
     this.$emit("clickGoToPage", this.targetPage);
   }
 

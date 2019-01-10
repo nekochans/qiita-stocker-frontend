@@ -31,6 +31,7 @@
           <Pagination
             :isLoading="isLoading"
             :isCategorizing="isCategorizing"
+            :checkedStockArticleIds="checkedStockArticleIds"
             :stocksLength="stocks.length"
             :currentPage="currentPage"
             :firstPage="firstPage"
