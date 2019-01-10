@@ -3,8 +3,8 @@
     <ConfirmModal
       :isShow="showConfirmation"
       :message="confirmMessage"
-      @confirmModal="confirmPaggination"
-      @cancelModal="cancelPaggination"
+      @confirmModal="confirmPagination"
+      @cancelModal="cancelaPagination"
     />
     <nav
       v-show="stocksLength && !isLoading"
@@ -139,12 +139,12 @@ export default class Pagination extends Vue {
     this.$emit("clickGoToPage", this.targetPage);
   }
 
-  confirmPaggination(): void {
+  confirmPagination(): void {
     this.showConfirmation = false;
     this.$emit("clickGoToPage", this.targetPage);
   }
 
-  cancelPaggination(): void {
+  cancelaPagination(): void {
     this.showConfirmation = false;
   }
 }
