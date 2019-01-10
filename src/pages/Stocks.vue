@@ -30,6 +30,7 @@
           />
           <Pagination
             :isLoading="isLoading"
+            :isCategorizing="isCategorizing"
             :stocksLength="stocks.length"
             :currentPage="currentPage"
             :firstPage="firstPage"
