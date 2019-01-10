@@ -121,7 +121,7 @@ describe("CategoryList.vue", () => {
 
       const category = wrapper.find(Category);
       // @ts-ignore
-      category.vm.onClickDestroyCategory();
+      category.vm.confirmDestroy();
 
       expect(mock).toHaveBeenCalledWith(propsData.categories[0].categoryId);
     });
