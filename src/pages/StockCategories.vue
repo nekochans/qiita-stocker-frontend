@@ -167,9 +167,9 @@ export default class StockCategories extends Vue {
     this.destroyCategory(categoryId);
   }
 
-  onClickCategorize(categoryId: number) {
+  onClickCategorize(category: ICategory) {
     const categorizePayload: ICategorizePayload = {
-      categoryId: categoryId,
+      category: category,
       stockArticleIds: this.checkedCategorizedStockArticleIds
     };
     this.categorize(categorizePayload);

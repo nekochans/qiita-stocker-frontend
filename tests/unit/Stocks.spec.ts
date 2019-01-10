@@ -148,12 +148,13 @@ describe("Stocks.vue", () => {
 
     it('calls store action "categorize" on onClickCategorize()', () => {
       const wrapper = shallowMount(Stocks, { store, localVue, router });
+      const category = { categoryId: 1, name: "category" };
 
       // @ts-ignore
-      wrapper.vm.onClickCategorize(1);
+      wrapper.vm.onClickCategorize(category);
 
       const categorizePayload: ICategorizePayload = {
-        categoryId: 1,
+        category,
         stockArticleIds: []
       };
 
@@ -278,7 +279,7 @@ describe("Stocks.vue", () => {
       const stockEdit = wrapper.find(StockEdit);
 
       // @ts-ignore
-      stockEdit.vm.selectedCategoryId = 1;
+      stockEdit.vm.selectedCategory = { categoryId: 1, name: "category" };
       // @ts-ignore
       stockEdit.vm.changeCategory();
 
@@ -294,14 +295,14 @@ describe("Stocks.vue", () => {
       });
 
       const stockEdit = wrapper.find(StockEdit);
-      const selectedCategoryId = 1;
+      const category = { categoryId: 1, name: "category" };
 
       // @ts-ignore
-      stockEdit.vm.selectedCategoryId = selectedCategoryId;
+      stockEdit.vm.selectedCategory = category;
       // @ts-ignore
       stockEdit.vm.changeCategory();
 
-      expect(mock).toHaveBeenCalledWith(selectedCategoryId);
+      expect(mock).toHaveBeenCalledWith(category);
     });
 
     it("should call onClickCheckStock when checkBox is clicked", () => {

@@ -47,7 +47,7 @@ import { ICategorizedStock } from "@/domain/qiita";
 @Component
 export default class CategorizedStock extends Vue {
   @Prop()
-  stock!: ICategorizedStock[];
+  stock!: ICategorizedStock;
 
   @Prop()
   isCategorizing!: boolean;

@@ -88,7 +88,7 @@ export interface IUpdateCategoryPayload {
 }
 
 export interface ICategorizePayload {
-  categoryId: number;
+  category: ICategory;
   stockArticleIds: string[];
 }
 
@@ -134,7 +134,6 @@ const getters: GetterTree<IQiitaState, RootState> = {
       category => category.categoryId !== state.displayCategoryId
     );
   },
-
   stocks: (state): IQiitaState["stocks"] => {
     return state.stocks;
   },
@@ -244,6 +243,16 @@ const mutations: MutationTree<IQiitaState> = {
   },
   saveStocks: (state, stocks: IUncategorizedStock[]) => {
     state.stocks = stocks;
+  },
+  updateStockCategory: (
+    state,
+    payload: { stockArticleIds: string[]; category: ICategory }
+  ) => {
+    state.stocks.map(stock => {
+      if (payload.stockArticleIds.includes(stock.article_id)) {
+        stock.category = payload.category;
+      }
+    });
   },
   saveCategorizedStocks: (state, stocks: ICategorizedStock[]) => {
     state.categorizedStocks = stocks;
@@ -620,12 +629,13 @@ const actions: ActionTree<IQiitaState, RootState> = {
       );
 
       let uncategorizedStocks: IUncategorizedStock[] = [];
-      for (const stock of fetchStockResponse.stocks) {
-        const date: string[] = stock.article_created_at.split(" ");
-        stock.article_created_at = date[0];
-        const uncategorizedStock: IUncategorizedStock = Object.assign(stock, {
-          isChecked: false
-        });
+      for (const fetchStock of fetchStockResponse.stocks) {
+        const date: string[] = fetchStock.stock.article_created_at.split(" ");
+        fetchStock.stock.article_created_at = date[0];
+        const uncategorizedStock: IUncategorizedStock = Object.assign(
+          fetchStock.stock,
+          { isChecked: false, category: fetchStock.category }
+        );
         uncategorizedStocks.push(uncategorizedStock);
       }
 
@@ -712,13 +722,17 @@ const actions: ActionTree<IQiitaState, RootState> = {
       const categorizeRequest: ICategorizeRequest = {
         apiUrlBase: apiUrlBase(),
         sessionId: sessionId,
-        categoryId: categorizePayload.categoryId,
+        categoryId: categorizePayload.category.categoryId,
         articleIds: categorizePayload.stockArticleIds
       };
 
       await categorize(categorizeRequest);
       commit("uncheckStock");
       commit("removeCategorizedStocks", categorizePayload.stockArticleIds);
+      commit("updateStockCategory", {
+        stockArticleIds: categorizePayload.stockArticleIds,
+        category: categorizePayload.category
+      });
     } catch (error) {
       if (isUnauthorized(error.response.status)) {
         localStorage.remove(STORAGE_KEY_SESSION_ID);
