@@ -19,6 +19,7 @@
             :stocksLength="stocks.length"
             :isCategorizing="isCategorizing"
             :displayCategories="displayCategories"
+            :checkedStockArticleIds="checkedStockArticleIds"
             @clickSetIsCategorizing="onSetIsCategorizing"
             @clickCategorize="onClickCategorize"
           />
@@ -30,6 +31,8 @@
           />
           <Pagination
             :isLoading="isLoading"
+            :isCategorizing="isCategorizing"
+            :checkedStockArticleIds="checkedStockArticleIds"
             :stocksLength="stocks.length"
             :currentPage="currentPage"
             :firstPage="firstPage"

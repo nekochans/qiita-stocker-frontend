@@ -8,6 +8,7 @@ describe("StockEdit.vue", () => {
     stocksLength: number;
     isCategorizing: boolean;
     displayCategories: ICategory[];
+    checkedStockArticleIds: string[];
   } = {
     isLoading: false,
     stocksLength: 10,
@@ -15,7 +16,8 @@ describe("StockEdit.vue", () => {
     displayCategories: [
       { categoryId: 1, name: "テストカテゴリ1" },
       { categoryId: 2, name: "テストカテゴリ2" }
-    ]
+    ],
+    checkedStockArticleIds: ["aabbccddee0000000000"]
   };
 
   it("props", () => {
@@ -73,7 +75,7 @@ describe("StockEdit.vue", () => {
       );
     });
 
-    it("should not emit clickCategorize on changeCategory()", () => {
+    it("should not emit clickCategorize on changeCategory() when category is not selected", () => {
       const mock = jest.fn();
       const wrapper = shallowMount(StockEdit, { propsData });
 
@@ -81,6 +83,21 @@ describe("StockEdit.vue", () => {
 
       // @ts-ignore
       wrapper.vm.selectedCategory = { categoryId: 0, name: "" };
+
+      // @ts-ignore
+      wrapper.vm.changeCategory();
+      expect(wrapper.emitted("clickCategorize")).toBeFalsy();
+    });
+
+    it("should not emit clickCategorize on changeCategory() when stock is not checked", () => {
+      propsData.checkedStockArticleIds = [];
+      const mock = jest.fn();
+      const wrapper = shallowMount(StockEdit, { propsData });
+
+      // @ts-ignore
+      wrapper.vm.selectedCategory = propsData.displayCategories[0];
+
+      wrapper.setMethods({ doneEdit: mock });
 
       // @ts-ignore
       wrapper.vm.changeCategory();

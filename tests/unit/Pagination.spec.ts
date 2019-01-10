@@ -26,6 +26,8 @@ describe("Pagination.vue", () => {
 
   const propsData: {
     isLoading: boolean;
+    isCategorizing: boolean;
+    checkedStockArticleIds: string[];
     stocksLength: number;
     currentPage: number;
     firstPage: IPage;
@@ -34,6 +36,8 @@ describe("Pagination.vue", () => {
     lastPage: IPage;
   } = {
     isLoading: false,
+    isCategorizing: false,
+    checkedStockArticleIds: ["aabbccddee0000000000"],
     stocksLength: 20,
     currentPage: 3,
     firstPage,
@@ -56,10 +60,31 @@ describe("Pagination.vue", () => {
       expect(wrapper.emitted("clickGoToPage")).toBeTruthy();
       expect(wrapper.emitted("clickGoToPage")[0][0]).toEqual(firstPage);
     });
+
+    it("should not emit clickGoToPage on goToPage()", () => {
+      propsData.isCategorizing = true;
+      const wrapper = shallowMount(Pagination, { propsData });
+
+      // @ts-ignore
+      wrapper.vm.goToPage(firstPage);
+      expect(wrapper.emitted("clickGoToPage")).toBeFalsy();
+    });
+
+    it("should emit clickGoToPage on confirmPagination()", () => {
+      const wrapper = shallowMount(Pagination, { propsData });
+
+      // @ts-ignore
+      wrapper.vm.targetPage = firstPage;
+
+      // @ts-ignore
+      wrapper.vm.confirmPagination();
+      expect(wrapper.emitted("clickGoToPage")).toBeTruthy();
+      expect(wrapper.emitted("clickGoToPage")[0][0]).toEqual(firstPage);
+    });
   });
 
   describe("template", () => {
-    it("should call startEdit when previous is clicked", () => {
+    it("should call goToPage when previous is clicked", () => {
       const mock = jest.fn();
       const wrapper = shallowMount(Pagination, { propsData });
 
@@ -74,7 +99,7 @@ describe("Pagination.vue", () => {
       expect(mock).toHaveBeenCalledWith(prevPage);
     });
 
-    it("should call startEdit when next is clicked", () => {
+    it("should call goToPage when next is clicked", () => {
       const mock = jest.fn();
       const wrapper = shallowMount(Pagination, { propsData });
 
@@ -89,7 +114,7 @@ describe("Pagination.vue", () => {
       expect(mock).toHaveBeenCalledWith(nextPage);
     });
 
-    it("should call startEdit when first is clicked", () => {
+    it("should call goToPage when first is clicked", () => {
       const mock = jest.fn();
       const wrapper = shallowMount(Pagination, { propsData });
 
@@ -104,7 +129,7 @@ describe("Pagination.vue", () => {
       expect(mock).toHaveBeenCalledWith(firstPage);
     });
 
-    it("should call startEdit when prev is clicked", () => {
+    it("should call goToPage when prev is clicked", () => {
       const mock = jest.fn();
       const wrapper = shallowMount(Pagination, { propsData });
 
@@ -119,7 +144,7 @@ describe("Pagination.vue", () => {
       expect(mock).toHaveBeenCalledWith(prevPage);
     });
 
-    it("should call startEdit when next is clicked", () => {
+    it("should call goToPage when next is clicked", () => {
       const mock = jest.fn();
       const wrapper = shallowMount(Pagination, { propsData });
 
@@ -134,7 +159,7 @@ describe("Pagination.vue", () => {
       expect(mock).toHaveBeenCalledWith(nextPage);
     });
 
-    it("should call startEdit when last is clicked", () => {
+    it("should call goToPage when last is clicked", () => {
       const mock = jest.fn();
       const wrapper = shallowMount(Pagination, { propsData });
 

@@ -1,76 +1,98 @@
 <template>
-  <nav v-show="stocksLength && !isLoading" class="pagination" role="navigation">
-    <a
-      class="pagination-previous"
-      :disabled="!prevPage.page"
-      @click="goToPage(prevPage);"
-      >Previous</a
+  <div>
+    <ConfirmModal
+      :isShow="showConfirmation"
+      :message="confirmMessage"
+      @confirmModal="confirmPagination"
+      @cancelModal="cancelaPagination"
+    />
+    <nav
+      v-show="stocksLength && !isLoading"
+      class="pagination"
+      role="navigation"
     >
-    <a
-      class="pagination-next"
-      :disabled="!nextPage.page"
-      @click="goToPage(nextPage);"
-      >Next page</a
-    >
-
-    <ul class="pagination-list">
-      <li>
-        <a
-          class="pagination-link"
-          v-show="showFirstEllipsis()"
-          @click="goToPage(firstPage);"
-          >{{ firstPage.page }}</a
-        >
-      </li>
-      <li>
-        <span class="pagination-ellipsis" v-show="showPrevEllipsis()"
-          >&hellip;</span
-        >
-      </li>
-      <li>
-        <a
-          class="pagination-link"
-          v-show="prevPage.page"
-          @click="goToPage(prevPage);"
-          >{{ prevPage.page }}</a
-        >
-      </li>
-      <li>
-        <a class="pagination-link is-current">{{ currentPage }}</a>
-      </li>
-      <li>
-        <a
-          class="pagination-link"
-          v-show="nextPage.page"
-          @click="goToPage(nextPage);"
-          >{{ nextPage.page }}</a
-        >
-      </li>
-      <li>
-        <span class="pagination-ellipsis" v-show="showNestEllipsis()"
-          >&hellip;</span
-        >
-      </li>
-      <li>
-        <a
-          class="pagination-link"
-          v-show="showLastPage()"
-          @click="goToPage(lastPage);"
-          >{{ lastPage.page }}</a
-        >
-      </li>
-    </ul>
-  </nav>
+      <a
+        class="pagination-previous"
+        :disabled="!prevPage.page"
+        @click="goToPage(prevPage);"
+        >Previous</a
+      >
+      <a
+        class="pagination-next"
+        :disabled="!nextPage.page"
+        @click="goToPage(nextPage);"
+        >Next page</a
+      >
+      <ul class="pagination-list">
+        <li>
+          <a
+            class="pagination-link"
+            v-show="showFirstEllipsis()"
+            @click="goToPage(firstPage);"
+            >{{ firstPage.page }}</a
+          >
+        </li>
+        <li>
+          <span class="pagination-ellipsis" v-show="showPrevEllipsis()"
+            >&hellip;</span
+          >
+        </li>
+        <li>
+          <a
+            class="pagination-link"
+            v-show="prevPage.page"
+            @click="goToPage(prevPage);"
+            >{{ prevPage.page }}</a
+          >
+        </li>
+        <li>
+          <a class="pagination-link is-current">{{ currentPage }}</a>
+        </li>
+        <li>
+          <a
+            class="pagination-link"
+            v-show="nextPage.page"
+            @click="goToPage(nextPage);"
+            >{{ nextPage.page }}</a
+          >
+        </li>
+        <li>
+          <span class="pagination-ellipsis" v-show="showNestEllipsis()"
+            >&hellip;</span
+          >
+        </li>
+        <li>
+          <a
+            class="pagination-link"
+            v-show="showLastPage()"
+            @click="goToPage(lastPage);"
+            >{{ lastPage.page }}</a
+          >
+        </li>
+      </ul>
+    </nav>
+  </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
 import { IPage } from "@/domain/qiita";
+import ConfirmModal from "@/components/ConfirmModal.vue";
 
-@Component
+@Component({
+  components: {
+    ConfirmModal
+  }
+})
 export default class Pagination extends Vue {
   @Prop()
   isLoading!: boolean;
+
+  @Prop()
+  isCategorizing!: boolean;
+
+  @Prop()
+  checkedStockArticleIds!: string[];
 
   @Prop()
   stocksLength!: number;
@@ -90,6 +112,11 @@ export default class Pagination extends Vue {
   @Prop()
   lastPage!: { page: number; perPage: number; relation: string };
 
+  targetPage!: IPage;
+  showConfirmation: boolean = false;
+  confirmMessage: string =
+    "保存せずにページを遷移した場合、現在のストックの選択は解除されます。ページを移動してもよろしいですか？";
+
   showFirstEllipsis() {
     return this.firstPage.page !== this.prevPage.page;
   }
@@ -107,7 +134,21 @@ export default class Pagination extends Vue {
   }
 
   goToPage(page: IPage) {
-    this.$emit("clickGoToPage", page);
+    this.targetPage = page;
+
+    if (this.isCategorizing && this.checkedStockArticleIds.length)
+      return (this.showConfirmation = true);
+
+    this.$emit("clickGoToPage", this.targetPage);
+  }
+
+  confirmPagination(): void {
+    this.showConfirmation = false;
+    this.$emit("clickGoToPage", this.targetPage);
+  }
+
+  cancelaPagination(): void {
+    this.showConfirmation = false;
   }
 }
 </script>
