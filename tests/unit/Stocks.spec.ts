@@ -38,27 +38,27 @@ describe("Stocks.vue", () => {
       sessionId: "d690e4de-0a4e-4f14-a5c5-f4303fbd8a08",
       categories: [],
       stocks: [
-      {
-        article_id: "11111111111111111111",
-        title: "title1",
-        user_id: "test-user1",
-        profile_image_url: "https://test.com/test/image",
-        article_created_at: "2018/09/30",
-        tags: ["laravel", "php"],
-        isChecked: true,
-        category: { categoryId: 1, name: "categoryName" }
-      },
-      {
-        article_id: "22222222222222222222",
-        title: "title2",
-        user_id: "test-user12",
-        profile_image_url: "https://test.com/test/image",
-        article_created_at: "2018/09/30",
-        tags: ["Vue.js", "Vuex", "TypeScript"],
-        isChecked: false,
-        category: undefined
-      }
-    ],
+        {
+          article_id: "11111111111111111111",
+          title: "title1",
+          user_id: "test-user1",
+          profile_image_url: "https://test.com/test/image",
+          article_created_at: "2018/09/30",
+          tags: ["laravel", "php"],
+          isChecked: true,
+          category: { categoryId: 1, name: "categoryName" }
+        },
+        {
+          article_id: "22222222222222222222",
+          title: "title2",
+          user_id: "test-user12",
+          profile_image_url: "https://test.com/test/image",
+          article_created_at: "2018/09/30",
+          tags: ["Vue.js", "Vuex", "TypeScript"],
+          isChecked: false,
+          category: undefined
+        }
+      ],
       categorizedStocks: [],
       currentPage: 1,
       paging: [],

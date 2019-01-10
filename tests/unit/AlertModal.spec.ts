@@ -7,7 +7,7 @@ describe("AlertModal.vue", () => {
     message: string;
   } = {
     isShow: true,
-    message: "アラートメッセージ",
+    message: "アラートメッセージ"
   };
 
   it("props", () => {

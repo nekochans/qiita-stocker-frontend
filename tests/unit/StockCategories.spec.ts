@@ -66,7 +66,6 @@ describe("StockCategories.vue", () => {
           tags: ["Vue.js", "Vuex", "TypeScript"],
           isChecked: false
         }
-
       ],
       currentPage: 1,
       paging: [],
