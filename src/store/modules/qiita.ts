@@ -254,6 +254,13 @@ const mutations: MutationTree<IQiitaState> = {
       }
     });
   },
+  removeCategoryFromStock: (state, categoryId: number) => {
+    state.stocks.map(stock => {
+      if (stock.category && stock.category.categoryId == categoryId) {
+        stock.category = undefined;
+      }
+    });
+  },
   saveCategorizedStocks: (state, stocks: ICategorizedStock[]) => {
     state.categorizedStocks = stocks;
   },
@@ -596,6 +603,7 @@ const actions: ActionTree<IQiitaState, RootState> = {
 
       await destroyCategory(destroyCategoryRequest);
       commit("removeCategory", categoryId);
+      commit("removeCategoryFromStock", categoryId);
     } catch (error) {
       if (isUnauthorized(error.response.status)) {
         localStorage.remove(STORAGE_KEY_SESSION_ID);
