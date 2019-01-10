@@ -1,6 +1,6 @@
 <template>
   <div :class="`modal ${isShow && 'is-active'}`">
-    <div class="modal-background" @click="cancelModal"></div>
+    <div class="modal-background" @click="onClickCancel"></div>
     <div class="modal-card">
       <header class="modal-card-head">
         <p class="modal-card-title">
@@ -9,10 +9,10 @@
       </header>
       <section class="modal-card-body">{{ message }}</section>
       <footer class="modal-card-foot">
-        <button class="button is-danger" @click="confirmModal">
+        <button class="button is-danger" @click="onClickConfirm">
           {{ confirmButtonText }}
         </button>
-        <button class="button" @click="cancelModal">
+        <button class="button" @click="onClickCancel">
           {{ cancelButtonText }}
         </button>
       </footer>
@@ -37,11 +37,11 @@ export default class ConfirmModal extends Vue {
   @Prop({ default: "いいえ" })
   cancelButtonText!: string;
 
-  confirmModal() {
+  onClickConfirm() {
     this.$emit("confirmModal");
   }
 
-  cancelModal() {
+  onClickCancel() {
     this.$emit("cancelModal");
   }
 }
