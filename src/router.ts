@@ -8,6 +8,7 @@ import OAuthCallback from "./pages/oAuth/callback/OAuthCallback.vue";
 import Cancel from "./pages/cencel/Cancel.vue";
 import CancelComplete from "./pages/cencel/complete/CancelComplete.vue";
 import Error from "./pages/Error.vue";
+import Terms from "./pages/Terms.vue";
 import NotFound from "./pages/NotFound.vue";
 import Home from "./pages/Home.vue";
 import { STORAGE_KEY_SESSION_ID } from "@/domain/qiita";
@@ -70,6 +71,11 @@ export const router = new Router({
       name: "error",
       component: Error,
       props: true
+    },
+    {
+      path: "/terms",
+      name: "terms",
+      component: Terms
     },
     {
       path: "*",
