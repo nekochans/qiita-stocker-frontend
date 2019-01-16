@@ -20,6 +20,7 @@
     "@fortawesome/fontawesome-free": "^5.6.3",
     "axios": "^0.18.0",
     "bulma": "^0.7.2",
+    "markdown-it": "^8.4.2",
     "uuid": "^3.3.2",
     "vue": "^2.5.17",
     "vue-class-component": "^6.3.2",
@@ -31,6 +32,7 @@
   "devDependencies": {
     "@nekonomokochan/aws-env-creator": "^1.1.0",
     "@types/jest": "^23.3.9",
+    "@types/markdown-it": "^0.0.7",
     "@types/uuid": "^3.4.4",
     "@vue/cli-plugin-babel": "^3.1.1",
     "@vue/cli-plugin-e2e-cypress": "^3.1.1",
