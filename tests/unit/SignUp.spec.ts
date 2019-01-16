@@ -18,7 +18,7 @@ describe("SignUp.vue", () => {
   let state: IQiitaState;
   let actions: any;
 
-  it('calls store action "signUp" when button is clicked', () => {
+  beforeAll(() => {
     state = {
       authorizationCode: "",
       accessToken: "",
@@ -49,10 +49,22 @@ describe("SignUp.vue", () => {
         }
       }
     });
+  });
 
+  it('not calls store action "signUp" when button is clicked', () => {
     const wrapper = shallowMount(SignUp, { store, localVue, router });
     const button = wrapper.find("button");
 
+    button.trigger("click");
+    expect(actions.signUp).not.toHaveBeenCalled();
+  });
+
+  it('calls store action "signUp" when button is clicked', () => {
+    const wrapper = shallowMount(SignUp, { store, localVue, router });
+    const button = wrapper.find("button");
+
+    // @ts-ignore
+    wrapper.vm.isChecked = true;
     button.trigger("click");
     expect(actions.signUp).toHaveBeenCalled();
   });
