@@ -6,7 +6,7 @@
           <div class="level-item breadcrumb">
             <ul>
               <li><a href="/terms">利用規約</a></li>
-              <li><a href="#">プライバシーポリシー</a></li>
+              <li><a href="/privacy">プライバシーポリシー</a></li>
               <li>
                 <a href="https://twitter.com/mindexer_org">公式Twitter</a>
               </li>

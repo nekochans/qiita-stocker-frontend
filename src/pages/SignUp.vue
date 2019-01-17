@@ -7,7 +7,7 @@
         <h2 class="is-size-7">
           <input type="checkbox" :checked="isChecked" @change="onClickCheck" />
           私は、 <a href="/terms">利用規約</a> および
-          <a href="#">プライバシーポリシー</a> に同意します。
+          <a href="/privacy">プライバシーポリシー</a> に同意します。
         </h2>
         <button
           class="button signup-margin"
