@@ -5,12 +5,20 @@
       <div class="hero-body">
         <div class="container">
           <div class="columns">
-            <div class="column is-6">
+            <div class="column is-7">
               <h1 class="title has-text-left has-text-white">
-                Qiita Stockerは<br />Qiitaをストックするサービスです
+                <span class="description">Mindexerは、</span>
+                <span class="description">Qiitaのストックに</span>
+                <span class="description"
+                  >カテゴリ機能を追加したサービスです。</span
+                >
               </h1>
               <h2 class="subtitle has-text-left has-text-white">
-                説明文はあとで考える
+                必要な情報をストックしておくだけでなく<br
+                  class="break"
+                />カテゴリに分類することによって、<br
+                  class="break"
+                />ほしい情報への素早いアクセス可能にします。
               </h2>
               <a href="/signup" class="button is-medium is-primary"
                 >今すぐ登録</a
@@ -26,17 +34,23 @@
         <div class="container">
           <h1 class="title has-text-centered">What can?</h1>
           <div class="columns">
-            <div class="column is-6 has-text-centered">
+            <div class="column is-offset-2 is-3 has-text-centered">
               <span class="icon">
                 <i class="fas fa-folder-open fa-4x"></i>
               </span>
               <h2 class="title is-size-5 detail-title">ストックの取得</h2>
-              <p>ストックした記事の一覧を取得</p>
+              <p class="has-text-left">
+                Qiitaでストックした記事の一覧を取得します。
+                一覧にカテゴリを表示し、記事がどのカテゴリに分類されているか一目で確認できます。
+              </p>
             </div>
-            <div class="column is-6 has-text-centered">
+            <div class="column is-offset-2 is-3 has-text-centered">
               <span class="icon"> <i class="fas fa-list fa-4x"></i> </span>
               <h2 class="title is-size-5 detail-title">カテゴリの作成</h2>
-              <p>カテゴライズすることで、記事を整理可能に</p>
+              <p class="has-text-left">
+                自分専用のカテゴリを作成することができます。
+                記事をカテゴリに分けることで、ストックを管理しましょう。
+              </p>
             </div>
           </div>
         </div>
@@ -70,5 +84,15 @@ export default class Home extends Vue {}
 
 .detail-title {
   padding-top: 0.75rem;
+}
+
+.description {
+  display: inline-block;
+}
+
+@media screen and (max-width: 480px) {
+  .break {
+    display: none;
+  }
 }
 </style>
