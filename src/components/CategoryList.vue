@@ -4,7 +4,7 @@
     <ul class="menu-list">
       <Category
         v-for="category in categories"
-        :key="category.id"
+        :key="category.categoryId"
         :category="category"
         @clickUpdateCategory="onClickUpdateCategory"
         @clickCategory="onClickCategory"

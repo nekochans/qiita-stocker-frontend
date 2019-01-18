@@ -91,7 +91,7 @@ export default class Category extends Vue {
   isSelecting: boolean = false;
 
   showConfirmation: boolean = false;
-  confirmMessage: string = `${this.category.name} を削除してもよろしいですか？`;
+  confirmMessage: string = this.buildConfirmMessage(this.category.name);
   confirmButtonText: string = "削除";
   cancelButtonText: string = "キャンセル";
 
@@ -125,7 +125,9 @@ export default class Category extends Vue {
     };
 
     this.$emit("clickUpdateCategory", updateCategoryPayload);
-    this.doneEdit();
+    this.confirmMessage = this.buildConfirmMessage(this.editCategoryName);
+    this.isValidationError = false;
+    this.editing = false;
   }
 
   onClickDestroyCategory() {
@@ -135,7 +137,6 @@ export default class Category extends Vue {
   confirmDestroy(): void {
     this.showConfirmation = false;
     this.$emit("clickDestroyCategory", this.category.categoryId);
-    this.doneEdit();
 
     if (this.isSelecting) {
       this.$router.push({
@@ -146,6 +147,10 @@ export default class Category extends Vue {
 
   cancelDestroy(): void {
     this.showConfirmation = false;
+  }
+
+  buildConfirmMessage(categoryName: string): string {
+    return `${categoryName} を削除してもよろしいですか？`;
   }
 
   initializeIsSelecting() {
