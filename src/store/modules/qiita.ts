@@ -616,6 +616,8 @@ const actions: ActionTree<IQiitaState, RootState> = {
       await destroyCategory(destroyCategoryRequest);
       commit("removeCategory", categoryId);
       commit("removeCategoryFromStock", categoryId);
+      if (state.displayCategoryId === categoryId)
+        return commit("saveDisplayCategoryId", 0);
     } catch (error) {
       if (isUnauthorized(error.response.status)) {
         localStorage.remove(STORAGE_KEY_SESSION_ID);
