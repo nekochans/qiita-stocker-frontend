@@ -4,7 +4,7 @@
       <div class="container">
         <div class="navbar-brand">
           <a class="navbar-item" href="/"
-            ><p class="is-size-5 has-text-black">Qiita Stocker</p></a
+            ><p class="is-size-4 has-text-black">Mindexer</p></a
           >
           <a
             role="button"
