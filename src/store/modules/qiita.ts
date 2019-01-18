@@ -416,8 +416,9 @@ const actions: ActionTree<IQiitaState, RootState> = {
         name: "error",
         params: { errorMessage: error.response.data.message }
       });
-      return;
     }
+    localStorage.remove(STORAGE_KEY_AUTH_STATE);
+    localStorage.remove(STORAGE_KEY_ACCOUNT_ACTION);
   },
   issueLoginSession: async ({ commit }) => {
     try {
@@ -447,8 +448,9 @@ const actions: ActionTree<IQiitaState, RootState> = {
         name: "error",
         params: { errorMessage: error.response.data.message }
       });
-      return;
     }
+    localStorage.remove(STORAGE_KEY_AUTH_STATE);
+    localStorage.remove(STORAGE_KEY_ACCOUNT_ACTION);
   },
   logout: async ({ commit }) => {
     try {
