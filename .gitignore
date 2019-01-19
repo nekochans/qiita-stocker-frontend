@@ -26,3 +26,5 @@ yarn-error.log*
 *.sw*
 
 qiita-stocker-frontend.iml
+
+public/index.html
