@@ -84,7 +84,8 @@ describe("StockCategories.vue", () => {
       checkCategorizedStock: jest.fn(),
       resetData: jest.fn(),
       destroyCategory: jest.fn(),
-      saveDisplayCategoryId: jest.fn()
+      saveDisplayCategoryId: jest.fn(),
+      cancelCategorization: jest.fn()
     };
 
     store = new Vuex.Store({
@@ -193,6 +194,24 @@ describe("StockCategories.vue", () => {
       expect(actions.categorize).toHaveBeenCalledWith(
         expect.anything(),
         categorizePayload,
+        undefined
+      );
+    });
+
+    it('calls store action "cancelCategorization" on onClickCancelCategorization()', () => {
+      const wrapper = shallowMount(StockCategories, {
+        store,
+        localVue,
+        router
+      });
+      const categorizedStockId = 1;
+
+      // @ts-ignore
+      wrapper.vm.onClickCancelCategorization(categorizedStockId);
+
+      expect(actions.cancelCategorization).toHaveBeenCalledWith(
+        expect.anything(),
+        categorizedStockId,
         undefined
       );
     });
@@ -439,6 +458,23 @@ describe("StockCategories.vue", () => {
       stockEdit.vm.changeCategory();
 
       expect(mock).toHaveBeenCalledWith(category);
+    });
+
+    it("should call onClickCancelCategorization when icon is clicked", () => {
+      const mock = jest.fn();
+      const wrapper = mount(StockCategories, { store, localVue, router });
+      const categorizedStockId = 1;
+
+      wrapper.setMethods({
+        onClickCancelCategorization: mock
+      });
+
+      const categorizedStockList = wrapper.find(CategorizedStockList);
+
+      // @ts-ignore
+      categorizedStockList.vm.onClickCancelCategorization(categorizedStockId);
+
+      expect(mock).toHaveBeenCalledWith(categorizedStockId);
     });
 
     it("should call onClickCheckStock when checkBox is clicked", () => {

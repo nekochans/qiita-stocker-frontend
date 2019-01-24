@@ -612,6 +612,39 @@ describe("QiitaModule", () => {
       expect(state.categorizedStocks).toEqual([categorizedStocks[1]]);
     });
 
+    it("should be able to remove categorized stocks by id", () => {
+      const categorizedStocks: ICategorizedStock[] = [
+        {
+          id: 1,
+          article_id: "removeid111111111111",
+          title: "title1",
+          user_id: "test-user1",
+          profile_image_url: "https://test.com/test/image",
+          article_created_at: "2018/09/30",
+          tags: ["laravel", "php"],
+          isChecked: true
+        },
+        {
+          id: 2,
+          article_id: "c0a2609ae61a72dcc60f",
+          title: "title2",
+          user_id: "test-user12",
+          profile_image_url: "https://test.com/test/image",
+          article_created_at: "2018/09/30",
+          tags: ["Vue.js", "Vuex", "TypeScript"],
+          isChecked: false
+        }
+      ];
+      const id = 1;
+
+      state.categorizedStocks = categorizedStocks;
+      const wrapper = (mutations: any) =>
+        mutations.removeCategorizedStocksById(state, id);
+      wrapper(QiitaModule.mutations);
+
+      expect(state.categorizedStocks).toEqual([categorizedStocks[1]]);
+    });
+
     it("should be able to save paging", () => {
       const paging: IPage[] = [
         {
@@ -1207,7 +1240,7 @@ describe("QiitaModule", () => {
       ]);
     });
 
-    it("should be able to categorize", async () => {
+    it("should be able to set isCategorizing", async () => {
       const commit = jest.fn();
       const wrapper = (actions: any) => actions.setIsCategorizing({ commit });
       await wrapper(QiitaModule.actions);
@@ -1215,7 +1248,7 @@ describe("QiitaModule", () => {
       expect(commit.mock.calls).toEqual([["setIsCategorizing"]]);
     });
 
-    it("should be able to uncheck Stock", async () => {
+    it("should be able to categorize", async () => {
       const categorizePayload: ICategorizePayload = {
         category: { categoryId: 1, name: "category" },
         stockArticleIds: ["c0a2609ae61a72dcc60f", "c0a2609ae61a72dcc60a"]
@@ -1236,6 +1269,21 @@ describe("QiitaModule", () => {
             category: categorizePayload.category
           }
         ]
+      ]);
+    });
+
+    it("should be able to categorize", async () => {
+      const mockAxios: any = axios;
+      mockAxios.delete.mockResolvedValue({});
+      const commit = jest.fn();
+
+      const categorizedStockId = 1;
+      const wrapper = (actions: any) =>
+        actions.cancelCategorization({ commit }, categorizedStockId);
+      await wrapper(QiitaModule.actions);
+
+      expect(commit.mock.calls).toEqual([
+        ["removeCategorizedStocksById", categorizedStockId]
       ]);
     });
 
