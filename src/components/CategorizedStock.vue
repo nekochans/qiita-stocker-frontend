@@ -37,6 +37,13 @@
         @change="onClickCheckStock"
       />
     </label>
+    <p
+      v-show="!isCategorizing"
+      class="times-circle"
+      @click="onClickCancelCategorization"
+    >
+      <span class="icon"> <i class="far fa-times-circle fa-2x"></i> </span>
+    </p>
   </article>
 </template>
 
@@ -54,6 +61,10 @@ export default class CategorizedStock extends Vue {
 
   onClickCheckStock() {
     this.$emit("clickCheckStock", this.stock);
+  }
+
+  onClickCancelCategorization() {
+    this.$emit("clickCancelCategorization", this.stock.id);
   }
 }
 </script>
@@ -85,5 +96,21 @@ a:hover {
 
 .content-no-scroll {
   overflow-x: visible;
+}
+
+.times-circle {
+  color: darkgray;
+  display: none;
+  float: right;
+  transition: color 0.2s ease-out;
+  padding: 0.5rem;
+}
+
+.times-circle:hover {
+  color: gray;
+}
+
+article:hover .times-circle {
+  display: block;
 }
 </style>

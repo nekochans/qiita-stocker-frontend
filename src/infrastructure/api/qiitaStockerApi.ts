@@ -20,7 +20,8 @@ import {
   ICategorizeRequest,
   IFetchCategorizedStockRequest,
   IFetchCategorizedStockResponse,
-  IDestroyCategoryRequest
+  IDestroyCategoryRequest,
+  ICancelCategorizationRequest
 } from "@/domain/qiita";
 
 export default class QiitaStockerApi implements IQiitaStockerApi {
@@ -253,6 +254,23 @@ export default class QiitaStockerApi implements IQiitaStockerApi {
           }
         }
       )
+      .then((axiosResponse: AxiosResponse) => {
+        return Promise.resolve();
+      })
+      .catch((axiosError: IQiitaStockerError) => {
+        return Promise.reject(axiosError);
+      });
+  }
+
+  async cancelCategorization(
+    request: ICancelCategorizationRequest
+  ): Promise<void> {
+    return await axios
+      .delete(`${request.apiUrlBase}/api/categories/stocks/${request.id}`, {
+        headers: {
+          Authorization: `Bearer ${request.sessionId}`
+        }
+      })
       .then((axiosResponse: AxiosResponse) => {
         return Promise.resolve();
       })

@@ -8,6 +8,7 @@
         :key="stock.id"
         :isCategorizing="isCategorizing"
         @clickCheckStock="onClickCheckStock"
+        @clickCancelCategorization="onClickCancelCategorization"
       />
     </div>
     <div v-else><h1 class="subtitle">ストックされた記事はありません。</h1></div>
@@ -36,6 +37,10 @@ export default class CategorizedStockList extends Vue {
 
   onClickCheckStock(stock: ICategorizedStock) {
     this.$emit("clickCheckStock", stock);
+  }
+
+  onClickCancelCategorization(categorizedStockId: number) {
+    this.$emit("clickCancelCategorization", categorizedStockId);
   }
 }
 </script>

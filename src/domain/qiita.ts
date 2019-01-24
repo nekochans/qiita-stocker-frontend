@@ -37,6 +37,7 @@ export interface IQiitaStockerApi {
     request: IFetchCategorizedStockRequest
   ): Promise<IFetchCategorizedStockResponse>;
   categorize(request: ICategorizeRequest): Promise<void>;
+  cancelCategorization(request: ICancelCategorizationRequest): Promise<void>;
 }
 
 export interface IQiitaApi {
@@ -191,6 +192,12 @@ export interface ICategorizeRequest {
   articleIds: string[];
 }
 
+export interface ICancelCategorizationRequest {
+  apiUrlBase: string;
+  sessionId: string;
+  id: number;
+}
+
 export interface IQiitaStockerError extends AxiosError {
   response: AxiosResponse<IQiitaStockerErrorData>;
 }
@@ -300,6 +307,12 @@ export const categorize = async (
   request: ICategorizeRequest
 ): Promise<void> => {
   return await qiitaStockerApi.categorize(request);
+};
+
+export const cancelCategorization = async (
+  request: ICancelCategorizationRequest
+): Promise<void> => {
+  return await qiitaStockerApi.cancelCategorization(request);
 };
 
 export const matchState = (responseState: string, state: string): boolean => {

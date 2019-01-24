@@ -31,6 +31,7 @@
             :isCategorizing="isCategorizing"
             :isLoading="isLoading"
             @clickCheckStock="onClickCheckStock"
+            @clickCancelCategorization="onClickCancelCategorization"
           />
           <Pagination
             :isLoading="isLoading"
@@ -141,6 +142,9 @@ export default class StockCategories extends Vue {
   categorize!: (categorizePayload: ICategorizePayload) => void;
 
   @QiitaAction
+  cancelCategorization!: (categorizedStockId: number) => void;
+
+  @QiitaAction
   checkCategorizedStock!: (stock: ICategorizedStock) => void;
 
   @QiitaAction
@@ -176,6 +180,10 @@ export default class StockCategories extends Vue {
       stockArticleIds: this.checkedCategorizedStockArticleIds
     };
     this.categorize(categorizePayload);
+  }
+
+  onClickCancelCategorization(categorizedStockId: number) {
+    this.cancelCategorization(categorizedStockId);
   }
 
   onClickCheckStock(stock: ICategorizedStock) {
