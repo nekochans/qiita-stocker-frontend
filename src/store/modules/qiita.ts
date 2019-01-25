@@ -5,6 +5,7 @@ import { RootState } from "@/store";
 import {
   cancelAccount,
   categorize,
+  cancelCategorization,
   createAccount,
   fetchAuthenticatedUser,
   fetchCategories,
@@ -50,7 +51,8 @@ import {
   IFetchCategorizedStockResponse,
   ICategorizedStock,
   IDestroyCategoryRequest,
-  destroyCategory
+  destroyCategory,
+  ICancelCategorizationRequest
 } from "@/domain/qiita";
 import uuid from "uuid";
 import { router } from "@/router";
@@ -256,7 +258,6 @@ const mutations: MutationTree<IQiitaState> = {
   },
   updateStockCategoryName: (state, category: ICategory) => {
     state.stocks.map(stock => {
-      console.log(category.categoryId);
       if (stock.category && stock.category.categoryId === category.categoryId) {
         stock.category = category;
       }
@@ -276,6 +277,11 @@ const mutations: MutationTree<IQiitaState> = {
     state.categorizedStocks = state.categorizedStocks.filter(
       categorizedStock =>
         stockArticleIds.indexOf(categorizedStock.article_id) < 0
+    );
+  },
+  removeCategorizedStocksById: (state, id: number) => {
+    state.categorizedStocks = state.categorizedStocks.filter(
+      categorizedStock => categorizedStock.id !== id
     );
   },
   savePaging: (state, paging: IPage[]) => {
@@ -757,6 +763,30 @@ const actions: ActionTree<IQiitaState, RootState> = {
         stockArticleIds: categorizePayload.stockArticleIds,
         category: categorizePayload.category
       });
+    } catch (error) {
+      if (isUnauthorized(error.response.status)) {
+        localStorage.remove(STORAGE_KEY_SESSION_ID);
+        commit("saveSessionId", "");
+      }
+
+      router.push({
+        name: "error",
+        params: { errorMessage: error.response.data.message }
+      });
+      return;
+    }
+  },
+  cancelCategorization: async ({ commit }, categorizedStockId: number) => {
+    try {
+      const sessionId = localStorage.load(STORAGE_KEY_SESSION_ID);
+      const cancelCategorizationRequest: ICancelCategorizationRequest = {
+        apiUrlBase: apiUrlBase(),
+        sessionId: sessionId,
+        id: categorizedStockId
+      };
+
+      await cancelCategorization(cancelCategorizationRequest);
+      commit("removeCategorizedStocksById", categorizedStockId);
     } catch (error) {
       if (isUnauthorized(error.response.status)) {
         localStorage.remove(STORAGE_KEY_SESSION_ID);

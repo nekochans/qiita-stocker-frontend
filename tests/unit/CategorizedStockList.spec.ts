@@ -54,6 +54,18 @@ describe("CategorizedStockList.vue", () => {
       expect(wrapper.emitted("clickCheckStock")).toBeTruthy();
       expect(wrapper.emitted("clickCheckStock")[0][0]).toEqual(stocks[0]);
     });
+
+    it("should emit clickCancelCategorization on onClickCancelCategorization()", () => {
+      const wrapper = shallowMount(CategorizedStockList, { propsData });
+
+      // @ts-ignore
+      wrapper.vm.onClickCancelCategorization(stocks[0].id);
+
+      expect(wrapper.emitted("clickCancelCategorization")).toBeTruthy();
+      expect(wrapper.emitted("clickCancelCategorization")[0][0]).toEqual(
+        stocks[0].id
+      );
+    });
   });
 
   describe("template", () => {
@@ -71,6 +83,22 @@ describe("CategorizedStockList.vue", () => {
       categorizedStock.vm.onClickCheckStock();
 
       expect(mock).toHaveBeenCalledWith(stocks[0]);
+    });
+
+    it("should call clickCancelCategorization when icon is clicked", () => {
+      const mock = jest.fn();
+      const wrapper = mount(CategorizedStockList, { propsData });
+
+      wrapper.setMethods({
+        onClickCancelCategorization: mock
+      });
+
+      const categorizedStock = wrapper.find(CategorizedStock);
+
+      // @ts-ignore
+      categorizedStock.vm.onClickCancelCategorization();
+
+      expect(mock).toHaveBeenCalledWith(stocks[0].id);
     });
 
     it("renders list", () => {
