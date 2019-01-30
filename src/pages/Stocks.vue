@@ -18,6 +18,7 @@
             :isLoading="isLoading"
             :stocksLength="stocks.length"
             :isCategorizing="isCategorizing"
+            :isCancelingCategorization="isCancelingCategorization"
             :displayCategories="displayCategories"
             :checkedStockArticleIds="checkedStockArticleIds"
             @clickSetIsCategorizing="onSetIsCategorizing"
@@ -88,6 +89,9 @@ export default class Stocks extends Vue {
 
   @QiitaGetter
   isCategorizing!: boolean;
+
+  @QiitaGetter
+  isCancelingCategorization!: boolean;
 
   @QiitaGetter
   isLoading!: boolean;

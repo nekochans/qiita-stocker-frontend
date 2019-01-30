@@ -2,6 +2,17 @@
   <div v-show="stocksLength && !isLoading">
     <div class="navbar-menu edit-menu">
       <div class="navbar-end">
+        <div v-if="!isCategorizing" class="cancel-categorization-margin">
+          <button
+            :class="
+              `button is-light button-margin ${isCancelingCategorization &&
+                'is-link'}`
+            "
+            @click="setIsCancelingCategorization"
+          >
+            カテゴライズを解除する
+          </button>
+        </div>
         <CategorizeButton
           :isCategorizing="isCategorizing"
           :isCancelingCategorization="isCancelingCategorization"
@@ -25,7 +36,7 @@ import CategorizeButton from "@/components/CategorizeButton.vue";
     CategorizeButton
   }
 })
-export default class StockEdit extends Vue {
+export default class CategorizedStockEdit extends Vue {
   @Prop()
   isLoading!: boolean;
 
@@ -44,6 +55,10 @@ export default class StockEdit extends Vue {
   @Prop()
   checkedStockArticleIds!: string[];
 
+  setIsCancelingCategorization() {
+    this.$emit("clickSetIsCancelingCategorization");
+  }
+
   onSetIsCategorizing() {
     this.$emit("clickSetIsCategorizing");
   }
@@ -58,6 +73,10 @@ export default class StockEdit extends Vue {
 .edit-menu {
   display: block;
   box-shadow: none;
+}
+
+.cancel-categorization-margin {
+  margin-right: 0.5rem;
 }
 
 .button-margin {

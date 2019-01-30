@@ -112,6 +112,7 @@ const state: IQiitaState = {
   paging: [],
   displayCategoryId: 0,
   isCategorizing: false,
+  isCancelingCategorization: false,
   isLoading: true
 };
 
@@ -147,6 +148,11 @@ const getters: GetterTree<IQiitaState, RootState> = {
   },
   isCategorizing: (state): IQiitaState["isCategorizing"] => {
     return state.isCategorizing;
+  },
+  isCancelingCategorization: (
+    state
+  ): IQiitaState["isCancelingCategorization"] => {
+    return state.isCancelingCategorization;
   },
   isLoading: (state): IQiitaState["isLoading"] => {
     return state.isLoading;
@@ -296,8 +302,14 @@ const mutations: MutationTree<IQiitaState> = {
   setIsCategorizing: state => {
     state.isCategorizing = !state.isCategorizing;
   },
-  restIsCategorizing: state => {
+  setIsCancelingCategorization: state => {
+    state.isCancelingCategorization = !state.isCancelingCategorization;
+  },
+  resetData: state => {
     state.isCategorizing = false;
+    state.isCancelingCategorization = false;
+    state.displayCategoryId = 0;
+    state.currentPage = 1;
   },
   setIsLoading: (state, isLoading: boolean) => {
     state.isLoading = isLoading;
@@ -746,6 +758,9 @@ const actions: ActionTree<IQiitaState, RootState> = {
   setIsCategorizing: async ({ commit }) => {
     commit("setIsCategorizing");
   },
+  setIsCancelingCategorization: async ({ commit }) => {
+    commit("setIsCancelingCategorization");
+  },
   categorize: async ({ commit }, categorizePayload: ICategorizePayload) => {
     try {
       const sessionId = localStorage.load(STORAGE_KEY_SESSION_ID);
@@ -807,9 +822,7 @@ const actions: ActionTree<IQiitaState, RootState> = {
     commit("checkCategorizedStock", { stock, isChecked: !stock.isChecked });
   },
   resetData: ({ commit }): void => {
-    commit("saveDisplayCategoryId", 0);
-    commit("restIsCategorizing");
-    commit("saveCurrentPage", 1);
+    commit("resetData");
     commit("saveStocks", []);
     commit("saveCategorizedStocks", []);
   },

@@ -64,6 +64,7 @@ describe("Stocks.vue", () => {
       paging: [],
       displayCategoryId: 0,
       isCategorizing: false,
+      isCancelingCategorization: false,
       isLoading: false
     };
 
@@ -300,9 +301,7 @@ describe("Stocks.vue", () => {
       const stockEdit = wrapper.find(StockEdit);
 
       // @ts-ignore
-      stockEdit.vm.selectedCategory = { categoryId: 1, name: "category" };
-      // @ts-ignore
-      stockEdit.vm.changeCategory();
+      stockEdit.vm.onSetIsCategorizing();
 
       expect(mock).toHaveBeenCalled();
     });
@@ -319,9 +318,7 @@ describe("Stocks.vue", () => {
       const category = { categoryId: 1, name: "category" };
 
       // @ts-ignore
-      stockEdit.vm.selectedCategory = category;
-      // @ts-ignore
-      stockEdit.vm.changeCategory();
+      stockEdit.vm.onClickCategorize(category);
 
       expect(mock).toHaveBeenCalledWith(category);
     });

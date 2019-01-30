@@ -7,6 +7,7 @@
         :stock="stock"
         :key="stock.id"
         :isCategorizing="isCategorizing"
+        :isCancelingCategorization="isCancelingCategorization"
         @clickCheckStock="onClickCheckStock"
         @clickCancelCategorization="onClickCancelCategorization"
       />
@@ -31,6 +32,9 @@ export default class CategorizedStockList extends Vue {
 
   @Prop()
   isCategorizing!: boolean;
+
+  @Prop()
+  isCancelingCategorization!: boolean;
 
   @Prop()
   isLoading!: boolean;

@@ -32,10 +32,12 @@ describe("CategorizedStockList.vue", () => {
   const propsData: {
     stocks: ICategorizedStock[];
     isCategorizing: boolean;
+    isCancelingCategorization: boolean;
     isLoading: boolean;
   } = {
     stocks,
     isCategorizing: false,
+    isCancelingCategorization: false,
     isLoading: false
   };
 

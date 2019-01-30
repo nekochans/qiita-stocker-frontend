@@ -16,19 +16,21 @@
         </div>
         <div class="column is-9 column-padding">
           <Loading :isLoading="isLoading" />
-          <StockEdit
+          <CategorizedStockEdit
             :isLoading="isLoading"
             :stocksLength="categorizedStocks.length"
             :isCategorizing="isCategorizing"
-            :categories="categories"
+            :isCancelingCategorization="isCancelingCategorization"
             :displayCategories="displayCategories"
             :checkedStockArticleIds="checkedCategorizedStockArticleIds"
             @clickSetIsCategorizing="onSetIsCategorizing"
+            @clickSetIsCancelingCategorization="onSetIsCancelingCategorization"
             @clickCategorize="onClickCategorize"
           />
           <CategorizedStockList
             :stocks="categorizedStocks"
             :isCategorizing="isCategorizing"
+            :isCancelingCategorization="isCancelingCategorization"
             :isLoading="isLoading"
             @clickCheckStock="onClickCheckStock"
             @clickCancelCategorization="onClickCancelCategorization"
@@ -57,7 +59,7 @@ import { Getter, Action, namespace } from "vuex-class";
 
 import AppHeader from "@/components/AppHeader.vue";
 import SideMenu from "@/components/SideMenu.vue";
-import StockEdit from "@/components/StockEdit.vue";
+import CategorizedStockEdit from "@/components/CategorizedStockEdit.vue";
 import CategorizedStockList from "@/components/CategorizedStockList.vue";
 import Pagination from "@/components/Pagination.vue";
 import Loading from "@/components/Loading.vue";
@@ -75,7 +77,7 @@ const QiitaGetter = namespace("QiitaModule", Getter);
   components: {
     AppHeader,
     SideMenu,
-    StockEdit,
+    CategorizedStockEdit,
     CategorizedStockList,
     Pagination,
     Loading
@@ -93,6 +95,9 @@ export default class StockCategories extends Vue {
 
   @QiitaGetter
   isCategorizing!: boolean;
+
+  @QiitaGetter
+  isCancelingCategorization!: boolean;
 
   @QiitaGetter
   isLoading!: boolean;
@@ -137,6 +142,9 @@ export default class StockCategories extends Vue {
 
   @QiitaAction
   setIsCategorizing!: () => void;
+
+  @QiitaAction
+  setIsCancelingCategorization!: () => void;
 
   @QiitaAction
   categorize!: (categorizePayload: ICategorizePayload) => void;
@@ -202,6 +210,10 @@ export default class StockCategories extends Vue {
 
   onSetIsCategorizing() {
     this.setIsCategorizing();
+  }
+
+  onSetIsCancelingCategorization() {
+    this.setIsCancelingCategorization();
   }
 
   onClickStocksAll() {

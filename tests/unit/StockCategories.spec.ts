@@ -7,7 +7,7 @@ import {
 } from "@/store/modules/qiita";
 import StockCategories from "@/pages/StockCategories.vue";
 import SideMenu from "@/components/SideMenu.vue";
-import StockEdit from "@/components/StockEdit.vue";
+import CategorizedStockEdit from "@/components/CategorizedStockEdit.vue";
 import CategorizedStockList from "@/components/CategorizedStockList.vue";
 import CategoryList from "@/components/CategoryList.vue";
 import Pagination from "@/components/Pagination.vue";
@@ -71,6 +71,7 @@ describe("StockCategories.vue", () => {
       paging: [],
       displayCategoryId: 0,
       isCategorizing: false,
+      isCancelingCategorization: false,
       isLoading: false
     };
 
@@ -80,6 +81,7 @@ describe("StockCategories.vue", () => {
       fetchCategory: jest.fn(),
       fetchCategorizedStock: jest.fn(),
       setIsCategorizing: jest.fn(),
+      setIsCancelingCategorization: jest.fn(),
       categorize: jest.fn(),
       checkCategorizedStock: jest.fn(),
       resetData: jest.fn(),
@@ -285,6 +287,19 @@ describe("StockCategories.vue", () => {
       expect(actions.setIsCategorizing).toHaveBeenCalled();
     });
 
+    it('calls store action "setIsCancelingCategorization" on onSetIsCancelingCategorization()', () => {
+      const wrapper = shallowMount(StockCategories, {
+        store,
+        localVue,
+        router
+      });
+
+      // @ts-ignore
+      wrapper.vm.onSetIsCancelingCategorization();
+
+      expect(actions.setIsCancelingCategorization).toHaveBeenCalled();
+    });
+
     it('calls store action "resetData" on onClickStocksAll()', () => {
       const wrapper = shallowMount(StockCategories, {
         store,
@@ -431,12 +446,26 @@ describe("StockCategories.vue", () => {
         onSetIsCategorizing: mock
       });
 
-      const stockEdit = wrapper.find(StockEdit);
+      const categorizedStockEdit = wrapper.find(CategorizedStockEdit);
 
       // @ts-ignore
-      stockEdit.vm.selectedCategory = { categoryId: 1, name: "category" };
+      categorizedStockEdit.vm.onSetIsCategorizing();
+
+      expect(mock).toHaveBeenCalled();
+    });
+
+    it("should call onSetIsCancelingCategorization when button is clicked", () => {
+      const mock = jest.fn();
+      const wrapper = mount(StockCategories, { store, localVue, router });
+
+      wrapper.setMethods({
+        onSetIsCancelingCategorization: mock
+      });
+
+      const categorizedStockEdit = wrapper.find(CategorizedStockEdit);
+
       // @ts-ignore
-      stockEdit.vm.changeCategory();
+      categorizedStockEdit.vm.setIsCancelingCategorization();
 
       expect(mock).toHaveBeenCalled();
     });
@@ -450,12 +479,10 @@ describe("StockCategories.vue", () => {
         onClickCategorize: mock
       });
 
-      const stockEdit = wrapper.find(StockEdit);
+      const categorizedStockEdit = wrapper.find(CategorizedStockEdit);
 
       // @ts-ignore
-      stockEdit.vm.selectedCategory = category;
-      // @ts-ignore
-      stockEdit.vm.changeCategory();
+      categorizedStockEdit.vm.onClickCategorize(category);
 
       expect(mock).toHaveBeenCalledWith(category);
     });

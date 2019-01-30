@@ -31,6 +31,7 @@ describe("AppHeader.vue", () => {
     paging: [],
     displayCategoryId: 0,
     isCategorizing: false,
+    isCancelingCategorization: false,
     isLoading: false
   };
 
