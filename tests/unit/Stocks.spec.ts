@@ -64,6 +64,7 @@ describe("Stocks.vue", () => {
       paging: [],
       displayCategoryId: 0,
       isCategorizing: false,
+      isCancelingCategorizing: false,
       isLoading: false
     };
 

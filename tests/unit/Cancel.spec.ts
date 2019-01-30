@@ -32,6 +32,7 @@ describe("Cancel.vue", () => {
       paging: [],
       displayCategoryId: 0,
       isCategorizing: false,
+      isCancelingCategorizing: false,
       isLoading: false
     };
 

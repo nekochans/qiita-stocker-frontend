@@ -111,6 +111,7 @@ describe("QiitaModule", () => {
         paging: [firstPage, prevPage, nextPage, lastPage],
         displayCategoryId: 2,
         isCategorizing: false,
+        isCancelingCategorizing: false,
         isLoading: false
       };
     });
@@ -201,6 +202,15 @@ describe("QiitaModule", () => {
       expect(isCategorizing).toEqual(state.isCategorizing);
     });
 
+    it("should be able to get isCancelingCategorizing", () => {
+      const wrapper = (getters: any) => getters.isCancelingCategorizing(state);
+      const isCancelingCategorizing: IQiitaState["isCancelingCategorizing"] = wrapper(
+        QiitaModule.getters
+      );
+
+      expect(isCancelingCategorizing).toEqual(state.isCancelingCategorizing);
+    });
+
     it("should be able to get isLoading", () => {
       const wrapper = (getters: any) => getters.isLoading(state);
       const isLoading: IQiitaState["isLoading"] = wrapper(QiitaModule.getters);
@@ -282,6 +292,7 @@ describe("QiitaModule", () => {
         paging: [],
         displayCategoryId: 0,
         isCategorizing: false,
+        isCancelingCategorizing: false,
         isLoading: false
       };
     });
@@ -694,10 +705,20 @@ describe("QiitaModule", () => {
       expect(state.isCategorizing).toEqual(true);
     });
 
-    it("should be able to reset isCategorizing", () => {
-      const wrapper = (mutations: any) => mutations.restIsCategorizing(state);
+    it("should be able to save isCancelingCategorizing", () => {
+      const wrapper = (mutations: any) =>
+        mutations.setIsCancelingCategorizing(state);
+      wrapper(QiitaModule.mutations);
+      expect(state.isCancelingCategorizing).toEqual(true);
+    });
+
+    it("should be able to reset data", () => {
+      const wrapper = (mutations: any) => mutations.resetData(state);
       wrapper(QiitaModule.mutations);
       expect(state.isCategorizing).toEqual(false);
+      expect(state.isCancelingCategorizing).toEqual(false);
+      expect(state.displayCategoryId).toEqual(0);
+      expect(state.currentPage).toEqual(1);
     });
 
     it("should be able to save isLoading", () => {
@@ -1248,6 +1269,15 @@ describe("QiitaModule", () => {
       expect(commit.mock.calls).toEqual([["setIsCategorizing"]]);
     });
 
+    it("should be able to set isCancelingCategorizing", async () => {
+      const commit = jest.fn();
+      const wrapper = (actions: any) =>
+        actions.setIsCancelingCategorizing({ commit });
+      await wrapper(QiitaModule.actions);
+
+      expect(commit.mock.calls).toEqual([["setIsCancelingCategorizing"]]);
+    });
+
     it("should be able to categorize", async () => {
       const categorizePayload: ICategorizePayload = {
         category: { categoryId: 1, name: "category" },
@@ -1335,9 +1365,7 @@ describe("QiitaModule", () => {
       await wrapper(QiitaModule.actions);
 
       expect(commit.mock.calls).toEqual([
-        ["saveDisplayCategoryId", 0],
-        ["restIsCategorizing"],
-        ["saveCurrentPage", 1],
+        ["resetData"],
         ["saveStocks", []],
         ["saveCategorizedStocks", []]
       ]);

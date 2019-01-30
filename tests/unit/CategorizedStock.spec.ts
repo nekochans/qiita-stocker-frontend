@@ -14,9 +14,14 @@ describe("CategorizedStock.vue", () => {
     isChecked: true
   };
 
-  const propsData: { stock: ICategorizedStock; isCategorizing: boolean } = {
+  const propsData: {
+    stock: ICategorizedStock;
+    isCategorizing: boolean;
+    isCancelingCategorizing: boolean;
+  } = {
     stock,
-    isCategorizing: false
+    isCategorizing: false,
+    isCancelingCategorizing: false
   };
 
   it("props", () => {
