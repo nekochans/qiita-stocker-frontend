@@ -449,12 +449,7 @@ describe("StockCategories.vue", () => {
       const categorizedStockEdit = wrapper.find(CategorizedStockEdit);
 
       // @ts-ignore
-      categorizedStockEdit.vm.selectedCategory = {
-        categoryId: 1,
-        name: "category"
-      };
-      // @ts-ignore
-      categorizedStockEdit.vm.changeCategory();
+      categorizedStockEdit.vm.onSetIsCategorizing();
 
       expect(mock).toHaveBeenCalled();
     });
@@ -484,12 +479,10 @@ describe("StockCategories.vue", () => {
         onClickCategorize: mock
       });
 
-      const stockEdit = wrapper.find(CategorizedStockEdit);
+      const categorizedStockEdit = wrapper.find(CategorizedStockEdit);
 
       // @ts-ignore
-      stockEdit.vm.selectedCategory = category;
-      // @ts-ignore
-      stockEdit.vm.changeCategory();
+      categorizedStockEdit.vm.onClickCategorize(category);
 
       expect(mock).toHaveBeenCalledWith(category);
     });

@@ -21,7 +21,6 @@
             :stocksLength="categorizedStocks.length"
             :isCategorizing="isCategorizing"
             :isCancelingCategorizing="isCancelingCategorizing"
-            :categories="categories"
             :displayCategories="displayCategories"
             :checkedStockArticleIds="checkedCategorizedStockArticleIds"
             @clickSetIsCategorizing="onSetIsCategorizing"
