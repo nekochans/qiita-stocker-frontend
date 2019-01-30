@@ -10,14 +10,14 @@ describe("StockEdit.vue", () => {
     isLoading: boolean;
     stocksLength: number;
     isCategorizing: boolean;
-    isCancelingCategorizing: boolean;
+    isCancelingCategorization: boolean;
     displayCategories: ICategory[];
     checkedStockArticleIds: string[];
   } = {
     isLoading: false,
     stocksLength: 10,
     isCategorizing: false,
-    isCancelingCategorizing: false,
+    isCancelingCategorization: false,
     displayCategories: [
       { categoryId: 1, name: "テストカテゴリ1" },
       { categoryId: 2, name: "テストカテゴリ2" }

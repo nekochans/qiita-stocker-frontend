@@ -20,17 +20,17 @@
             :isLoading="isLoading"
             :stocksLength="categorizedStocks.length"
             :isCategorizing="isCategorizing"
-            :isCancelingCategorizing="isCancelingCategorizing"
+            :isCancelingCategorization="isCancelingCategorization"
             :displayCategories="displayCategories"
             :checkedStockArticleIds="checkedCategorizedStockArticleIds"
             @clickSetIsCategorizing="onSetIsCategorizing"
-            @clickSetIsCancelingCategorizing="onSetIsCancelingCategorizing"
+            @clickSetIsCancelingCategorization="onSetIsCancelingCategorization"
             @clickCategorize="onClickCategorize"
           />
           <CategorizedStockList
             :stocks="categorizedStocks"
             :isCategorizing="isCategorizing"
-            :isCancelingCategorizing="isCancelingCategorizing"
+            :isCancelingCategorization="isCancelingCategorization"
             :isLoading="isLoading"
             @clickCheckStock="onClickCheckStock"
             @clickCancelCategorization="onClickCancelCategorization"
@@ -97,7 +97,7 @@ export default class StockCategories extends Vue {
   isCategorizing!: boolean;
 
   @QiitaGetter
-  isCancelingCategorizing!: boolean;
+  isCancelingCategorization!: boolean;
 
   @QiitaGetter
   isLoading!: boolean;
@@ -144,7 +144,7 @@ export default class StockCategories extends Vue {
   setIsCategorizing!: () => void;
 
   @QiitaAction
-  setIsCancelingCategorizing!: () => void;
+  setIsCancelingCategorization!: () => void;
 
   @QiitaAction
   categorize!: (categorizePayload: ICategorizePayload) => void;
@@ -212,8 +212,8 @@ export default class StockCategories extends Vue {
     this.setIsCategorizing();
   }
 
-  onSetIsCancelingCategorizing() {
-    this.setIsCancelingCategorizing();
+  onSetIsCancelingCategorization() {
+    this.setIsCancelingCategorization();
   }
 
   onClickStocksAll() {

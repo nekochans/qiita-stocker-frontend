@@ -29,15 +29,15 @@ describe("CategorizedStockEdit.vue", () => {
   });
 
   describe("methods", () => {
-    it("should emit clickSetIsCancelingCategorizing on setIsCancelingCategorizing()", () => {
+    it("should emit clickSetIsCancelingCategorization on setIsCancelingCategorization()", () => {
       const mock = jest.fn();
       const wrapper = shallowMount(CategorizedStockEdit, { propsData });
 
       wrapper.setMethods({ doneEdit: mock });
 
       // @ts-ignore
-      wrapper.vm.setIsCancelingCategorizing();
-      expect(wrapper.emitted("clickSetIsCancelingCategorizing")).toBeTruthy();
+      wrapper.vm.setIsCancelingCategorization();
+      expect(wrapper.emitted("clickSetIsCancelingCategorization")).toBeTruthy();
     });
 
     it("should emit clickSetIsCategorizing on onSetIsCategorizing()", () => {
@@ -100,13 +100,13 @@ describe("CategorizedStockEdit.vue", () => {
       expect(mock).toHaveBeenCalledWith(propsData.displayCategories[0]);
     });
 
-    it("should call setIsCancelingCategorizing when button is clicked", () => {
+    it("should call setIsCancelingCategorization when button is clicked", () => {
       propsData.isCategorizing = false;
       const mock = jest.fn();
       const wrapper = shallowMount(CategorizedStockEdit, { propsData });
 
       wrapper.setMethods({
-        setIsCancelingCategorizing: mock
+        setIsCancelingCategorization: mock
       });
 
       wrapper

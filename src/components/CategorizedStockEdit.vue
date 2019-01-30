@@ -5,17 +5,17 @@
         <div v-if="!isCategorizing" class="cancel-categorization-margin">
           <button
             :class="
-              `button is-light button-margin ${isCancelingCategorizing &&
+              `button is-light button-margin ${isCancelingCategorization &&
                 'is-link'}`
             "
-            @click="setIsCancelingCategorizing"
+            @click="setIsCancelingCategorization"
           >
             カテゴライズを解除する
           </button>
         </div>
         <CategorizeButton
           :isCategorizing="isCategorizing"
-          :isCancelingCategorizing="isCancelingCategorizing"
+          :isCancelingCategorization="isCancelingCategorization"
           :displayCategories="displayCategories"
           :checkedStockArticleIds="checkedStockArticleIds"
           @clickSetIsCategorizing="onSetIsCategorizing"
@@ -47,7 +47,7 @@ export default class CategorizedStockEdit extends Vue {
   isCategorizing!: boolean;
 
   @Prop()
-  isCancelingCategorizing!: boolean;
+  isCancelingCategorization!: boolean;
 
   @Prop()
   displayCategories!: ICategory[];
@@ -55,8 +55,8 @@ export default class CategorizedStockEdit extends Vue {
   @Prop()
   checkedStockArticleIds!: string[];
 
-  setIsCancelingCategorizing() {
-    this.$emit("clickSetIsCancelingCategorizing");
+  setIsCancelingCategorization() {
+    this.$emit("clickSetIsCancelingCategorization");
   }
 
   onSetIsCategorizing() {

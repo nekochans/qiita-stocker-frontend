@@ -18,6 +18,6 @@ export interface IQiitaState {
   paging: IPage[];
   displayCategoryId: number;
   isCategorizing: boolean;
-  isCancelingCategorizing: boolean;
+  isCancelingCategorization: boolean;
   isLoading: boolean;
 }

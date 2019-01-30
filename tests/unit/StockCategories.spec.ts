@@ -71,7 +71,7 @@ describe("StockCategories.vue", () => {
       paging: [],
       displayCategoryId: 0,
       isCategorizing: false,
-      isCancelingCategorizing: false,
+      isCancelingCategorization: false,
       isLoading: false
     };
 
@@ -81,7 +81,7 @@ describe("StockCategories.vue", () => {
       fetchCategory: jest.fn(),
       fetchCategorizedStock: jest.fn(),
       setIsCategorizing: jest.fn(),
-      setIsCancelingCategorizing: jest.fn(),
+      setIsCancelingCategorization: jest.fn(),
       categorize: jest.fn(),
       checkCategorizedStock: jest.fn(),
       resetData: jest.fn(),
@@ -287,7 +287,7 @@ describe("StockCategories.vue", () => {
       expect(actions.setIsCategorizing).toHaveBeenCalled();
     });
 
-    it('calls store action "setIsCancelingCategorizing" on onSetIsCancelingCategorizing()', () => {
+    it('calls store action "setIsCancelingCategorization" on onSetIsCancelingCategorization()', () => {
       const wrapper = shallowMount(StockCategories, {
         store,
         localVue,
@@ -295,9 +295,9 @@ describe("StockCategories.vue", () => {
       });
 
       // @ts-ignore
-      wrapper.vm.onSetIsCancelingCategorizing();
+      wrapper.vm.onSetIsCancelingCategorization();
 
-      expect(actions.setIsCancelingCategorizing).toHaveBeenCalled();
+      expect(actions.setIsCancelingCategorization).toHaveBeenCalled();
     });
 
     it('calls store action "resetData" on onClickStocksAll()', () => {
@@ -454,18 +454,18 @@ describe("StockCategories.vue", () => {
       expect(mock).toHaveBeenCalled();
     });
 
-    it("should call onSetIsCancelingCategorizing when button is clicked", () => {
+    it("should call onSetIsCancelingCategorization when button is clicked", () => {
       const mock = jest.fn();
       const wrapper = mount(StockCategories, { store, localVue, router });
 
       wrapper.setMethods({
-        onSetIsCancelingCategorizing: mock
+        onSetIsCancelingCategorization: mock
       });
 
       const categorizedStockEdit = wrapper.find(CategorizedStockEdit);
 
       // @ts-ignore
-      categorizedStockEdit.vm.setIsCancelingCategorizing();
+      categorizedStockEdit.vm.setIsCancelingCategorization();
 
       expect(mock).toHaveBeenCalled();
     });

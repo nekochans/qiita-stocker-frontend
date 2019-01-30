@@ -38,7 +38,7 @@
       />
     </label>
     <p
-      v-show="!isCategorizing && isCancelingCategorizing"
+      v-show="!isCategorizing && isCancelingCategorization"
       class="times-circle"
       @click="onClickCancelCategorization"
     >
@@ -60,7 +60,7 @@ export default class CategorizedStock extends Vue {
   isCategorizing!: boolean;
 
   @Prop()
-  isCancelingCategorizing!: boolean;
+  isCancelingCategorization!: boolean;
 
   onClickCheckStock() {
     this.$emit("clickCheckStock", this.stock);

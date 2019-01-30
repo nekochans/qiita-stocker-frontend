@@ -4,7 +4,7 @@
       <div class="navbar-end">
         <CategorizeButton
           :isCategorizing="isCategorizing"
-          :isCancelingCategorizing="isCancelingCategorizing"
+          :isCancelingCategorization="isCancelingCategorization"
           :displayCategories="displayCategories"
           :checkedStockArticleIds="checkedStockArticleIds"
           @clickSetIsCategorizing="onSetIsCategorizing"
@@ -36,7 +36,7 @@ export default class StockEdit extends Vue {
   isCategorizing!: boolean;
 
   @Prop()
-  isCancelingCategorizing!: boolean;
+  isCancelingCategorization!: boolean;
 
   @Prop()
   displayCategories!: ICategory[];

@@ -112,7 +112,7 @@ const state: IQiitaState = {
   paging: [],
   displayCategoryId: 0,
   isCategorizing: false,
-  isCancelingCategorizing: false,
+  isCancelingCategorization: false,
   isLoading: true
 };
 
@@ -149,8 +149,10 @@ const getters: GetterTree<IQiitaState, RootState> = {
   isCategorizing: (state): IQiitaState["isCategorizing"] => {
     return state.isCategorizing;
   },
-  isCancelingCategorizing: (state): IQiitaState["isCancelingCategorizing"] => {
-    return state.isCancelingCategorizing;
+  isCancelingCategorization: (
+    state
+  ): IQiitaState["isCancelingCategorization"] => {
+    return state.isCancelingCategorization;
   },
   isLoading: (state): IQiitaState["isLoading"] => {
     return state.isLoading;
@@ -300,12 +302,12 @@ const mutations: MutationTree<IQiitaState> = {
   setIsCategorizing: state => {
     state.isCategorizing = !state.isCategorizing;
   },
-  setIsCancelingCategorizing: state => {
-    state.isCancelingCategorizing = !state.isCancelingCategorizing;
+  setIsCancelingCategorization: state => {
+    state.isCancelingCategorization = !state.isCancelingCategorization;
   },
   resetData: state => {
     state.isCategorizing = false;
-    state.isCancelingCategorizing = false;
+    state.isCancelingCategorization = false;
     state.displayCategoryId = 0;
     state.currentPage = 1;
   },
@@ -756,8 +758,8 @@ const actions: ActionTree<IQiitaState, RootState> = {
   setIsCategorizing: async ({ commit }) => {
     commit("setIsCategorizing");
   },
-  setIsCancelingCategorizing: async ({ commit }) => {
-    commit("setIsCancelingCategorizing");
+  setIsCancelingCategorization: async ({ commit }) => {
+    commit("setIsCancelingCategorization");
   },
   categorize: async ({ commit }, categorizePayload: ICategorizePayload) => {
     try {

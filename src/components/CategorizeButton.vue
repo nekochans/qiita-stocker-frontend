@@ -26,7 +26,7 @@
         キャンセル
       </button>
     </div>
-    <div v-show="!isCancelingCategorizing" v-else>
+    <div v-show="!isCancelingCategorization" v-else>
       <button class="button is-light button-margin" @click="startEdit">
         カテゴリに分類する
       </button>
@@ -49,7 +49,7 @@ export default class CategorizeButton extends Vue {
   isCategorizing!: boolean;
 
   @Prop()
-  isCancelingCategorizing!: boolean;
+  isCancelingCategorization!: boolean;
 
   @Prop()
   displayCategories!: ICategory[];
