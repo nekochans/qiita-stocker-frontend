@@ -14,6 +14,12 @@ import NotFound from "./pages/NotFound.vue";
 import Home from "./pages/Home.vue";
 import { STORAGE_KEY_SESSION_ID } from "@/domain/qiita";
 import LocalStorageFactory from "@/factory/repository/LocalStorageFactory";
+declare global {
+  interface Window {
+    dataLayer: Array<any>;
+    gtag: (...args: any[]) => void;
+  }
+}
 
 const localStorage = LocalStorageFactory.create();
 
@@ -102,4 +108,14 @@ router.beforeEach((to, from, next) => {
   } else {
     next();
   }
+});
+
+router.afterEach(to => {
+  const trackingId = process.env.VUE_APP_TRACKING_ID;
+  function gtag(...args: any[]) {
+    const dataLayer = (window.dataLayer = window.dataLayer || []);
+    dataLayer.push(arguments);
+  }
+  gtag("js", new Date());
+  gtag("config", trackingId, { page_path: to.path });
 });
