@@ -12,4 +12,16 @@ export default class App extends Vue {}
 <style lang="scss">
 $modal-background-background-color: rgba(10, 10, 10, 0.3);
 @import "../node_modules/bulma/bulma.sass";
+
+.columns {
+  margin: 0;
+}
+
+@media screen and (min-width: 768px) {
+  .columns {
+    margin-left: -0.75rem;
+    margin-right: -0.75rem;
+    margin-top: -0.75rem;
+  }
+}
 </style>
