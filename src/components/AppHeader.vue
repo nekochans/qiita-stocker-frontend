@@ -3,9 +3,9 @@
     <nav class="navbar navbar-guest">
       <div class="container">
         <div class="navbar-brand">
-          <a class="navbar-item" href="/"
-            ><p class="is-size-4 has-text-black">Mindexer</p></a
-          >
+          <router-link class="navbar-item" :to="{ name: 'home' }">
+            <p class="is-size-4 has-text-black">Mindexer</p>
+          </router-link>
           <a
             role="button"
             class="navbar-burger"
@@ -18,14 +18,18 @@
         <div class="navbar-menu" :class="{ 'is-active': isMenuActive }">
           <div class="navbar-end" v-if="!isLoggedIn">
             <div class="navbar-item">
-              <a href="/login" class="has-text-grey">ログイン</a>
+              <router-link class="has-text-grey" :to="{ name: 'login' }"
+                >ログイン</router-link
+              >
             </div>
           </div>
           <div class="navbar-end" v-else>
             <div class="navbar-item has-dropdown is-hoverable">
               <a class="navbar-link">メニュー</a>
               <div class="navbar-dropdown is-right">
-                <a class="navbar-item" href="/stocks/all">ストック一覧</a>
+                <router-link class="navbar-item" :to="{ name: 'stocks' }"
+                  >ストック一覧</router-link
+                >
                 <a class="navbar-item" @click="logout">ログアウト</a>
               </div>
             </div>

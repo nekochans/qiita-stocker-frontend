@@ -6,8 +6,12 @@
         <h1 class="title">アカウント作成</h1>
         <h2 class="is-size-7">
           <input type="checkbox" :checked="isChecked" @change="onClickCheck" />
-          私は、 <a href="/terms">利用規約</a> および
-          <a href="/privacy">プライバシーポリシー</a> に同意します。
+          私は、
+          <router-link :to="{ name: 'terms' }">利用規約</router-link> および
+          <router-link :to="{ name: 'privacy' }"
+            >プライバシーポリシー</router-link
+          >
+          に同意します。
         </h2>
         <button
           class="button signup-margin"
@@ -16,7 +20,11 @@
         >
           Qiitaアカウントで登録
         </button>
-        <h2 class="is-size-7">ログインの方は<a href="/login">こちら</a></h2>
+        <h2 class="is-size-7">
+          ログインの方は<router-link :to="{ name: 'login' }"
+            >こちら</router-link
+          >
+        </h2>
       </div>
     </main>
     <AppFooter />

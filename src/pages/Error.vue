@@ -4,7 +4,7 @@
     <main class="container has-text-centered">
       <h1 class="title">Error</h1>
       <h2 class="subtitle">{{ errorMessage }}</h2>
-      <a href="/">TOPページへ</a>
+      <router-link :to="{ name: 'home' }">TOPページへ</router-link>
     </main>
     <AppFooter />
   </section>
