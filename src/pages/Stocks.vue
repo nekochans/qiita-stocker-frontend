@@ -3,7 +3,7 @@
     <AppHeader />
     <main class="container">
       <div class="columns">
-        <div class="column is-3 column-padding">
+        <div class="column is-3">
           <SideMenu
             :categories="categories"
             :displayCategoryId="displayCategoryId"
@@ -12,7 +12,7 @@
             @clickDestroyCategory="onClickDestroyCategory"
           />
         </div>
-        <div class="column is-9 column-padding">
+        <div class="column is-9">
           <Loading :isLoading="isLoading" />
           <StockEdit
             :isLoading="isLoading"
@@ -192,9 +192,6 @@ export default class Stocks extends Vue {
 
 <style scoped>
 .container {
-  padding-top: 2rem;
-}
-.column-padding {
-  padding-left: 1.25rem;
+  padding-top: 1rem;
 }
 </style>
