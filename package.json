@@ -8,13 +8,14 @@
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
+    "remove:htmlTemplate": "rm -rf dist/index.stg.html && rm -rf dist/index.prod.html",
     "generateDotenv:local": "DEPLOY_STAGE=local node generateEnv.js",
     "generateDotenv:dev": "DEPLOY_STAGE=dev node generateEnv.js",
     "generateDotenv:stg": "DEPLOY_STAGE=stg node generateEnv.js",
     "generateDotenv:prod": "DEPLOY_STAGE=prod node generateEnv.js",
-    "deploy:dev": "cp public/index.stg.html public/index.html  && rm -rf dist && yarn run generateDotenv:dev && yarn run build && DEPLOY_STAGE=dev node deployToS3.js",
-    "deploy:stg": "cp public/index.stg.html public/index.html  && rm -rf dist && yarn run generateDotenv:stg && yarn run build && DEPLOY_STAGE=stg node deployToS3.js",
-    "deploy:prod": "cp public/index.prod.html public/index.html  && rm -rf dist && yarn run generateDotenv:prod && yarn run build && DEPLOY_STAGE=prod node deployToS3.js"
+    "deploy:dev": "cp public/index.stg.html public/index.html && rm -rf dist && yarn run generateDotenv:dev && yarn run build && yarn run remove:htmlTemplate && DEPLOY_STAGE=dev node deployToS3.js",
+    "deploy:stg": "cp public/index.stg.html public/index.html && rm -rf dist && yarn run generateDotenv:stg && yarn run build && yarn run remove:htmlTemplate && DEPLOY_STAGE=stg node deployToS3.js",
+    "deploy:prod": "cp public/index.prod.html public/index.html && rm -rf dist && yarn run generateDotenv:prod && yarn run build && yarn run remove:htmlTemplate && DEPLOY_STAGE=prod node deployToS3.js"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.6.3",

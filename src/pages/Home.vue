@@ -20,8 +20,10 @@
                   class="break"
                 />ほしい情報への素早いアクセス可能にします。
               </h2>
-              <a href="/signup" class="button is-medium is-primary"
-                >今すぐ登録</a
+              <router-link
+                class="button is-medium is-primary"
+                :to="{ name: 'signup' }"
+                >今すぐ登録</router-link
               >
             </div>
             <div class="column is-6"></div>
