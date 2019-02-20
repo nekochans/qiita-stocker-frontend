@@ -22,7 +22,6 @@ import {
 } from "@/store/modules/qiita";
 import axios from "axios";
 
-jest.mock("@/domain/Qiita");
 jest.mock("axios");
 
 describe("QiitaModule", () => {
