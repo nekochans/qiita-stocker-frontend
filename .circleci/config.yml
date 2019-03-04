@@ -22,4 +22,4 @@ jobs:
     steps:
       - checkout
       - yarn_install
-      - run: yarn run test:unit
+      - run: yarn run test:unit:ci
