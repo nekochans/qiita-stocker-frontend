@@ -1,4 +1,4 @@
-import { mount ,createLocalVue, config } from "@vue/test-utils";
+import { mount, createLocalVue, config } from "@vue/test-utils";
 import Vuex from "vuex";
 import { QiitaModule } from "@/store/modules/qiita";
 import AppHeader from "@/components/AppHeader.vue";
