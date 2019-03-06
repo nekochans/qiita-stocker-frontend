@@ -1,7 +1,7 @@
 import { shallowMount } from "@vue/test-utils";
 import Category from "@/components/Category.vue";
 import { ICategory } from "@/domain/qiita";
-import { IUpdateCategoryPayload } from "@/store/modules/qiita";
+import { IUpdateCategoryPayload } from "@/store/modules/actions";
 
 describe("Category.vue", () => {
   const $route = {

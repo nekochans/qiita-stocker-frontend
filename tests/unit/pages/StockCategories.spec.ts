@@ -1,10 +1,7 @@
 import { shallowMount, mount, createLocalVue, config } from "@vue/test-utils";
 import Vuex from "vuex";
-import {
-  IUpdateCategoryPayload,
-  ICategorizePayload,
-  QiitaModule
-} from "@/store/modules/qiita";
+import { QiitaModule } from "@/store/modules/qiita";
+import {IUpdateCategoryPayload, ICategorizePayload} from "@/store/modules/actions";
 import StockCategories from "@/pages/StockCategories.vue";
 import SideMenu from "@/components/SideMenu.vue";
 import CategorizedStockEdit from "@/components/CategorizedStockEdit.vue";
