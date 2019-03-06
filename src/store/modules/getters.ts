@@ -64,9 +64,8 @@ export const getters: GetterTree<IQiitaState, RootState> = {
 
     if (page !== undefined) {
       return page;
-    } else {
-      return { page: 0, perPage: 0, relation: "" };
     }
+    return { page: 0, perPage: 0, relation: "" };
   },
   prevPage: (state): IPage => {
     const page: IPage | undefined = state.paging.find(page => {
@@ -75,9 +74,8 @@ export const getters: GetterTree<IQiitaState, RootState> = {
 
     if (page !== undefined) {
       return page;
-    } else {
-      return { page: 0, perPage: 0, relation: "" };
     }
+    return { page: 0, perPage: 0, relation: "" };
   },
   nextPage: (state): IPage => {
     const page: IPage | undefined = state.paging.find(page => {
@@ -86,9 +84,8 @@ export const getters: GetterTree<IQiitaState, RootState> = {
 
     if (page !== undefined) {
       return page;
-    } else {
-      return { page: 0, perPage: 0, relation: "" };
     }
+    return { page: 0, perPage: 0, relation: "" };
   },
   lastPage: (state): IPage => {
     const page: IPage | undefined = state.paging.find(page => {
@@ -97,8 +94,7 @@ export const getters: GetterTree<IQiitaState, RootState> = {
 
     if (page !== undefined) {
       return page;
-    } else {
-      return { page: 0, perPage: 0, relation: "" };
     }
+    return { page: 0, perPage: 0, relation: "" };
   }
 };
