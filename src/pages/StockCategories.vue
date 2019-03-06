@@ -68,7 +68,7 @@ import {
   IUpdateCategoryPayload,
   ICategorizePayload,
   IfetchCategorizedStockPayload
-} from "@/store/modules/qiita";
+} from "@/store/modules/actions";
 
 const QiitaAction = namespace("QiitaModule", Action);
 const QiitaGetter = namespace("QiitaModule", Getter);

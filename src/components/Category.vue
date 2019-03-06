@@ -61,7 +61,7 @@
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from "vue-property-decorator";
 import { ICategory } from "@/domain/qiita";
-import { IUpdateCategoryPayload } from "@/store/modules/qiita";
+import { IUpdateCategoryPayload } from "@/store/modules/actions";
 import ConfirmModal from "@/components/ConfirmModal.vue";
 
 @Component({

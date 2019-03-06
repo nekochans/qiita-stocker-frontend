@@ -62,7 +62,7 @@ import { ICategory, IUncategorizedStock, IPage } from "@/domain/qiita";
 import {
   IUpdateCategoryPayload,
   ICategorizePayload
-} from "@/store/modules/qiita";
+} from "@/store/modules/actions";
 
 const QiitaAction = namespace("QiitaModule", Action);
 const QiitaGetter = namespace("QiitaModule", Getter);
