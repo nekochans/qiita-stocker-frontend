@@ -20,7 +20,7 @@ import DefaultMenuList from "@/components/DefaultMenuList.vue";
 import CategoryList from "@/components/CategoryList.vue";
 import CreateCategory from "@/components/CreateCategory.vue";
 import { ICategory } from "@/domain/qiita";
-import { IUpdateCategoryPayload } from "@/store/modules/qiita";
+import { IUpdateCategoryPayload } from "@/store/modules/actions";
 
 @Component({
   components: {

@@ -1,6 +1,6 @@
 import { shallowMount, createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
-import Cancel from "../../src/pages/cencel/Cancel.vue";
+import Login from "@/pages/Login.vue";
 import { QiitaModule } from "@/store/modules/qiita";
 
 import { IQiitaState } from "@/types/qiita";
@@ -13,18 +13,18 @@ localVue.use(VueRouter);
 
 const router = new VueRouter();
 
-describe("Cancel.vue", () => {
+describe("Login.vue", () => {
   let store: any;
   let state: IQiitaState;
   let actions: any;
 
-  it('calls store action "cancel" when button is clicked', () => {
+  it('calls store action "login" when button is clicked', () => {
     state = {
       authorizationCode: "",
       accessToken: "",
       qiitaAccountId: "",
       permanentId: "",
-      sessionId: "d690e4de-0a4e-4f14-a5c5-f4303fbd8a08",
+      sessionId: "",
       categories: [],
       stocks: [],
       categorizedStocks: [],
@@ -37,7 +37,7 @@ describe("Cancel.vue", () => {
     };
 
     actions = {
-      cancel: jest.fn()
+      login: jest.fn()
     };
 
     store = new Vuex.Store({
@@ -51,10 +51,10 @@ describe("Cancel.vue", () => {
       }
     });
 
-    const wrapper = shallowMount(Cancel, { store, localVue, router });
+    const wrapper = shallowMount(Login, { store, localVue, router });
     const button = wrapper.find("button");
 
     button.trigger("click");
-    expect(actions.cancel).toHaveBeenCalled();
+    expect(actions.login).toHaveBeenCalled();
   });
 });

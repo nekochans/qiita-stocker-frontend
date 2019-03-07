@@ -3,7 +3,7 @@ import SideMenu from "@/components/SideMenu.vue";
 import CreateCategory from "@/components/CreateCategory.vue";
 import CategoryList from "@/components/CategoryList.vue";
 import DefaultMenuList from "@/components/DefaultMenuList.vue";
-import { IUpdateCategoryPayload } from "@/store/modules/qiita";
+import { IUpdateCategoryPayload } from "@/store/modules/actions";
 import { ICategory } from "@/domain/qiita";
 
 config.logModifiedComponents = false;

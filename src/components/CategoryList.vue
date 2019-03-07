@@ -17,7 +17,7 @@
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
 import { ICategory } from "@/domain/qiita";
-import { IUpdateCategoryPayload } from "@/store/modules/qiita";
+import { IUpdateCategoryPayload } from "@/store/modules/actions";
 import Category from "@/components/Category.vue";
 
 @Component({
