@@ -134,6 +134,8 @@ export default class Pagination extends Vue {
   }
 
   goToPage(page: IPage) {
+    document.getElementById("pagination-scroll-top")!.scrollIntoView(true);
+
     this.targetPage = page;
 
     if (this.isCategorizing && this.checkedStockArticleIds.length)
