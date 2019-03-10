@@ -3,7 +3,7 @@
     <AppHeader />
     <main class="container">
       <div class="columns">
-        <div class="column is-3" id="pagination-scroll-top">
+        <div class="column is-3">
           <SideMenu
             :categories="categories"
             :displayCategoryId="displayCategoryId"
