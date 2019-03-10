@@ -1,5 +1,5 @@
 <template>
-  <header class="header">
+  <header class="header" id="pagination-scroll-top">
     <nav class="navbar navbar-guest">
       <div class="container">
         <div class="navbar-brand">

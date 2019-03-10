@@ -117,6 +117,10 @@ export default class Pagination extends Vue {
   confirmMessage: string =
     "保存せずにページを遷移した場合、現在のストックの選択は解除されます。ページを移動してもよろしいですか？";
 
+  scrollIntoStockList() {
+    document.getElementById("pagination-scroll-top")!.scrollIntoView(true);
+  }
+
   showFirstEllipsis() {
     return this.firstPage.page !== this.prevPage.page;
   }
@@ -134,6 +138,8 @@ export default class Pagination extends Vue {
   }
 
   goToPage(page: IPage) {
+    this.scrollIntoStockList();
+
     this.targetPage = page;
 
     if (this.isCategorizing && this.checkedStockArticleIds.length)
