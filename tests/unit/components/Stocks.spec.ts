@@ -363,6 +363,10 @@ describe("Stocks.vue", () => {
         relation: "next"
       };
 
+      pagination.setMethods({
+        scrollIntoStockList: mock
+      });
+
       // @ts-ignore
       pagination.vm.goToPage(page);
 

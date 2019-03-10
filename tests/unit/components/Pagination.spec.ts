@@ -55,6 +55,10 @@ describe("Pagination.vue", () => {
     it("should emit clickGoToPage on goToPage()", () => {
       const wrapper = shallowMount(Pagination, { propsData });
 
+      wrapper.setMethods({
+        scrollIntoStockList: jest.fn()
+      });
+
       // @ts-ignore
       wrapper.vm.goToPage(firstPage);
       expect(wrapper.emitted("clickGoToPage")).toBeTruthy();
@@ -64,6 +68,10 @@ describe("Pagination.vue", () => {
     it("should not emit clickGoToPage on goToPage()", () => {
       propsData.isCategorizing = true;
       const wrapper = shallowMount(Pagination, { propsData });
+
+      wrapper.setMethods({
+        scrollIntoStockList: jest.fn()
+      });
 
       // @ts-ignore
       wrapper.vm.goToPage(firstPage);
