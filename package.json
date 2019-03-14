@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
+    "test:unit:ci": "vue-cli-service test:unit --runInBand",
     "remove:htmlTemplate": "rm -rf dist/index.stg.html && rm -rf dist/index.prod.html",
     "generateDotenv:local": "DEPLOY_STAGE=local node generateEnv.js",
     "generateDotenv:dev": "DEPLOY_STAGE=dev node generateEnv.js",

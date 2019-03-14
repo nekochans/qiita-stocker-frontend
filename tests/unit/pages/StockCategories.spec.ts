@@ -1,10 +1,10 @@
 import { shallowMount, mount, createLocalVue, config } from "@vue/test-utils";
 import Vuex from "vuex";
+import { QiitaModule } from "@/store/modules/qiita";
 import {
   IUpdateCategoryPayload,
-  ICategorizePayload,
-  QiitaModule
-} from "@/store/modules/qiita";
+  ICategorizePayload
+} from "@/store/modules/actions";
 import StockCategories from "@/pages/StockCategories.vue";
 import SideMenu from "@/components/SideMenu.vue";
 import CategorizedStockEdit from "@/components/CategorizedStockEdit.vue";
@@ -543,6 +543,10 @@ describe("StockCategories.vue", () => {
         perPage: 20,
         relation: "next"
       };
+
+      pagination.setMethods({
+        scrollIntoStockList: mock
+      });
 
       // @ts-ignore
       pagination.vm.goToPage(page);

@@ -2,7 +2,7 @@ import { shallowMount, mount, config } from "@vue/test-utils";
 import CategoryList from "@/components/CategoryList.vue";
 import Category from "@/components/Category.vue";
 import { ICategory } from "@/domain/qiita";
-import { IUpdateCategoryPayload } from "@/store/modules/qiita";
+import { IUpdateCategoryPayload } from "@/store/modules/actions";
 
 config.logModifiedComponents = false;
 

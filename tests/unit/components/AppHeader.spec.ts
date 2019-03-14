@@ -1,4 +1,4 @@
-import { shallowMount, createLocalVue, config } from "@vue/test-utils";
+import { mount, createLocalVue, config } from "@vue/test-utils";
 import Vuex from "vuex";
 import { QiitaModule } from "@/store/modules/qiita";
 import AppHeader from "@/components/AppHeader.vue";
@@ -47,7 +47,7 @@ describe("AppHeader.vue", () => {
       }
     });
 
-    const wrapper = shallowMount(AppHeader, { store, localVue, router });
+    const wrapper = mount(AppHeader, { store, localVue, router });
     const navbarItem = wrapper.findAll("a").at(2);
     expect(navbarItem.text()).toBe("ログイン");
   });
@@ -66,7 +66,7 @@ describe("AppHeader.vue", () => {
       }
     });
 
-    const wrapper = shallowMount(AppHeader, { store, localVue, router });
+    const wrapper = mount(AppHeader, { store, localVue, router });
     const navbarItem = wrapper.findAll("a").at(4);
     expect(navbarItem.text()).toBe("ログアウト");
   });
@@ -87,7 +87,7 @@ describe("AppHeader.vue", () => {
       }
     });
 
-    const wrapper = shallowMount(AppHeader, { store, localVue, router });
+    const wrapper = mount(AppHeader, { store, localVue, router });
     const logoutLink = wrapper.findAll("a").at(4);
 
     logoutLink.trigger("click");

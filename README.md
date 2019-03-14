@@ -1,4 +1,5 @@
 # qiita-stocker-frontend
+[![CircleCI](https://circleci.com/gh/nekochans/qiita-stocker-frontend/tree/master.svg?style=svg)](https://circleci.com/gh/nekochans/qiita-stocker-frontend/tree/master)
 
 ## Project setup
 ```
