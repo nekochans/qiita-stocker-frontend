@@ -2,7 +2,7 @@
   <div>
     <AppHeader />
     <section class="hero is-medium hero-top">
-      <div class="hero-body">
+      <div class="hero-body hero-filter">
         <div class="container">
           <div class="columns">
             <div class="column is-7">
@@ -78,8 +78,21 @@ export default class Home extends Vue {}
 
 <style scoped>
 .hero-top {
-  background: black url(../assets/top.jpg) center / cover;
+  background: black url(../assets/top.jpg) 62% 50% / cover;
 }
+
+@media screen and (max-width: 1024px) {
+  .hero-filter {
+    background-color: rgba(0, 0, 0, 0.3);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .hero-filter {
+    background-color: rgba(0, 0, 0, 0.6);
+  }
+}
+
 .subtitle {
   padding-top: 1rem;
 }

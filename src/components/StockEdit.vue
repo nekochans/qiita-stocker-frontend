@@ -1,5 +1,8 @@
 <template>
-  <div v-show="stocksLength && !isLoading">
+  <div
+    v-show="stocksLength && !isLoading"
+    :class="`${isCategorizing && 'stock-edit-sticky'}`"
+  >
     <div class="navbar-menu edit-menu">
       <div class="navbar-end">
         <CategorizeButton
@@ -60,7 +63,13 @@ export default class StockEdit extends Vue {
   box-shadow: none;
 }
 
-.button-margin {
-  margin-bottom: 0.5rem;
+@media screen and (max-width: 768px) {
+  .stock-edit-sticky {
+    border-bottom: 1px solid #e8e8e8;
+    display: block;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
 }
 </style>
