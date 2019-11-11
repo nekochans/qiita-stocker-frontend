@@ -1,0 +1,42 @@
+{
+  "compilerOptions": {
+    "module": "esnext",
+    "moduleResolution": "node",
+    "target": "esnext",
+    "sourceMap": true,
+    "removeComments": true,
+    "experimentalDecorators": true,
+    "noUnusedLocals": true,
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "allowSyntheticDefaultImports": true,
+    "allowJs": true,
+    "strict": true,
+    "noImplicitReturns": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "rootDir": ".",
+    "paths": {
+      "@/*": [
+        "./app/*"
+      ]
+    },
+    "types": [
+      "@types/node",
+      "@nuxt/types",
+      "@types/jest"
+    ],
+    "typeRoots": [
+      "app/types"
+    ],
+    "lib": [
+      "dom",
+      "esnext",
+      "esnext.asynciterable"
+    ]
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}

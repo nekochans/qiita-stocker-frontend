@@ -1,0 +1,75 @@
+service: qiita-stocker-nuxt
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+  stage: ${env:STAGE}
+  region: ap-northeast-1
+  logRetentionInDays: 30
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+        - 'lambda:InvokeFunction'
+      Resource:
+        - Fn::Join:
+            - ':'
+            - - arn:aws:lambda
+              - Ref: AWS::Region
+              - Ref: AWS::AccountId
+              - function:${self:service}-${opt:stage, self:provider.stage}-*
+  environment:
+    STAGE: ${env:STAGE}
+    NODE_ENV: ${env:NODE_ENV}
+    QIITA_CLIENT_ID: ${env:QIITA_CLIENT_ID}
+    QIITA_CLIENT_SECRET: ${env:QIITA_CLIENT_SECRET}
+    API_URL_BASE: ${env:API_URL_BASE}
+    APP_URL: ${env:APP_URL}
+    GOOGLE_SITE_VERIFICATION: ${env:GOOGLE_SITE_VERIFICATION}
+    TRACKING_ID: ${env:TRACKING_ID}
+
+plugins:
+  - serverless-plugin-warmup
+
+package:
+  individually: true
+  exclude:
+    - .git/**
+    - .github/**
+    - .idea/**
+    - coverage/**
+    - node_modules/.bin/**
+    - node_modules/.cache/**
+    - node_modules/.cache/**
+    - app/**
+    - server/**
+    - test/**
+    - .editorconfig
+    - .gitignore
+    - .prettierrc
+    - createEnv.ts
+    - envUtils.ts
+    - jest.config.js
+    - LICENSE
+    - nodemon.json
+    - package.json
+    - qiita-stocker-nuxt.iml
+    - README.md
+    - tsconfig.json
+    - tsconfig.server.json
+    - yarn-error.log
+    - yarn.lock
+
+functions:
+  render:
+    handler: dist/server/lambda.render
+    warmup: true
+    events:
+      - http:
+          path: '/'
+          method: get
+      - http:
+          path: '{proxy+}'
+          method: get
+      - http:
+          path: '/api/{proxy+}'
+          method: any

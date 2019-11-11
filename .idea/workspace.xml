@@ -2,99 +2,110 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ec059ed4-0d96-48aa-9c26-99dd17101c9a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.circleci/config.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/CONTRIBUTING.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/ISSUE_TEMPLATE/Bug_report.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/ISSUE_TEMPLATE/Feature_request.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/PULL_REQUEST_TEMPLATE.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/apple-touch-icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/favicon.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/index.prod.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/index.stg.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/ogp.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/logo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/top.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/AlertModal.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/AppFooter.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/AppHeader.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/CategorizeButton.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/CategorizedStock.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/CategorizedStockEdit.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/CategorizedStockList.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Category.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/CategoryList.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ConfirmModal.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/CreateCategory.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/DefaultMenuList.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Loading.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Pagination.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/SideMenu.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Stock.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/StockEdit.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/StockList.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/domain/qiita.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/factory/api/QiitaApiFactory.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/factory/api/QiitaStockerApiFactory.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/factory/repository/LocalStorageFactory.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/infrastructure/api/qiitaApi.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/infrastructure/api/qiitaStockerApi.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/infrastructure/repository/localStorage.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Error.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Home.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Login.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/NotFound.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Privacy.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/SignUp.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/StockCategories.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Stocks.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Terms.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/cencel/Cancel.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/cencel/complete/CancelComplete.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/oAuth/callback/OAuthCallback.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/router.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shims-tsx.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shims-vue.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/index.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/modules/actions.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/modules/getters.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/modules/mutations.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/modules/qiita.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/modules/state.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/qiita.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/e2e/.eslintrc.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/e2e/plugins/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/e2e/specs/test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/e2e/support/commands.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/e2e/support/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/unit/.eslintrc.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/unit/components/AlertModal.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/unit/components/AppHeader.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/unit/components/Cancel.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/unit/components/CategorizeButton.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/unit/components/CategorizedStock.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/unit/components/CategorizedStockEdit.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/unit/components/CategorizedStockList.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/unit/components/Category.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/unit/components/CategoryList.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/unit/components/ConfirmModal.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/unit/components/CreateCategory.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/unit/components/DefaultMenuList.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/unit/components/Loading.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/unit/components/Pagination.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/unit/components/SideMenu.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/unit/components/StockEdit.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/unit/components/StockList.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/unit/components/Stocks.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/unit/pages/Error.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/unit/pages/Login.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/unit/pages/SignUp.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/unit/pages/Stock.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/unit/pages/StockCategories.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/unit/store/QiitaModule/actions.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/unit/store/QiitaModule/getters.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/unit/store/QiitaModule/mutations.spec.ts" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/.babelrc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.editorconfig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.eslintrc.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.github/CONTRIBUTING.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.github/ISSUE_TEMPLATE/Bug_report.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.github/ISSUE_TEMPLATE/Feature_request.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.github/PULL_REQUEST_TEMPLATE.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.prettierrc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/LICENSE" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/assets/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/assets/style.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/assets/top.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/components/AlertModal.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/components/AppFooter.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/components/AppHeader.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/components/CategorizeButton.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/components/CategorizedStock.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/components/CategorizedStockEdit.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/components/CategorizedStockList.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/components/Category.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/components/CategoryList.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/components/ConfirmModal.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/components/CreateCategory.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/components/DefaultMenuList.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/components/Loading.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/components/Logo.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/components/Pagination.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/components/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/components/SideMenu.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/components/Stock.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/components/StockEdit.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/components/StockList.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/components/pages/Error.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/components/pages/Index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/components/pages/Login.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/components/pages/Privacy.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/components/pages/Signup.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/components/pages/Terms.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/components/pages/cancel/Complete.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/components/pages/cancel/Index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/components/pages/stocks/All.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/components/pages/stocks/categories/StockCategories.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/constants/envConstant.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/domain/domain.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/factory/qiitaStockApi.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/layouts/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/layouts/default.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/layouts/error.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/layouts/stocks.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/middleware/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/middleware/authCookieMiddleware.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/middleware/redirectMiddleware.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/pages/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/pages/cancel/complete.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/pages/cancel/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/pages/error.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/pages/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/pages/login.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/pages/privacy.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/pages/signup.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/pages/stocks/all.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/pages/stocks/categories/_id.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/pages/terms.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/plugins/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/repositories/api.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/repositories/httpResponse.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/static/assets/favicon.ico" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/static/assets/ogp.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/store/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/store/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/store/qiita.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/types/shims-vue.d.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/buildspec.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/createEnv.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/deployToS3.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/deployUtils.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/envUtils.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jest.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/nodemon.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/nuxt.config.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/api/qiita.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/app.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/auth/oauth.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/constants/envConstant.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/core/nuxt.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/domain/auth.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/domain/qiita.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/domain/qiitaApiInterface.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/domain/qiitaStockerApiInterface.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/factroy/api/qiitaApiFactory.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/factroy/api/qiitaStockerApiFactory.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/lambda.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/repositories/qiitaApi.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/repositories/qiitaStockerApi.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/server.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/serverless.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/Logo.spec.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tsconfig.server.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -125,7 +136,29 @@
     <option name="isMigrated" value="true" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/package.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-596">
+              <caret line="3" column="35" selection-start-line="3" selection-start-column="35" selection-end-line="3" selection-end-column="35" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/server/api/qiita.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="323">
+              <caret line="19" column="24" selection-start-line="19" selection-start-column="24" selection-end-line="19" selection-end-column="24" />
+              <folding>
+                <element signature="e#0#51#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -181,6 +214,8 @@
         <option value="$PROJECT_DIR$/src/pages/StockCategories.vue" />
         <option value="$PROJECT_DIR$/src/store/modules/actions.ts" />
         <option value="$PROJECT_DIR$/public/index.prod.html" />
+        <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/package.json" />
       </list>
     </option>
   </component>
@@ -210,6 +245,40 @@
               <item name="qiita-stocker-frontend" type="b2602c69:ProjectViewProjectNode" />
               <item name="qiita-stocker-frontend" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="qiita-stocker-frontend" type="b2602c69:ProjectViewProjectNode" />
+              <item name="qiita-stocker-frontend" type="462c0819:PsiDirectoryNode" />
+              <item name=".github" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="qiita-stocker-frontend" type="b2602c69:ProjectViewProjectNode" />
+              <item name="qiita-stocker-frontend" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="qiita-stocker-frontend" type="b2602c69:ProjectViewProjectNode" />
+              <item name="qiita-stocker-frontend" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="pages" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="qiita-stocker-frontend" type="b2602c69:ProjectViewProjectNode" />
+              <item name="qiita-stocker-frontend" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="pages" type="462c0819:PsiDirectoryNode" />
+              <item name="cancel" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="qiita-stocker-frontend" type="b2602c69:ProjectViewProjectNode" />
+              <item name="qiita-stocker-frontend" type="462c0819:PsiDirectoryNode" />
+              <item name="server" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="qiita-stocker-frontend" type="b2602c69:ProjectViewProjectNode" />
+              <item name="qiita-stocker-frontend" type="462c0819:PsiDirectoryNode" />
+              <item name="server" type="462c0819:PsiDirectoryNode" />
+              <item name="api" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -224,8 +293,10 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1556438190474" />
+    <property name="editor.config.ad.shown" value="true" />
     <property name="go.gopath.indexing.explicitly.defined" value="true" />
     <property name="go.import.settings.migrated" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -235,6 +306,11 @@
     <property name="settings.editor.selected.configurable" value="Settings.JavaScript" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
     <property name="typescript-compiler-editor-notification" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -294,15 +370,16 @@
       <workItem from="1568904333561" duration="1725000" />
       <workItem from="1570428527435" duration="6635000" />
       <workItem from="1570963273407" duration="633000" />
-      <workItem from="1573456517914" duration="253000" />
+      <workItem from="1573456517914" duration="511000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="44565000" />
+    <option name="totallyTimeSpent" value="44823000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2746781" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -640,19 +717,61 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="23" column="10" selection-start-line="23" selection-start-column="5" selection-end-line="23" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/store/modules/actions.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="553">
           <caret line="61" lean-forward="true" selection-start-line="61" selection-end-line="61" />
           <folding>
             <element signature="e#0#34#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/qiita-stocker-frontend.iml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.github/ISSUE_TEMPLATE/Bug_report.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor />
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/pages/cancel/index.vue">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.babelrc">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor />
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-596">
+          <caret line="3" column="35" selection-start-line="3" selection-start-column="35" selection-end-line="3" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/api/qiita.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" column="24" selection-start-line="19" selection-start-column="24" selection-end-line="19" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#51#0" expanded="true" />
           </folding>
         </state>
       </provider>
