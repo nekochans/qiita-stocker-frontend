@@ -6,12 +6,12 @@
  */
 exports.isAllowedDeployStage = deployStage => {
   return (
-    deployStage === "local" ||
-    deployStage === "dev" ||
-    deployStage === "stg" ||
-    deployStage === "prod"
-  );
-};
+    deployStage === 'local' ||
+    deployStage === 'dev' ||
+    deployStage === 'stg' ||
+    deployStage === 'prod'
+  )
+}
 
 /**
  * SecretIdsを取得する
@@ -20,8 +20,8 @@ exports.isAllowedDeployStage = deployStage => {
  * @return {string[]}
  */
 exports.findSecretIds = deployStage => {
-  return [`${deployStage}/qiita-stocker`];
-};
+  return [`${deployStage}/qiita-stocker`]
+}
 
 /**
  * AWSのプロファイル名を取得する
@@ -30,12 +30,12 @@ exports.findSecretIds = deployStage => {
  * @return {string}
  */
 exports.findAwsProfile = deployStage => {
-  if (deployStage === "prod") {
-    return "qiita-stocker-prod";
+  if (deployStage === 'prod') {
+    return 'qiita-stocker-prod'
   }
 
-  return "qiita-stocker-dev";
-};
+  return 'qiita-stocker-dev'
+}
 
 /**
  * デプロイ先のS3Bucket名を取得する
@@ -44,5 +44,5 @@ exports.findAwsProfile = deployStage => {
  * @return {string}
  */
 exports.findDeployS3Bucket = deployStage => {
-  return `${deployStage}-qiita-stocker-frontend`;
-};
+  return `${deployStage}-qiita-stocker-nuxt`
+}

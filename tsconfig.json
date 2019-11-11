@@ -1,39 +1,41 @@
 {
   "compilerOptions": {
-    "target": "esnext",
     "module": "esnext",
-    "strict": true,
-    "jsx": "preserve",
-    "importHelpers": true,
     "moduleResolution": "node",
-    "experimentalDecorators": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
+    "target": "esnext",
     "sourceMap": true,
+    "removeComments": true,
+    "experimentalDecorators": true,
+    "noUnusedLocals": true,
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "allowSyntheticDefaultImports": true,
+    "allowJs": true,
+    "strict": true,
+    "noImplicitReturns": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
     "baseUrl": ".",
-    "types": [
-      "node",
-      "jest"
-    ],
+    "rootDir": ".",
     "paths": {
       "@/*": [
-        "src/*"
+        "./app/*"
       ]
     },
+    "types": [
+      "@types/node",
+      "@nuxt/types",
+      "@types/jest"
+    ],
+    "typeRoots": [
+      "app/types"
+    ],
     "lib": [
-      "esnext",
       "dom",
-      "dom.iterable",
-      "scripthost"
+      "esnext",
+      "esnext.asynciterable"
     ]
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue",
-    "tests/**/*.ts",
-    "tests/**/*.tsx"
-  ],
   "exclude": [
     "node_modules"
   ]
