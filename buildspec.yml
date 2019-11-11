@@ -1,0 +1,19 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 10
+    commands:
+      - npm install -g yarn
+  pre_build:
+    commands:
+      - yarn install
+  build:
+    commands:
+      - yarn build
+      - aws s3 rm s3://${DEPLOY_STAGE}-qiita-stocker-nuxt --recursive
+      - aws s3 sync ./.nuxt/dist/client s3://${DEPLOY_STAGE}-qiita-stocker-nuxt/_nuxt
+      - aws s3 sync ./app/static s3://${DEPLOY_STAGE}-qiita-stocker-nuxt
+      - yarn run deploy:${DEPLOY_STAGE}
+      - aws cloudfront create-invalidation --distribution-id ${DISTRIBUTION_ID} --paths "/*"

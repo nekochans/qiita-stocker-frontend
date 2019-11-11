@@ -1,14 +1,24 @@
 module.exports = {
   root: true,
   env: {
+    browser: true,
     node: true
   },
-  extends: ["plugin:vue/essential", "@vue/prettier", "@vue/typescript"],
+  extends: [
+    '@nuxtjs/eslint-config-typescript',
+    'plugin:nuxt/recommended',
+    'plugin:prettier/recommended',
+    'prettier',
+    'prettier/vue',
+    'prettier/@typescript-eslint'
+  ],
+  plugins: [
+    'prettier'
+  ],
   rules: {
-    "no-console": process.env.NODE_ENV === "production" ? "error" : "off",
-    "no-debugger": process.env.NODE_ENV === "production" ? "error" : "off"
-  },
-  parserOptions: {
-    parser: "typescript-eslint-parser"
+    'nuxt/no-cjs-in-config': 'off',
+    'camelcase': 0,
+    'vue/no-v-html': 0,
+    'no-console': 0
   }
-};
+}

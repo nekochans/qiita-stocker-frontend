@@ -4,8 +4,8 @@ about: スクラム開発でいうところのストーリーのテンプレー�
 
 ---
 
-# Doneの定義
+ # Doneの定義
 [required]
 
-# 補足情報
+ # 補足情報
 [optional]
