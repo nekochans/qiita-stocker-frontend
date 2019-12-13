@@ -7,7 +7,8 @@ const nuxtConfig: Configuration = {
   mode: 'universal',
   srcDir: 'app',
   env: {
-    apiUrlBase: process.env.API_URL_BASE || 'http://localhost:3000'
+    apiUrlBase: process.env.API_URL_BASE || 'http://localhost:3000',
+    trackingId: process.env.TRACKING_ID || ''
   },
   router: {
     middleware: ['authCookieMiddleware', 'redirectMiddleware'],
@@ -95,8 +96,7 @@ const nuxtConfig: Configuration = {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
-
+  plugins: [{ src: '@/plugins/ga.js', mode: 'client' }],
   /*
    ** Nuxt.js modules
    */
