@@ -2,7 +2,7 @@ service: qiita-stocker-nuxt
 
 provider:
   name: aws
-  runtime: nodejs10.x
+  runtime: nodejs12.x
   stage: ${env:STAGE}
   region: ap-northeast-1
   logRetentionInDays: 30
