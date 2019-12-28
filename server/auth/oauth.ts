@@ -1,5 +1,6 @@
 import { Router, Request, Response } from 'express'
 import * as auth from '../domain/auth'
+import { stage } from '../constants/envConstant'
 
 const router = Router()
 
@@ -61,10 +62,11 @@ router.get('/callback', async (req: Request, res: Response) => {
     )
     res.clearCookie(auth.COOKIE_AUTH_STATE)
     res.clearCookie(auth.COOKIE_ACCOUNT_ACTION)
-    res.cookie(auth.COOKIE_SESSION_ID, sessionId, {
-      path: '/',
-      httpOnly: true
-    })
+
+    const isLocal = stage() === 'local'
+    const cookieOptions = auth.loginSessionCookieOptions(isLocal)
+
+    res.cookie(auth.COOKIE_SESSION_ID, sessionId, cookieOptions)
 
     return res.redirect(auth.redirectAppUrl())
   } catch (error) {
