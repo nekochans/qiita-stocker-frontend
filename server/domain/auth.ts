@@ -147,6 +147,7 @@ export const fetchSessionId = async (
       )
       break
     default:
+      /* eslint no-case-declarations: 0 */
       const _: never = accountAction
       sessionId = _
       break
