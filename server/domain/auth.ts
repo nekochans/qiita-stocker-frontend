@@ -134,23 +134,25 @@ export const fetchSessionId = async (
   let sessionId = ''
 
   switch (accountAction) {
-    case 'signUp':
+    case 'signUp': {
       sessionId = await createAccount(
         issueAccessTokenResponse.token,
         authenticatedUser
       )
       break
-    case 'login':
+    }
+    case 'login': {
       sessionId = await issueLoginSession(
         issueAccessTokenResponse.token,
         authenticatedUser
       )
       break
-    default:
-      /* eslint no-case-declarations: 0 */
+    }
+    default: {
       const _: never = accountAction
       sessionId = _
       break
+    }
   }
   return sessionId
 }
