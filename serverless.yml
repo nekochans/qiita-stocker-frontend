@@ -49,7 +49,7 @@ package:
     - LICENSE
     - nodemon.json
     - package.json
-    - qiita-stocker-nuxt.iml
+    - qiita-stocker-frontend.iml
     - README.md
     - tsconfig.json
     - tsconfig.server.json
