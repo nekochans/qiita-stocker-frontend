@@ -68,7 +68,6 @@
     "s3": "^4.4.0",
     "sass-loader": "^8.0.0",
     "serverless": "^1.60.4",
-    "serverless-plugin-warmup": "^4.7.1-rc.1",
     "ts-jest": "^24.2.0",
     "ts-loader": "^6.2.1",
     "ts-node": "^8.5.4",
