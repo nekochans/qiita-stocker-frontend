@@ -19,6 +19,5 @@ app.use(async (req, res, next) => {
   await nuxt.ready()
   nuxt.render(req, res, next)
 })
-// app.use(nuxt.render)
 
 export default app
