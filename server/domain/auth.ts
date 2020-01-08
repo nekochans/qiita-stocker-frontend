@@ -1,6 +1,7 @@
 import url from 'url'
 import uuid from 'uuid'
 import { AxiosResponse, AxiosError } from 'axios'
+import { CookieOptions } from 'express'
 import QiitaApiFactory from '../factroy/api/qiitaApiFactory'
 import QiitaStockerApiFactory from '../factroy/api/qiitaStockerApiFactory'
 import {
@@ -133,22 +134,25 @@ export const fetchSessionId = async (
   let sessionId = ''
 
   switch (accountAction) {
-    case 'signUp':
+    case 'signUp': {
       sessionId = await createAccount(
         issueAccessTokenResponse.token,
         authenticatedUser
       )
       break
-    case 'login':
+    }
+    case 'login': {
       sessionId = await issueLoginSession(
         issueAccessTokenResponse.token,
         authenticatedUser
       )
       break
-    default:
+    }
+    default: {
       const _: never = accountAction
       sessionId = _
       break
+    }
   }
   return sessionId
 }
@@ -186,4 +190,19 @@ const issueLoginSession = async (
     issueLoginSessionRequest
   )
   return issueLoginSessionResponse.sessionId
+}
+
+export const loginSessionCookieOptions = (isLocal = false): CookieOptions => {
+  const nowDate = new Date()
+  // ログインセッションが無効になるのは30日後なのでそれより早めに29日でCookieは無効にする
+  nowDate.setDate(nowDate.getDate() + 29)
+
+  const secure = !isLocal
+
+  return {
+    expires: nowDate,
+    httpOnly: true,
+    path: '/',
+    secure
+  }
 }

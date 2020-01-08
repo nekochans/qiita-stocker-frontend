@@ -114,6 +114,7 @@ export default class extends Vue {
   fetchCategorizedStock!: (
     fetchCategorizedStockPayload: FetchCategorizedStockPayload
   ) => void
+
   fetchCategory!: () => void
   saveCategory!: (category: string) => void
   updateCategory!: (updateCategoryPayload: UpdateCategoryPayload) => void
