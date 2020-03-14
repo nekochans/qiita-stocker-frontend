@@ -20,7 +20,7 @@
         </div>
         <div class="level-right">
           <div class="content has-text-centered">
-            <p>Copyright (c) 2018-2019 nekochans</p>
+            <p>Copyright (c) 2018-2020 nekochans</p>
           </div>
         </div>
       </nav>
