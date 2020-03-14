@@ -69,4 +69,4 @@ functions:
       - http:
           path: '/api/{proxy+}'
           method: any
-    provisionedConcurrency: 2
+    provisionedConcurrency: 1
